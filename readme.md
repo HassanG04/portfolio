@@ -1,4 +1,4 @@
-# Hassan Gebril – Personal Portfolio - update
+# Hassan Gebril – Personal Portfolio
 
 A responsive personal portfolio website built with HTML, CSS, and JavaScript to showcase my background as an AI / Data Science student, my projects, certifications, and contact links.
 

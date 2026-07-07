@@ -173,7 +173,25 @@ document.addEventListener('DOMContentLoaded', function () {
   const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
   if (revealEls.length) {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+          // Trigger any counters inside this revealed element
+          e.target.querySelectorAll('[data-count]').forEach(counter => {
+            if (!counter.dataset.counted) {
+              counter.dataset.counted = 'true';
+              setTimeout(() => {
+                animateCounter(counter, parseInt(counter.dataset.count));
+              }, 300);
+            }
+          });
+          // Trigger any skill bars inside this revealed element
+          e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+            bar.style.width = bar.dataset.pct + '%';
+          });
+        }
+      });
     }, { threshold: 0.12 });
     revealEls.forEach(el => observer.observe(el));
   }
@@ -193,17 +211,21 @@ document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(step);
   }
 
+  // Fallback counter observer for counters NOT inside .reveal wrappers
   const counterEls = document.querySelectorAll('[data-count]');
   if (counterEls.length) {
     const counterObs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           const el = e.target;
-          animateCounter(el, parseInt(el.dataset.count));
+          if (!el.dataset.counted) {
+            el.dataset.counted = 'true';
+            animateCounter(el, parseInt(el.dataset.count));
+          }
           counterObs.unobserve(el);
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.15 });
     counterEls.forEach(el => counterObs.observe(el));
   }
 
