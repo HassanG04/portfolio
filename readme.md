@@ -8,7 +8,7 @@ The site is intentionally simple (no heavy frameworks) but has a few dynamic tou
 
 ## Live Demo
 
-> https://hassang04.github.io/
+> https://hassang04.github.io/portfolio/
 
 ---
 
