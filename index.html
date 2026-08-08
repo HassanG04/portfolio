@@ -1,341 +1,247 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hassan Gebril – AI Engineer | Portfolio</title>
-  <meta name="description" content="Hassan Gebril – AI Engineer, ML Developer & creative problem solver. Explore projects, certifications and achievements." />
-
-  <!-- Open Graph -->
-  <meta property="og:title"       content="Hassan Gebril – AI Engineer | Portfolio" />
-  <meta property="og:description" content="Explore my projects, certifications, AI work, and personal achievements." />
-  <meta property="og:image"       content="https://hassang04.github.io/images/thumbnail.png" />
-  <meta property="og:url"         content="https://hassang04.github.io/" />
-  <meta property="og:type"        content="website" />
-  <meta name="twitter:card"       content="summary_large_image" />
-  <meta name="twitter:title"      content="Hassan Gebril – AI Engineer | Portfolio" />
-  <meta name="twitter:image"      content="https://hassang04.github.io/images/thumbnail.png" />
-
-  <link rel="icon"             type="image/x-icon" href="favicon.ico" />
-  <link rel="apple-touch-icon" href="images/thumbnail.png" />
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hassan Gebril — AI & Data Science Portfolio</title>
+  <meta name="description" content="AI and Data Science student building evaluated machine-learning systems across computer vision, NLP, healthcare analytics, and data engineering.">
+  <meta name="theme-color" content="#0b0d0c">
+  <meta property="og:title" content="Hassan Gebril — AI & Data Science Portfolio">
+  <meta property="og:description" content="Applied AI projects with measurable results, from satellite segmentation to NLP and healthcare analytics.">
+  <meta property="og:image" content="https://hassang04.github.io/images/og-portfolio.png">
+  <meta property="og:url" content="https://hassang04.github.io/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hassan Gebril — AI & Data Science Portfolio">
+  <meta name="twitter:description" content="Applied AI projects with measurable results.">
+  <meta name="twitter:image" content="https://hassang04.github.io/images/og-portfolio.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Hassan Gebril",
+    "url": "https://hassang04.github.io/",
+    "sameAs": [
+      "https://github.com/HassanG04",
+      "https://www.linkedin.com/in/hassang04/"
+    ],
+    "jobTitle": "AI and Data Science Student",
+    "alumniOf": {"@type": "CollegeOrUniversity", "name": "Arab Academy for Science, Technology and Maritime Transport"}
+  }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- PAGE LOADER -->
-  <div id="page-loader">
-    <div class="loader-inner">
-      <span class="loader-logo">HG.</span>
-      <div class="loader-ring"></div>
-    </div>
-  </div>
-
-  <!-- PARTICLE CANVAS -->
-  <canvas id="particle-canvas"></canvas>
-
-
-
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">HG.</a>
-      <button class="navbar-toggler border-0" type="button"
-              data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-center gap-1">
-          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="hobbies.html">Hobbies</a></li>
-          <li class="nav-item"><a class="nav-link" href="accomplishments.html">Accomplishments</a></li>
-          <li class="nav-item ms-2">
-            <button id="darkModeToggle" class="dark-toggle">
-              <i class="fas fa-moon"></i>
-            </button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ===== HERO ===== -->
-  <header class="hero-section">
-    <div class="container">
-      <div class="row align-items-center g-5">
-
-        <!-- Text -->
-        <div class="col-lg-6 order-2 order-lg-1">
-          <div class="hero-badge">
-            <span class="pulse-dot"></span>
-            Available for opportunities
-          </div>
-
-          <h1 class="hero-title">
-            <span class="greeting">Hello, I'm</span>
-            <span class="name">Hassan Gebril</span>
-          </h1>
-
-          <div class="typewriter-wrap">
-            <span class="typewriter-prefix">I build&nbsp;</span>
-            <span class="typewriter-text" id="typewriter-text">AI solutions</span>
-            <span class="typewriter-cursor"></span>
-          </div>
-
-          <p class="hero-desc">
-            AI Engineer with hands-on industry experience in machine learning,
-            creative problem-solving, and building things that actually matter.
-          </p>
-
-          <div class="hero-actions">
-            <a href="about.html" class="btn btn-primary">
-              About Me <i class="fas fa-arrow-right ms-2"></i>
-            </a>
-            <a href="https://drive.google.com/drive/folders/1PpwyqrEFpiQ_cHfw4pXXlBEPmE6P9rpv?usp=sharing"
-               target="_blank" class="btn btn-cv">
-              <i class="fas fa-file-alt"></i> View CV
-            </a>
-            <a href="accomplishments.html" class="btn btn-glass">
-              My Work
-            </a>
-          </div>
-
-          <div class="hero-social">
-            <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank"
-               class="social-btn linkedin" title="LinkedIn">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="https://www.youtube.com/@Hassan_G04" target="_blank"
-               class="social-btn youtube" title="YouTube">
-              <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://github.com/HassanG04" target="_blank"
-               class="social-btn github" title="GitHub">
-              <i class="fab fa-github"></i>
-            </a>
-          </div>
-        </div>
-
-        <!-- Image -->
-        <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
-          <div class="hero-img-wrap">
-            <div class="hero-img-ring">
-              <div class="hero-img-inner">
-                <img src="images/profile.jpg" alt="Hassan Gebril – AI Engineer" />
-              </div>
-            </div>
-
-            <!-- Floating badges -->
-            <div class="float-badge b1">
-              <div class="badge-ico p"><i class="fas fa-brain"></i></div>
-              <div>
-                <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:1px;">Speciality</div>
-                <div>AI / ML</div>
-              </div>
-            </div>
-
-            <div class="float-badge b2">
-              <div class="badge-ico c"><i class="fas fa-code"></i></div>
-              <div>
-                <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:1px;">Currently</div>
-                <div>Building cool stuff</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Scroll hint -->
-    <div class="scroll-hint">
-      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
-      <span>Scroll</span>
-    </div>
+  <header class="site-header" data-header>
+    <a class="wordmark" href="#top" aria-label="Hassan Gebril, home">HG<span>.</span></a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="header-cta" href="https://drive.google.com/drive/folders/1PpwyqrEFpiQ_cHfw4pXXlBEPmE6P9rpv?usp=sharing" target="_blank" rel="noopener">View résumé <span aria-hidden="true">↗</span></a>
   </header>
 
-  <!-- ===== MAIN ===== -->
-  <main>
-
-    <!-- STATS -->
-    <section id="stats" class="section-wrap">
-      <div class="container">
-        <div class="row g-4">
-          <div class="col-6 col-md-3 reveal delay-1">
-            <div class="stat-card">
-              <span class="stat-number" data-count="6" data-suffix="+">0+</span>
-              <span class="stat-label">AI Projects</span>
-            </div>
-          </div>
-          <div class="col-6 col-md-3 reveal delay-2">
-            <div class="stat-card">
-              <span class="stat-number" data-count="3" data-suffix="+">0+</span>
-              <span class="stat-label">Certifications</span>
-            </div>
-          </div>
-          <div class="col-6 col-md-3 reveal delay-3">
-            <div class="stat-card">
-              <span class="stat-number" data-count="25" data-suffix="th">0th</span>
-              <span class="stat-label">ICPC Ranking</span>
-            </div>
-          </div>
-          <div class="col-6 col-md-3 reveal delay-4">
-            <div class="stat-card">
-              <span class="stat-number" data-count="3" data-suffix="yr">0yr</span>
-              <span class="stat-label">Coding Experience</span>
-            </div>
-          </div>
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="availability-dot"></span> Open to internships & junior roles</p>
+        <h1>I turn messy data into <em>working intelligence.</em></h1>
+        <p class="hero-intro">I’m Hassan Gebril, a fourth-year Artificial Intelligence student focused on machine learning, data science, and the engineering that makes models useful.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#work">Explore selected work <span aria-hidden="true">↓</span></a>
+          <a class="text-link" href="mailto:hassangebrill2004@gmail.com">hassangebrill2004@gmail.com <span aria-hidden="true">↗</span></a>
         </div>
+      </div>
+
+      <aside class="hero-profile" aria-label="Profile overview">
+        <div class="portrait-frame">
+          <img src="images/profile.jpg" alt="Portrait of Hassan Gebril" width="560" height="640">
+          <span class="image-index">01 / PROFILE</span>
+        </div>
+        <dl class="profile-meta">
+          <div><dt>Based in</dt><dd>Alexandria, Egypt</dd></div>
+          <div><dt>Focus</dt><dd>AI · ML · Data</dd></div>
+          <div><dt>Availability</dt><dd>Remote · Hybrid · Relocation</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="signal-strip" aria-label="Portfolio highlights">
+      <div><strong>6+</strong><span>Applied AI projects</span></div>
+      <div><strong>93.1%</strong><span>NLP test accuracy</span></div>
+      <div><strong>0.92</strong><span>Healthcare AUC</span></div>
+      <div><strong>96.21%</strong><span>Vision validation accuracy</span></div>
+    </section>
+
+    <section class="section projects-section" id="work">
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">01 / Selected work</p>
+          <h2>Models measured by results,<br>not just screenshots.</h2>
+        </div>
+        <p>Selected projects across computer vision, NLP, tabular ML, and explainable healthcare analytics. Each one is built around a real problem and evaluated on held-out data.</p>
+      </header>
+
+      <div class="project-grid">
+        <article class="project-card project-featured">
+          <a class="project-image" href="https://github.com/HassanG04/River-Flood-Prediction" target="_blank" rel="noopener" aria-label="View Flood Detection project on GitHub">
+            <img src="images/river_flood.jpg" alt="Satellite flood segmentation model output" loading="lazy">
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+          <div class="project-body">
+            <div class="project-number">01</div>
+            <div>
+              <p class="project-type">Computer vision · Segmentation</p>
+              <h3>Flood Detection from Satellite Imagery</h3>
+              <p>A lightweight U-Net pipeline trained on 306 labeled image-mask pairs, designed to identify flooded regions from satellite data.</p>
+              <div class="project-proof"><strong>0.741</strong><span>validation mIoU</span></div>
+              <ul class="tag-list" aria-label="Technologies"><li>PyTorch</li><li>U-Net</li><li>OpenCV</li><li>Flask</li></ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <a class="project-image" href="https://github.com/HassanG04/yet_another_heart_disease_application" target="_blank" rel="noopener" aria-label="View Heart Disease Prediction project on GitHub">
+            <img src="images/heart_disease.png" alt="Heart disease machine learning dashboard" loading="lazy">
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+          <div class="project-body">
+            <div class="project-number">02</div>
+            <div>
+              <p class="project-type">Healthcare · Explainable ML</p>
+              <h3>Heart Disease Prediction</h3>
+              <p>A leakage-controlled, multi-hospital pipeline with MICE imputation, calibration, stacking, threshold tuning, and SHAP explanations.</p>
+              <div class="proof-row"><span><strong>0.92</strong> AUC</span><span><strong>85%</strong> recall</span></div>
+              <ul class="tag-list" aria-label="Technologies"><li>scikit-learn</li><li>Optuna</li><li>SHAP</li></ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <a class="project-image" href="https://github.com/HassanG04/Emoji_Recognition" target="_blank" rel="noopener" aria-label="View Emoji Recognition project on GitHub">
+            <img src="images/emoji_predictor.png" alt="Emoji prediction application interface" loading="lazy">
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+          <div class="project-body">
+            <div class="project-number">03</div>
+            <div>
+              <p class="project-type">NLP · Transformers</p>
+              <h3>Twitter Emoji Predictor</h3>
+              <p>Fine-tuned DistilBERT for multiclass emoji prediction, improving substantially over a TF-IDF baseline and serving inference through Django.</p>
+              <div class="proof-row"><span><strong>93.1%</strong> test accuracy</span><span><strong>+21.5</strong> points vs baseline</span></div>
+              <ul class="tag-list" aria-label="Technologies"><li>DistilBERT</li><li>Hugging Face</li><li>Django</li></ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <a class="project-image" href="https://github.com/HassanG04/cancer_cell_detection" target="_blank" rel="noopener" aria-label="View Cancer Cell Detection project on GitHub">
+            <img src="images/cancer_detection.png" alt="Cancer cell detection model visualization" loading="lazy">
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+          <div class="project-body">
+            <div class="project-number">04</div>
+            <div>
+              <p class="project-type">Computer vision · Ensemble</p>
+              <h3>Cancerous Cell Detection</h3>
+              <p>Validated 220,025 labeled images, removed low-quality samples, and trained a ResNet18–ViT ensemble for robust classification.</p>
+              <div class="proof-row"><span><strong>96.21%</strong> validation accuracy</span><span><strong>1,645</strong> images filtered</span></div>
+              <ul class="tag-list" aria-label="Technologies"><li>PyTorch</li><li>ResNet18</li><li>ViT</li></ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card compact-card">
+          <a class="compact-link" href="https://github.com/HassanG04/Uber-Fare-Prediction" target="_blank" rel="noopener">
+            <span class="project-number">05</span>
+            <span><small>Tabular ML · Deployment</small><strong>Uber Fare Estimation</strong><em>RMSE 2.095 · R² 0.794</em></span>
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+        <article class="project-card compact-card">
+          <a class="compact-link" href="https://github.com/HassanG04/ShopLifting_Detection" target="_blank" rel="noopener">
+            <span class="project-number">06</span>
+            <span><small>Computer vision · Video</small><strong>Shoplifting Detection</strong><em>YOLOv8 · MobileNetV3 · BiGRU</em></span>
+            <span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+        </article>
+      </div>
+      <a class="section-link" href="https://github.com/HassanG04?tab=repositories" target="_blank" rel="noopener">Explore all repositories <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="section experience-section" id="experience">
+      <header class="section-header">
+        <div><p class="section-kicker">02 / Experience</p><h2>From notebooks<br>to usable systems.</h2></div>
+        <p>My work combines data preparation, model development, careful evaluation, and practical deployment.</p>
+      </header>
+
+      <article class="experience-card">
+        <div class="experience-when"><span>JUL — NOV</span><strong>2025</strong></div>
+        <div class="experience-main">
+          <p class="experience-company">Cellula Technologies</p>
+          <h3>AI Engineering Intern</h3>
+          <ul>
+            <li>Built an XGBoost fare-estimation model and deployed it through a Django application.</li>
+            <li>Designed a satellite-image segmentation pipeline using a lightweight U-Net variant.</li>
+            <li>Handled data cleaning, feature engineering, evaluation, documentation, and deployment-oriented development.</li>
+          </ul>
+        </div>
+        <div class="experience-stack"><span>Machine Learning</span><span>Computer Vision</span><span>Django</span><span>Evaluation</span></div>
+      </article>
+
+      <article class="education-card">
+        <div class="education-mark"><img src="images/AASTMT_Logo.png" alt="AASTMT logo" loading="lazy"></div>
+        <div><p class="experience-company">2023 — 2027</p><h3>B.Sc. Artificial Intelligence</h3><p>Data Science specialization · Arab Academy for Science, Technology and Maritime Transport</p></div>
+        <span class="education-status">Fourth year</span>
+      </article>
+    </section>
+
+    <section class="section about-section" id="about">
+      <header class="section-header">
+        <div><p class="section-kicker">03 / Capabilities</p><h2>A practical toolkit<br>for applied AI.</h2></div>
+        <p>I enjoy the full path from raw data and experiments to understandable results and deployable applications.</p>
+      </header>
+
+      <div class="capability-grid">
+        <article><span>01</span><h3>Machine learning</h3><p>PyTorch, scikit-learn, XGBoost, LightGBM, CatBoost, Optuna, SHAP</p></article>
+        <article><span>02</span><h3>Computer vision</h3><p>YOLOv8, OpenCV, CNNs, vision transformers, segmentation, video classification</p></article>
+        <article><span>03</span><h3>NLP</h3><p>Hugging Face Transformers, DistilBERT, text preprocessing, evaluation, model serving</p></article>
+        <article><span>04</span><h3>Data & engineering</h3><p>Python, SQL, pandas, NumPy, MongoDB, Django, Flask, REST APIs, Git</p></article>
+      </div>
+
+      <div class="learning-panel">
+        <div><p class="section-kicker">Currently developing</p><h3>Building breadth without losing depth.</h3></div>
+        <ul><li>Data engineering through DEPI</li><li>Power BI and business-facing storytelling</li><li>Research writing and reproducible experimentation</li><li>Stronger Git and production workflows</li></ul>
       </div>
     </section>
 
-    <!-- QUICK INTRO -->
-    <section class="section-wrap pt-0">
-      <div class="container">
-        <div class="intro-card reveal">
-          <span class="section-tag">Who I am</span>
-          <h2>Quick Introduction</h2>
-          <p>
-            I'm an AI Engineer studying at the Arab Academy for Science &amp; Technology,
-            with real-world industry experience and a passion for creativity, problem-solving,
-            and building intelligent systems. I love turning complex challenges into elegant, working solutions.
-          </p>
-        </div>
+    <section class="contact-section" id="contact">
+      <p class="section-kicker">04 / Let’s work together</p>
+      <h2>Have an AI or data problem<br>I can help solve?</h2>
+      <p>I’m looking for internships and junior opportunities in AI Engineering, ML Engineering, Data Science, Data Engineering, and Data Analysis.</p>
+      <div class="contact-actions">
+        <a class="button button-light" href="mailto:hassangebrill2004@gmail.com">Send me an email <span aria-hidden="true">↗</span></a>
+        <a href="https://www.linkedin.com/in/hassang04/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="https://github.com/HassanG04" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </section>
-
-    <!-- SKILLS -->
-    <section class="section-wrap pt-0">
-      <div class="container">
-        <div class="text-center mb-5 reveal">
-          <span class="section-tag">What I do</span>
-          <h2 class="section-heading">My <span class="grad-text">Skills</span></h2>
-          <p class="section-sub">A blend of technical depth and creative thinking</p>
-        </div>
-
-        <div class="row g-4">
-          <!-- AI & ML -->
-          <div class="col-md-6 col-lg-3 reveal delay-1">
-            <div class="skill-card">
-              <div class="skill-icon"><i class="fas fa-brain"></i></div>
-              <h5>AI &amp; Machine Learning</h5>
-              <p>Building and training models for image segmentation, action recognition, and NLP tasks.</p>
-              <div class="tag-row">
-                <span class="stag">Python</span>
-                <span class="stag">PyTorch</span>
-                <span class="stag">Keras</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Web Dev -->
-          <div class="col-md-6 col-lg-3 reveal delay-2">
-            <div class="skill-card">
-              <div class="skill-icon" style="background:rgba(34,211,238,.12);border-color:rgba(34,211,238,.2);color:var(--accent-cyan);">
-                <i class="fas fa-code"></i>
-              </div>
-              <h5>Web Development</h5>
-              <p>Building responsive, modern web apps with HTML, CSS, JS, and frameworks like Flask &amp; Django.</p>
-              <div class="tag-row">
-                <span class="stag">HTML</span>
-                <span class="stag">CSS</span>
-                <span class="stag">JavaScript</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Creative -->
-          <div class="col-md-6 col-lg-3 reveal delay-3">
-            <div class="skill-card">
-              <div class="skill-icon" style="background:rgba(244,114,182,.12);border-color:rgba(244,114,182,.2);color:var(--accent-pink);">
-                <i class="fas fa-paint-brush"></i>
-              </div>
-              <h5>Creative Design</h5>
-              <p>Crafting visually appealing interfaces and editing high-quality video content.</p>
-              <div class="tag-row">
-                <span class="stag">UI/UX</span>
-                <span class="stag">Video Editing</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Problem Solving -->
-          <div class="col-md-6 col-lg-3 reveal delay-4">
-            <div class="skill-card">
-              <div class="skill-icon" style="background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.2);color:var(--accent-green);">
-                <i class="fas fa-puzzle-piece"></i>
-              </div>
-              <h5>Problem Solving</h5>
-              <p>Competitive programming with analytical thinking and algorithmic expertise from ICPC.</p>
-              <div class="tag-row">
-                <span class="stag">Algorithms</span>
-                <span class="stag">Data Structures</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section-wrap pt-0">
-      <div class="container">
-        <div class="cta-card reveal">
-          <h2>Want to know more?</h2>
-          <p>I'm always open to new opportunities, collaborations, and interesting conversations.</p>
-          <button id="ctaButton" class="btn btn-white">
-            <i class="fas fa-paper-plane me-2"></i>Get in Touch
-          </button>
-          <div id="ctaResponse"></div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <div class="container text-center">
-      <span class="footer-brand">HG.</span>
-      <p class="footer-tagline">Hassan Gebril — AI Engineer &amp; Creative Builder</p>
-      <div class="footer-social justify-content-center">
-        <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" class="social-btn linkedin">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a href="https://github.com/HassanG04" target="_blank" class="social-btn github">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://www.youtube.com/@Hassan_G04" target="_blank" class="social-btn youtube">
-          <i class="fab fa-youtube"></i>
-        </a>
-      </div>
-      <div class="footer-divider"></div>
-      <p class="footer-copy">&copy; 2025 Hassan's Portfolio. All rights reserved.</p>
-    </div>
+  <footer class="site-footer">
+    <p>© <span data-year></span> Hassan Gebril</p>
+    <p>Built with curiosity in Alexandria.</p>
+    <a href="#top">Back to top ↑</a>
   </footer>
 
-  <!-- CHATBOT -->
-  <div id="chatbot-bubble" class="chatbot-bubble">
-    <i class="fas fa-comments"></i>
-  </div>
-  <div id="chatbot-window" class="chatbot-window d-none">
-    <div class="chatbot-header">
-      <span><i class="fas fa-robot me-2"></i>Hassan-bot (WIP)</span>
-      <button id="chatbot-close" class="btn-close btn-close-white btn-sm"></button>
-    </div>
-    <div class="chatbot-body">
-      <div class="chatbot-message bot">
-        Hey! I'm still learning Hassan's ways... 🤖<br />
-        (A proper chatbot is coming — eventually!)
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
