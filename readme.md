@@ -4,7 +4,7 @@ A recruiter-focused portfolio for AI, machine learning, data science, and data e
 
 ## Live site
 
-https://hassang04.github.io/
+https://hassang04.github.io/portfolio/
 
 ## Highlights
 
