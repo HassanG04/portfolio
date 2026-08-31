@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    (() => {
+      const savedTheme = localStorage.getItem('portfolio-theme');
+      const theme = savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+    })();
+  </script>
   <title>My Hobbies | Hassan Gebril – Portfolio</title>
   <meta name="description" content="Discover Hassan Gebril's hobbies — competitive programming, gaming, and video editing." />
 
@@ -43,8 +51,9 @@
           <li class="nav-item"><a class="nav-link active" href="hobbies.html">Hobbies</a></li>
           <li class="nav-item"><a class="nav-link" href="accomplishments.html">Accomplishments</a></li>
           <li class="nav-item ms-2">
-            <button id="darkModeToggle" class="dark-toggle">
-              <i class="fas fa-moon"></i>
+            <button id="darkModeToggle" class="dark-toggle" type="button" aria-label="Switch color theme">
+              <i class="fas fa-moon" aria-hidden="true"></i>
+              <span class="theme-toggle-label">Dark</span>
             </button>
           </li>
         </ul>
@@ -233,7 +242,7 @@
         </a>
       </div>
       <div class="footer-divider"></div>
-      <p class="footer-copy">&copy; 2025 Hassan's Portfolio. All rights reserved.</p>
+      <p class="footer-copy">&copy; 2026 Hassan Gebril. Built with curiosity and care.</p>
     </div>
   </footer>
 
