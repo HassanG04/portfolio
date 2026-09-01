@@ -11,44 +11,36 @@
       document.documentElement.style.colorScheme = theme;
     })();
   </script>
-  <title>My Hobbies | Hassan Gebril – Portfolio</title>
-  <meta name="description" content="Discover Hassan Gebril's hobbies — competitive programming, gaming, and video editing." />
-
+  <title>Activity | Hassan Gebril – Portfolio</title>
+  <meta name="description" content="Follow Hassan Gebril's ECPC journey through three teams, contests, and lessons learned." />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="images/thumbnail.png" />
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-  <!-- PAGE LOADER -->
   <div id="page-loader">
     <div class="loader-inner">
-      <span class="loader-logo">HG.</span>
+      <a class="loader-logo" href="index.html" aria-label="Go to home page">HG.</a>
       <div class="loader-ring"></div>
     </div>
   </div>
-
-  <!-- PARTICLE CANVAS -->
   <canvas id="particle-canvas"></canvas>
 
-
-
-  <!-- ===== NAVBAR ===== -->
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.html">HG.</a>
-      <button class="navbar-toggler border-0" type="button"
-              data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto align-items-center gap-1">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link active" href="hobbies.html">Hobbies</a></li>
+          <li class="nav-item"><a class="nav-link active" href="hobbies.html">Activity</a></li>
           <li class="nav-item"><a class="nav-link" href="accomplishments.html">Accomplishments</a></li>
           <li class="nav-item ms-2">
             <button id="darkModeToggle" class="dark-toggle" type="button" aria-label="Switch color theme">
@@ -61,205 +53,231 @@
     </div>
   </nav>
 
-  <!-- ===== PAGE HERO ===== -->
-  <section class="page-hero">
+  <section class="page-hero activity-hero">
     <div class="container text-center">
-      <span class="section-tag reveal">Beyond the Code</span>
-      <h1 class="reveal delay-1">My <span class="grad-text">Hobbies</span></h1>
-      <p class="reveal delay-2">What I love doing when I'm not building the future.</p>
+      <span class="section-tag reveal">Competitive Programming</span>
+      <h1 class="reveal delay-1">My <span class="grad-text">Activity</span></h1>
+      <p class="reveal delay-2">Three ECPC chapters, three remarkable teams, and a journey of constant growth.</p>
     </div>
   </section>
 
-  <!-- ===== HOBBIES GRID ===== -->
-  <main class="container pb-5">
-
-    <!-- Intro blurb -->
-    <div class="intro-card mb-5 reveal" style="padding:40px 50px;">
-      <p style="font-size:1.05rem;max-width:640px;margin:0 auto;line-height:1.85;">
-        A great engineer is more than just their code. Here's a glimpse into the
-        activities that fuel my creativity, sharpen my mind, and keep me inspired.
+  <main class="container activity-main pb-5">
+    <div class="activity-intro reveal">
+      <div>
+        <span class="section-tag">The journey so far</span>
+        <h2>ECPC taught me more than algorithms.</h2>
+      </div>
+      <p>
+        Every contest brought a new team, a tougher challenge, and a better version of me.
+        Use the arrows or dots to bring a chapter into focus — its story appears below, and clicking the photo reveals the teammates who were there with me.
       </p>
     </div>
 
-    <div class="row g-4">
-
-      <!-- Problem Solving -->
-      <div class="col-md-6 col-lg-4 reveal delay-1">
-        <div class="hobby-card">
-          <div class="hobby-img-container">
-            <img src="images/hobby1.jpg" class="hobby-img" alt="Competitive Programming" />
-            <div class="hobby-overlay">
-              <a href="https://codeforces.com/profile/Hassan_G04"
-                 class="learn-more-btn" target="_blank">
-                Codeforces Profile <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-            <!-- Label pill -->
-            <div style="position:absolute;top:16px;left:16px;
-                        background:rgba(139,92,246,.85);backdrop-filter:blur(8px);
-                        color:#fff;padding:5px 14px;border-radius:999px;
-                        font-size:.73rem;font-weight:700;letter-spacing:.06em;">
-              <i class="fas fa-terminal me-1"></i> COMPETITIVE
-            </div>
-          </div>
-          <div class="card-body" style="padding:24px;">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <div style="width:42px;height:42px;border-radius:12px;
-                          background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.25);
-                          display:flex;align-items:center;justify-content:center;
-                          font-size:1.1rem;color:var(--accent-purple);">
-                <i class="fas fa-puzzle-piece"></i>
-              </div>
-              <h5 class="card-title mb-0">Problem Solving</h5>
-            </div>
-            <p class="card-text">
-              I love the thrill of competitive programming — breaking down hard problems
-              into elegant algorithms. I've competed in ICPC and ECPC regionals.
-            </p>
-            <div class="tag-row mt-3">
-              <span class="stag">Algorithms</span>
-              <span class="stag">ICPC</span>
-              <span class="stag">Codeforces</span>
-            </div>
-          </div>
+    <section class="ecpc-showcase reveal delay-1" aria-labelledby="ecpc-heading">
+      <div class="ecpc-showcase-head">
+        <div>
+          <span class="ecpc-kicker"><i class="fas fa-code" aria-hidden="true"></i> ECPC Journey</span>
+          <h2 id="ecpc-heading">Built by teamwork.</h2>
         </div>
       </div>
 
-      <!-- Gaming -->
-      <div class="col-md-6 col-lg-4 reveal delay-2">
-        <div class="hobby-card">
-          <div class="hobby-img-container">
-            <img src="images/hobby2.jpg" class="hobby-img" alt="Gaming" />
-            <div class="hobby-overlay">
-              <a href="https://steamcommunity.com/profiles/76561199078114157/"
-                 class="learn-more-btn" target="_blank">
-                Steam Profile <i class="fas fa-arrow-right"></i>
-              </a>
+      <div class="ecpc-body">
+        <div id="ecpcDeck" class="ecpc-deck" role="region" aria-roledescription="carousel"
+             aria-label="Hassan's ECPC experiences" tabindex="0">
+          <div class="ecpc-deck-stage">
+            <div class="ecpc-slider-track" aria-live="polite">
+              <article class="ecpc-slide is-active" data-ecpc-slide="0" aria-label="First ECPC experience" aria-hidden="false">
+                <div class="flip-card ecpc-deck-card" data-flip-card>
+                  <div class="flip-card-inner">
+                    <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
+                      <img class="flip-card-image" src="images/ECPC1.jpg" alt="Hassan with Adham El Behiry and Karim Ayman at ECPC" />
+                      <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's first ECPC"></button>
+                      <span class="ecpc-photo-number">01 / 03</span>
+                      <span class="flip-card-prompt" aria-hidden="true">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                        <span>Meet the team</span>
+                      </span>
+                    </div>
+                    <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
+                      <span class="ecpc-contacts-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the Team!</span>
+                      <div class="ecpc-contact-cards">
+                        <div class="contact-card">
+                          <img class="contact-avatar contact-avatar--photo" src="images/hadeer-makhlouf.jpeg" alt="" loading="lazy" />
+                          <span class="contact-name">Eng. Adham El Behiry</span>
+                          <span class="contact-desc">No description</span>
+                        </div>
+                        <div class="contact-card">
+                          <img class="contact-avatar contact-avatar--photo" src="images/hadeer-makhlouf.jpeg" alt="" loading="lazy" />
+                          <span class="contact-name">Eng. Karim Ayman</span>
+                          <span class="contact-desc">No description</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ecpc-slide-caption">
+                  <span class="ecpc-chapter">Chapter one</span>
+                  <h3>My first ECPC</h3>
+                  <p>This was my first time participating in a global contest. ECPC 2024 was thrilling and a learning opportunity for all of us. It was a blast to work with Eng. Adham El Behiry and Eng. Karim Ayman.</p>
+                </div>
+              </article>
+
+              <article class="ecpc-slide" data-ecpc-slide="1" aria-label="Second ECPC experience" aria-hidden="true" inert>
+                <div class="flip-card ecpc-deck-card" data-flip-card>
+                  <div class="flip-card-inner">
+                    <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
+                      <img class="flip-card-image" src="images/ECPC2.jpg" alt="Hassan with Mohammed Ossama and Yasin Moataz at ECPC" loading="lazy" />
+                      <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's second ECPC"></button>
+                      <span class="ecpc-photo-number">02 / 03</span>
+                      <span class="flip-card-prompt" aria-hidden="true">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                        <span>Meet the team</span>
+                      </span>
+                    </div>
+                    <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
+                      <span class="ecpc-contacts-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the Team!</span>
+                      <div class="ecpc-contact-cards">
+                        <div class="contact-card">
+                          <img class="contact-avatar contact-avatar--photo" src="images/hadeer-makhlouf.jpeg" alt="" loading="lazy" />
+                          <span class="contact-name">Eng. Mohammed Ossama</span>
+                          <span class="contact-desc">No description</span>
+                        </div>
+                        <a class="contact-card is-linked" href="https://www.linkedin.com/in/yaseen-moataz-49b39b308/" target="_blank" rel="noopener" aria-label="Open Eng. Yasin Moataz's LinkedIn profile">
+                          <img class="contact-avatar contact-avatar--photo" src="images/hadeer-makhlouf.jpeg" alt="" loading="lazy" />
+                          <span class="contact-name">Eng. Yasin Moataz</span>
+                          <span class="contact-desc">No description</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ecpc-slide-caption">
+                  <span class="ecpc-chapter">Chapter two</span>
+                  <h3>Reaching 25th place</h3>
+                  <p>Fueled by the momentum of our first contest, we returned with a sharper strategy and fiercer ambition. Securing 25th place regionally was a testament to our relentless preparation. Sharing this milestone with Eng. Mohammed Ossama and Eng. Yasin Moataz—two exceptional engineers with brilliant trajectories—made the victory even more rewarding.</p>
+                </div>
+              </article>
+
+              <article class="ecpc-slide" data-ecpc-slide="2" aria-label="Third ECPC experience" aria-hidden="true" inert>
+                <div class="flip-card ecpc-deck-card" data-flip-card>
+                  <div class="flip-card-inner">
+                    <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
+                      <img class="flip-card-image" src="images/ECPC3.jpeg" alt="Hassan with Fatma Abaza and Rahma El Sayed at ECPC" loading="lazy" />
+                      <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's third ECPC"></button>
+                      <span class="ecpc-photo-number">03 / 03</span>
+                      <span class="flip-card-prompt" aria-hidden="true">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                        <span>Meet the team</span>
+                      </span>
+                    </div>
+                    <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
+                      <span class="ecpc-contacts-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the Team!</span>
+                      <div class="ecpc-contact-cards">
+                        <div class="contact-card">
+                          <img class="contact-avatar contact-avatar--photo" src="images/hadeer-makhlouf.jpeg" alt="" loading="lazy" />
+                          <span class="contact-name">Eng. Fatma Abaza</span>
+                          <span class="contact-desc">No description</span>
+                        </div>
+                        <div class="contact-card">
+                          <img class="contact-avatar contact-avatar--photo" src="images/hadeer-makhlouf.jpeg" alt="" loading="lazy" />
+                          <span class="contact-name">Eng. Rahma El Sayed</span>
+                          <span class="contact-desc">No description</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ecpc-slide-caption">
+                  <span class="ecpc-chapter">Chapter three</span>
+                  <h3>Returning with ambition</h3>
+                  <p>From last year, I was ambitious to improve and reach a higher ranking. My team put in an overwhelming effort and solved multiple problems, and I am thankful for this year's participation. Special thanks to Eng. Fatma Abaza and Eng. Rahma El Sayed—their effort made this a truly special team.</p>
+                </div>
+              </article>
             </div>
-            <div style="position:absolute;top:16px;left:16px;
-                        background:rgba(34,211,238,.85);backdrop-filter:blur(8px);
-                        color:#000;padding:5px 14px;border-radius:999px;
-                        font-size:.73rem;font-weight:700;letter-spacing:.06em;">
-              <i class="fas fa-gamepad me-1"></i> GAMING
+
+            <div class="ecpc-deck-controls" aria-hidden="false">
+              <button class="ecpc-deck-arrow" id="ecpcPrev" type="button" aria-label="Previous ECPC story">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+              </button>
+              <button class="ecpc-deck-arrow" id="ecpcNext" type="button" aria-label="Next ECPC story">
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
-          <div class="card-body" style="padding:24px;">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <div style="width:42px;height:42px;border-radius:12px;
-                          background:rgba(34,211,238,.15);border:1px solid rgba(34,211,238,.25);
-                          display:flex;align-items:center;justify-content:center;
-                          font-size:1.1rem;color:var(--accent-cyan);">
-                <i class="fas fa-gamepad"></i>
-              </div>
-              <h5 class="card-title mb-0">Gaming</h5>
-            </div>
-            <p class="card-text">
-              Sometimes I blow off some STEAM by diving into RTS and strategy games.
-              They sharpen my strategic thinking and decision-making under pressure.
-            </p>
-            <div class="tag-row mt-3">
-              <span class="stag" style="background:rgba(34,211,238,.1);color:var(--accent-cyan);border-color:rgba(34,211,238,.2);">RTS</span>
-              <span class="stag" style="background:rgba(34,211,238,.1);color:var(--accent-cyan);border-color:rgba(34,211,238,.2);">Strategy</span>
-              <span class="stag" style="background:rgba(34,211,238,.1);color:var(--accent-cyan);border-color:rgba(34,211,238,.2);">Steam</span>
-            </div>
+
+          <div class="ecpc-deck-indicators" aria-label="Choose an ECPC chapter">
+            <button type="button" class="is-active" data-ecpc-index="0" aria-current="true" aria-label="Show first ECPC experience">01</button>
+            <button type="button" data-ecpc-index="1" aria-label="Show second ECPC experience">02</button>
+            <button type="button" data-ecpc-index="2" aria-label="Show third ECPC experience">03</button>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Video Editing -->
-      <div class="col-md-6 col-lg-4 reveal delay-3">
-        <div class="hobby-card">
-          <div class="hobby-img-container">
-            <img src="images/hobby3.jpg" class="hobby-img" alt="Video Editing" />
-            <div class="hobby-overlay">
-              <a href="https://www.youtube.com/@Hassan_G04"
-                 class="learn-more-btn" target="_blank"
-                 style="background:linear-gradient(135deg,#f472b6,#ec4899);">
-                My YouTube <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-            <div style="position:absolute;top:16px;left:16px;
-                        background:rgba(244,114,182,.85);backdrop-filter:blur(8px);
-                        color:#fff;padding:5px 14px;border-radius:999px;
-                        font-size:.73rem;font-weight:700;letter-spacing:.06em;">
-              <i class="fas fa-film me-1"></i> CREATIVE
-            </div>
+    <section class="soft-skills-section reveal" aria-labelledby="soft-skills-heading">
+      <div class="soft-skills-flip flip-card" id="softSkillsFlip" data-flip-card>
+        <div class="soft-skills-flip-inner flip-card-inner">
+          <div class="soft-skills-photo soft-skills-face flip-card-face flip-card-front flip-card-media">
+            <img class="flip-card-image" src="images/softskills.jpeg" alt="Hassan with his DEPI soft skills class" loading="lazy" />
+            <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet Hassan's soft skills instructor"></button>
+            <span class="flip-card-prompt" aria-hidden="true">
+              <i class="fas fa-chalkboard-user" aria-hidden="true"></i>
+              <span>Meet the instructor</span>
+            </span>
+            <a class="soft-skills-book-tag" id="softSkillsBookTag" href="https://depi.gov.eg/" target="_blank" rel="noopener" aria-label="Visit the DEPI website">
+              <span>DEPI Community</span>
+              <i class="fas fa-people-group" aria-hidden="true"></i>
+            </a>
           </div>
-          <div class="card-body" style="padding:24px;">
-            <div class="d-flex align-items-center gap-3 mb-3">
-              <div style="width:42px;height:42px;border-radius:12px;
-                          background:rgba(244,114,182,.15);border:1px solid rgba(244,114,182,.25);
-                          display:flex;align-items:center;justify-content:center;
-                          font-size:1.1rem;color:var(--accent-pink);">
-                <i class="fas fa-film"></i>
-              </div>
-              <h5 class="card-title mb-0">Video Editing</h5>
-            </div>
-            <p class="card-text">
-              I love crafting visually compelling video content in my free time.
-              It combines storytelling with technical precision — a perfect creative outlet.
-            </p>
-            <div class="tag-row mt-3">
-              <span class="stag" style="background:rgba(244,114,182,.1);color:var(--accent-pink);border-color:rgba(244,114,182,.2);">After Effects</span>
-              <span class="stag" style="background:rgba(244,114,182,.1);color:var(--accent-pink);border-color:rgba(244,114,182,.2);">Premiere</span>
-              <span class="stag" style="background:rgba(244,114,182,.1);color:var(--accent-pink);border-color:rgba(244,114,182,.2);">YouTube</span>
-            </div>
+          <div class="soft-skills-back soft-skills-face flip-card-face flip-card-back" aria-hidden="true" inert>
+            <span class="linkedin-id-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the instructor</span>
+            <a class="linkedin-id-card" href="https://www.linkedin.com/in/hadeermakhlouf/" target="_blank" rel="noopener" aria-label="Open Hadeer Makhlouf's LinkedIn profile">
+              <img class="contact-avatar contact-avatar--lg contact-avatar--photo" src="images/hadeer-makhlouf.jpeg" alt="Hadeer Makhlouf" loading="lazy" />
+              <span class="linkedin-id-content">
+                <strong>Hadeer Makhlouf</strong>
+                <small>Head of Training &middot; Octopus Outsourcing</small>
+                <span>Learning &amp; Development professional with more than seven years of experience designing people-focused learning experiences.</span>
+                <span class="linkedin-id-link"><i class="fab fa-linkedin-in" aria-hidden="true"></i> View LinkedIn profile</span>
+              </span>
+            </a>
           </div>
         </div>
       </div>
+      <div class="soft-skills-copy">
+        <span class="section-tag">Beyond technical skills</span>
+        <h2 id="soft-skills-heading">Soft Skills</h2>
+        <p>
+          During my journey with
+          <a href="https://www.linkedin.com/company/digital-egypt-pioneers-initiative-depi/" target="_blank" rel="noopener">DEPI</a>,
+          one of the courses was Soft Skills, and it was crucial for my career.
+        </p>
+        <p>
+          I was lucky to have
+          <a href="https://www.linkedin.com/in/hadeermakhlouf/" target="_blank" rel="noopener">Professor Hadeer Makhlouf</a>
+          as my instructor. She helped all of us improve and expand our skill sets!
+        </p>
+      </div>
+    </section>
 
-    </div>
-
-    <!-- Bottom CTA -->
     <div class="text-center mt-5 reveal">
-      <p style="color:var(--text-secondary);margin-bottom:20px;font-size:1.05rem;">
-        Want to see my technical work instead?
-      </p>
-      <a href="accomplishments.html" class="btn btn-primary me-3">
-        <i class="fas fa-trophy me-2"></i>View Accomplishments
-      </a>
-      <a href="about.html" class="btn btn-glass">
-        Learn More About Me
-      </a>
+      <p style="color:var(--text-secondary);margin-bottom:20px;font-size:1.05rem;">Want to explore the work behind the journey?</p>
+      <a href="accomplishments.html" class="btn btn-primary me-3"><i class="fas fa-trophy me-2"></i>View Accomplishments</a>
+      <a href="about.html" class="btn btn-glass">Learn More About Me</a>
     </div>
-
   </main>
 
-  <!-- ===== FOOTER ===== -->
   <footer>
     <div class="container text-center">
-      <span class="footer-brand">HG.</span>
+      <a class="footer-brand" href="index.html" aria-label="Go to home page">HG.</a>
       <p class="footer-tagline">Hassan Gebril — AI Engineer &amp; Creative Builder</p>
       <div class="footer-social justify-content-center">
-        <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" class="social-btn linkedin">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a href="https://github.com/HassanG04" target="_blank" class="social-btn github">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://www.youtube.com/@Hassan_G04" target="_blank" class="social-btn youtube">
-          <i class="fab fa-youtube"></i>
-        </a>
+        <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" rel="noopener" class="social-btn linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+        <a href="https://github.com/HassanG04" target="_blank" rel="noopener" class="social-btn github" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
       </div>
       <div class="footer-divider"></div>
       <p class="footer-copy">&copy; 2026 Hassan Gebril. Built with curiosity and care.</p>
     </div>
   </footer>
-
-  <!-- CHATBOT -->
-  <div id="chatbot-bubble" class="chatbot-bubble"><i class="fas fa-comments"></i></div>
-  <div id="chatbot-window" class="chatbot-window d-none">
-    <div class="chatbot-header">
-      <span><i class="fas fa-robot me-2"></i>Hassan-bot (WIP)</span>
-      <button id="chatbot-close" class="btn-close btn-close-white btn-sm"></button>
-    </div>
-    <div class="chatbot-body">
-      <div class="chatbot-message bot">
-        Hey! I'm still learning Hassan's ways... 🤖<br />
-        (A proper chatbot is coming — eventually!)
-      </div>
-    </div>
-  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/script.js"></script>

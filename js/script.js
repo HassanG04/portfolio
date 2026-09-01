@@ -93,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const canvas = document.getElementById('particle-canvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
-    let W = canvas.width  = window.innerWidth;
+    let W = canvas.width = window.innerWidth;
     let H = canvas.height = window.innerHeight;
     window.addEventListener('resize', () => {
-      W = canvas.width  = window.innerWidth;
+      W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
     });
 
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.insertAdjacentHTML('beforeend', modalHtml);
 
     const contactModal = new bootstrap.Modal(document.getElementById('contactModal'));
-    
+
     ctaBtn.addEventListener('click', () => {
       contactModal.show();
     });
@@ -326,77 +326,331 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ============================================================
-     CHATBOT
+     SHARED ACTIVITY FLIP CARDS — ECPC and DEPI use one component
      ============================================================ */
-  const bubble    = document.getElementById('chatbot-bubble');
-  const chatWin   = document.getElementById('chatbot-window');
-  const chatClose = document.getElementById('chatbot-close');
-  const chatBody  = document.querySelector('.chatbot-body');
+  const activityFlipCards = Array.from(document.querySelectorAll('[data-flip-card]'));
+  const activityFlipTimers = new WeakMap();
+  const activitySoundDefinitions = activityFlipCards.length ? {
+    back: { url: new URL('sounds/back.mp3', document.baseURI).href, volume: 0.25 },
+    front: { url: new URL('sounds/front.mp3', document.baseURI).href, volume: 0.25 },
+    left: { url: new URL('sounds/left.mp3', document.baseURI).href, volume: 0.5 },
+    right: { url: new URL('sounds/right.mp3', document.baseURI).href, volume: 0.5 }
+  } : {};
+  const activitySoundBuffers = new Map();
+  const activeActivitySources = new Set();
+  const activeActivityFallbacks = new Set();
+  const ActivityAudioContext = window.AudioContext || window.webkitAudioContext;
+  let activityAudioContext = null;
+  let activitySoundRequest = 0;
 
-  if (bubble && chatWin) {
-    bubble.addEventListener('click', () => {
-      chatWin.classList.toggle('d-none');
-      if (!chatWin.classList.contains('d-none') && !chatWin.dataset.initialized) {
-        initChatbot();
-        chatWin.dataset.initialized = 'true';
-      }
+  try {
+    activityAudioContext = ActivityAudioContext && activityFlipCards.length
+      ? new ActivityAudioContext()
+      : null;
+  } catch (_) {
+    activityAudioContext = null;
+  }
+
+  const activitySoundBufferLoad = activityAudioContext
+    ? Promise.all(Object.entries(activitySoundDefinitions).map(async ([name, definition]) => {
+        const response = await fetch(definition.url, { cache: 'force-cache' });
+        if (!response.ok) throw new Error(`Unable to load ${name} activity sound`);
+        const buffer = await activityAudioContext.decodeAudioData(await response.arrayBuffer());
+        activitySoundBuffers.set(name, buffer);
+      })).then(() => true).catch(() => false)
+    : Promise.resolve(false);
+
+  function stopActivitySounds() {
+    activeActivitySources.forEach(source => {
+      try { source.stop(); } catch (_) {}
+      source.disconnect();
     });
-    if (chatClose) chatClose.addEventListener('click', () => chatWin.classList.add('d-none'));
+    activeActivitySources.clear();
 
-    // Functional Logic
-    function initChatbot() {
-      if (!chatBody) return;
-      const headerSpan = document.querySelector('.chatbot-header span');
-      if (headerSpan) headerSpan.innerHTML = '<i class="fas fa-robot me-2"></i>Hassan-bot';
+    activeActivityFallbacks.forEach(sound => {
+      sound.pause();
+      sound.currentTime = 0;
+    });
+    activeActivityFallbacks.clear();
+  }
 
-      chatBody.innerHTML = `
-        <div class="chatbot-message bot mb-3">
-          Hi! I'm Hassan-bot 🤖. I can answer quick questions about Hassan. What would you like to know?
-        </div>
-        <div id="chat-options" class="d-flex flex-column gap-2 mt-2">
-          <button class="btn btn-sm btn-outline-primary text-start chat-opt" data-ans="I am an AI engineering student at AASTMT with a passion for machine learning, computer vision, and creative web development.">Who is Hassan?</button>
-          <button class="btn btn-sm btn-outline-primary text-start chat-opt" data-ans="I specialize in Python, PyTorch, web development (HTML/CSS/JS), and solving complex algorithmic problems (ICPC competitor).">What are your skills?</button>
-          <button class="btn btn-sm btn-outline-primary text-start chat-opt" data-ans="You can reach out to me via my LinkedIn or email. Just hit the 'Click Me!' button on the home page or use the footer links!">How can I contact you?</button>
-        </div>
-      `;
+  function playActivitySoundFallback(names) {
+    stopActivitySounds();
+    names.forEach(name => {
+      const definition = activitySoundDefinitions[name];
+      if (!definition) return;
 
-      document.querySelectorAll('.chat-opt').forEach(btn => {
-         btn.addEventListener('click', (e) => {
-            const question = e.target.innerText;
-            const answer = e.target.getAttribute('data-ans');
-            
-            // Add user message
-            const userMsg = document.createElement('div');
-            userMsg.className = 'chatbot-message user mt-3 text-end mb-2';
-            userMsg.innerHTML = `<span style="background:var(--accent-purple);color:#fff;padding:8px 12px;border-radius:12px 12px 4px 12px;display:inline-block;font-size:0.86rem;max-width:85%;"><strong>You:</strong> ${question}</span>`;
-            
-            // Add bot answer
-            const botMsg = document.createElement('div');
-            botMsg.className = 'chatbot-message bot mb-3';
-            botMsg.innerHTML = `<strong>Hassan-bot:</strong><br/>${answer}`;
-            
-            chatBody.insertBefore(userMsg, document.getElementById('chat-options'));
-            chatBody.insertBefore(botMsg, document.getElementById('chat-options'));
-            userMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
-         });
+      const sound = new Audio(definition.url);
+      sound.preload = 'auto';
+      sound.volume = definition.volume;
+      activeActivityFallbacks.add(sound);
+
+      const release = () => activeActivityFallbacks.delete(sound);
+      sound.addEventListener('ended', release, { once: true });
+      sound.addEventListener('error', release, { once: true });
+      sound.play()?.catch(release);
+    });
+  }
+
+  async function playActivitySounds(...requestedNames) {
+    const names = requestedNames.filter(name => activitySoundDefinitions[name]);
+    if (!names.length) return false;
+
+    const request = ++activitySoundRequest;
+    stopActivitySounds();
+
+    if (!activityAudioContext || activityAudioContext.state === 'closed') {
+      playActivitySoundFallback(names);
+      return true;
+    }
+
+    try {
+      if (activityAudioContext.state === 'suspended') await activityAudioContext.resume();
+      const loaded = await activitySoundBufferLoad;
+      if (!loaded || request !== activitySoundRequest) {
+        if (request === activitySoundRequest) {
+          playActivitySoundFallback(names);
+          return true;
+        }
+        return false;
+      }
+
+      const startAt = activityAudioContext.currentTime + 0.018;
+      names.forEach(name => {
+        const definition = activitySoundDefinitions[name];
+        const buffer = activitySoundBuffers.get(name);
+        if (!buffer) return;
+
+        const source = activityAudioContext.createBufferSource();
+        const gain = activityAudioContext.createGain();
+        source.buffer = buffer;
+        gain.gain.setValueAtTime(definition.volume, startAt);
+        source.connect(gain).connect(activityAudioContext.destination);
+        activeActivitySources.add(source);
+        source.addEventListener('ended', () => {
+          if (activeActivitySources.delete(source)) {
+            source.disconnect();
+            gain.disconnect();
+          }
+        }, { once: true });
+        source.start(startAt);
+      });
+      return true;
+    } catch (_) {
+      if (request === activitySoundRequest) {
+        playActivitySoundFallback(names);
+        return true;
+      }
+      return false;
+    }
+  }
+
+  function playActivitySound(name) {
+    void playActivitySounds(name);
+  }
+
+  function markActivityFlipAnimating(card) {
+    const inner = card?.querySelector('.flip-card-inner');
+    if (!card || !inner) return;
+
+    const previous = activityFlipTimers.get(card);
+    if (previous) {
+      window.clearTimeout(previous.timer);
+      previous.inner.removeEventListener('transitionend', previous.finish);
+    }
+
+    card.classList.add('is-flip-animating');
+
+    const finish = event => {
+      if (event && (event.target !== inner || event.propertyName !== 'transform')) return;
+      window.clearTimeout(timer);
+      inner.removeEventListener('transitionend', finish);
+      card.classList.remove('is-flip-animating');
+      activityFlipTimers.delete(card);
+    };
+    const timer = window.setTimeout(() => finish(), 950);
+
+    inner.addEventListener('transitionend', finish);
+    activityFlipTimers.set(card, { timer, finish, inner });
+  }
+
+  function setActivityFlipState(card, shouldFlip, moveFocus = false) {
+    if (!card) return;
+
+    const front = card.querySelector('.flip-card-front');
+    const back = card.querySelector('.flip-card-back');
+    const toggle = card.querySelector('[data-flip-toggle]');
+
+    if (card.classList.contains('is-flipped') !== shouldFlip) {
+      markActivityFlipAnimating(card);
+    }
+    card.classList.toggle('is-flipped', shouldFlip);
+    if (toggle) toggle.setAttribute('aria-expanded', String(shouldFlip));
+
+    if (front) {
+      front.inert = shouldFlip;
+      front.setAttribute('aria-hidden', String(shouldFlip));
+    }
+    if (back) {
+      back.inert = !shouldFlip;
+      back.setAttribute('aria-hidden', String(!shouldFlip));
+      back.tabIndex = shouldFlip ? 0 : -1;
+      back.scrollTop = 0;
+    }
+
+    if (moveFocus) {
+      const focusTarget = shouldFlip ? back : toggle;
+      window.requestAnimationFrame(() => focusTarget?.focus({ preventScroll: true }));
+    }
+  }
+
+  activityFlipCards.forEach(card => {
+    const toggle = card.querySelector('[data-flip-toggle]');
+    const back = card.querySelector('.flip-card-back');
+
+    setActivityFlipState(card, false);
+    toggle?.addEventListener('click', event => {
+      playActivitySound('left');
+      setActivityFlipState(card, true, event.detail === 0);
+    });
+    back?.addEventListener('click', event => {
+      if (event.target.closest('a')) return;
+      playActivitySound('right');
+      setActivityFlipState(card, false, event.detail === 0);
+    });
+    back?.addEventListener('keydown', event => {
+      if (event.target !== back || (event.key !== 'Enter' && event.key !== ' ')) return;
+      event.preventDefault();
+      playActivitySound('right');
+      setActivityFlipState(card, false, true);
+    });
+  });
+
+  /* ============================================================
+     ECPC RESPONSIVE HORIZONTAL CAROUSEL
+     ============================================================ */
+  const ecpcDeck = document.getElementById('ecpcDeck');
+  if (ecpcDeck) {
+    const slides = Array.from(ecpcDeck.querySelectorAll('[data-ecpc-slide]'));
+    const indicators = Array.from(ecpcDeck.querySelectorAll('[data-ecpc-index]'));
+    const track = ecpcDeck.querySelector('.ecpc-slider-track');
+    const stage = ecpcDeck.querySelector('.ecpc-deck-stage');
+    const prevButton = document.getElementById('ecpcPrev');
+    const nextButton = document.getElementById('ecpcNext');
+    let currentIndex = 0;
+    let touchStartX = 0;
+    let suppressFlipClick = false;
+
+    function updateEcpcControlPosition() {
+      if (!stage || !slides[currentIndex]) return;
+
+      window.requestAnimationFrame(() => {
+        const activeCard = slides[currentIndex].querySelector('.ecpc-deck-card');
+        if (!activeCard) return;
+        const stageRect = stage.getBoundingClientRect();
+        const cardRect = activeCard.getBoundingClientRect();
+        const controlY = cardRect.top - stageRect.top + (cardRect.height / 2);
+        stage.style.setProperty('--ecpc-control-y', `${controlY}px`);
       });
     }
 
-    // Drag
-    let dragging = false, ox = 0, oy = 0;
-    bubble.addEventListener('mousedown', e => {
-      dragging = true;
-      const r = bubble.getBoundingClientRect();
-      ox = e.clientX - r.left; oy = e.clientY - r.top;
+    function positionEcpcTrack(skipAnimation = false) {
+      if (!track) return;
+      if (skipAnimation) track.classList.add('is-positioning');
+
+      track.style.transform = `translate3d(${-currentIndex * 100}%,0,0)`;
+
+      if (skipAnimation) {
+        void track.offsetWidth;
+        window.requestAnimationFrame(() => track.classList.remove('is-positioning'));
+      }
+    }
+
+    function showEcpc(index, force = false) {
+      if (!slides.length) return;
+      const wrappedIndex = (index + slides.length) % slides.length;
+      if (!force && wrappedIndex === currentIndex) return;
+      currentIndex = wrappedIndex;
+
+      slides.forEach((slide, slideIndex) => {
+        const active = slideIndex === currentIndex;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', String(!active));
+        slide.inert = !active;
+        setActivityFlipState(slide.querySelector('[data-flip-card]'), false);
+      });
+      indicators.forEach((indicator, indicatorIndex) => {
+        const active = indicatorIndex === currentIndex;
+        indicator.classList.toggle('is-active', active);
+        indicator.setAttribute('aria-current', active ? 'true' : 'false');
+      });
+
+      positionEcpcTrack(force);
+      updateEcpcControlPosition();
+    }
+
+    function moveEcpc(step) {
+      showEcpc(currentIndex + step);
+    }
+
+    async function moveEcpcWithSound(step) {
+      if (!slides.length) return;
+      const originIndex = currentIndex;
+      const destinationIndex = (currentIndex + step + slides.length) % slides.length;
+      const movingRight = destinationIndex > currentIndex;
+      const soundStarted = movingRight
+        ? await playActivitySounds('right', 'front')
+        : await playActivitySounds('left', 'back');
+      if (!soundStarted || currentIndex !== originIndex) return;
+      showEcpc(destinationIndex);
+    }
+
+    prevButton?.addEventListener('click', () => {
+      moveEcpcWithSound(-1);
     });
-    document.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      const x = Math.max(5, Math.min(e.clientX - ox, window.innerWidth  - bubble.offsetWidth  - 5));
-      const y = Math.max(5, Math.min(e.clientY - oy, window.innerHeight - bubble.offsetHeight - 5));
-      bubble.style.left = x+'px'; bubble.style.top = y+'px';
-      bubble.style.right = 'auto'; bubble.style.bottom = 'auto';
+    nextButton?.addEventListener('click', () => {
+      moveEcpcWithSound(1);
     });
-    document.addEventListener('mouseup', () => { dragging = false; });
+    indicators.forEach(indicator => {
+      indicator.addEventListener('click', () => showEcpc(Number(indicator.dataset.ecpcIndex)));
+    });
+    ecpcDeck.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        moveEcpc(-1);
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        moveEcpc(1);
+      }
+    });
+
+    if (stage) {
+      stage.addEventListener('touchstart', event => {
+        touchStartX = event.changedTouches[0].clientX;
+      }, { passive: true });
+      stage.addEventListener('touchend', event => {
+        const distance = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(distance) > 48) {
+          suppressFlipClick = true;
+          moveEcpc(distance < 0 ? 1 : -1);
+          window.setTimeout(() => { suppressFlipClick = false; }, 350);
+        }
+      }, { passive: true });
+      stage.addEventListener('click', event => {
+        if (!suppressFlipClick) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }, true);
+    }
+
+    let ecpcResizeTimer;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(ecpcResizeTimer);
+      ecpcResizeTimer = window.setTimeout(updateEcpcControlPosition, 120);
+    });
+
+    showEcpc(0, true);
   }
 
   /* ============================================================
@@ -416,8 +670,8 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.btn-primary,.btn-cv').forEach(btn => {
     btn.addEventListener('mousemove', e => {
       const r = btn.getBoundingClientRect();
-      const x = e.clientX - r.left - r.width  / 2;
-      const y = e.clientY - r.top  - r.height / 2;
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
       btn.style.transform = `translate(${x * .12}px,${y * .12}px) translateY(-3px) scale(1.02)`;
     });
     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });

@@ -22,7 +22,7 @@ The site is intentionally simple (no heavy frameworks) but has a few dynamic tou
     - Intro text.
     - “About Me” button.
     - **Green CV button** linking to my Google Drive CV.
-  - Social icons: LinkedIn, YouTube, GitHub.
+  - Social icons: LinkedIn and GitHub.
   - “View Accomplishments” button.
   - “Quick Introduction” and “My Skills” cards.
   - CTA button with randomized responses.
@@ -32,9 +32,9 @@ The site is intentionally simple (no heavy frameworks) but has a few dynamic tou
   - Education card (AAST – Artificial Intelligence, Data Science).
   - Profile image with hover effect (pop + purple spark aura).
 
-- **Hobbies (`hobbies.html`)**
-  - Cards describing hobbies (problem solving, gaming, video editing, etc.).
-  - Links to Codeforces, Steam, YouTube (where relevant).
+- **Activity (`hobbies.html`)**
+  - Interactive ECPC journey with team stories and animated profile-card flips.
+  - DEPI Soft Skills feature with an instructor profile link.
 
 - **Accomplishments (`accomplishments.html`)**
   - **Certifications** (cards with hover expansion):
@@ -55,14 +55,8 @@ The site is intentionally simple (no heavy frameworks) but has a few dynamic tou
 
 - **Dark Mode**
   - Toggle button in navbar.
-  - Preference stored in `localStorage` (`dark-mode: enabled/disabled`).
+  - Preference stored in `localStorage` (`portfolio-theme`).
   - Works across all pages.
-
-- **Draggable Chat Bubble**
-  - Floating chat bubble (`Hassan-bot`) fixed to the viewport.
-  - User can drag it anywhere on the screen.
-  - Clicking toggles a small chat window with a placeholder message:
-    > “I am still learning Hassan's behavior since he's kinda quiet atm… (I didn't make a chatbot yet but I will make it… \<eventually\>)”
 
 - **Electric Accomplishments Title**
   - “Accomplishments” page title with yellow electric glow + spark animation on hover.
@@ -100,7 +94,7 @@ root/
 ├── css/
 │   └── style.css            # Main stylesheet (layout, dark mode, effects)
 ├── js/
-│   └── script.js            # Dark mode, CTA, chatbot, translations scaffold
+│   └── script.js            # Theme, interactions, and page animations
 └── images/
     ├── profile.jpg
     ├── profile2.jpg
