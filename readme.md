@@ -32,7 +32,7 @@ The site is intentionally simple (no heavy frameworks) but has a few dynamic tou
   - Education card (AAST – Artificial Intelligence, Data Science).
   - Profile image with hover effect (pop + purple spark aura).
 
-- **Activity (`hobbies.html`)**
+- **Activity (`activity.html`)**
   - Interactive ECPC journey with team stories and animated profile-card flips.
   - DEPI Soft Skills feature with an instructor profile link.
 
@@ -87,9 +87,10 @@ The site is intentionally simple (no heavy frameworks) but has a few dynamic tou
 
 ```text
 root/
-├── home.html               # Home
+├── index.html              # Home / default landing page
+├── home.html               # Home compatibility page
 ├── about.html               # About Me
-├── hobbies.html             # Hobbies
+├── activity.html            # Activity
 ├── accomplishments.html     # Certifications & Projects
 ├── css/
 │   └── style.css            # Main stylesheet (layout, dark mode, effects)

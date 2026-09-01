@@ -1,15 +1,34 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   /* ============================================================
+     PAGE-TO-PAGE SLIDE TRANSITIONS
+     ============================================================ */
+  const pageTransitionKey = 'portfolio-page-direction';
+  let incomingPageDirection = null;
+
+  try {
+    incomingPageDirection = sessionStorage.getItem(pageTransitionKey);
+    sessionStorage.removeItem(pageTransitionKey);
+  } catch (_) {}
+
+  if (incomingPageDirection === 'forward' || incomingPageDirection === 'backward') {
+    document.body.classList.add(`page-enter-${incomingPageDirection}`);
+  }
+
+  /* ============================================================
      PAGE LOADER
      ============================================================ */
   const loader = document.getElementById('page-loader');
   if (loader) {
-    window.addEventListener('load', () => {
-      setTimeout(() => loader.classList.add('hidden'), 400);
-    });
-    // Fallback
-    setTimeout(() => loader && loader.classList.add('hidden'), 2500);
+    if (incomingPageDirection) {
+      loader.classList.add('is-instant', 'hidden');
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(() => loader.classList.add('hidden'), 400);
+      });
+      // Fallback
+      setTimeout(() => loader && loader.classList.add('hidden'), 2500);
+    }
   }
 
   /* ============================================================
@@ -46,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     darkBtn.addEventListener('click', () => {
       const isDark = document.documentElement.dataset.theme !== 'dark';
       const theme = isDark ? 'dark' : 'light';
+      void playInterfaceSound(isDark ? 'select' : 'select2');
       document.documentElement.dataset.theme = theme;
       document.documentElement.style.colorScheme = theme;
       document.body.classList.toggle('dark-mode', isDark);
@@ -85,6 +105,61 @@ document.addEventListener('DOMContentLoaded', function () {
       (currentPage === '' && href === 'index.html') ||
       (currentPage === 'index.html' && href === 'index.html')
     );
+  });
+
+  const pageOrder = new Map([
+    ['index.html', 0],
+    ['home.html', 0],
+    ['about.html', 1],
+    ['activity.html', 2],
+    ['accomplishments.html', 3]
+  ]);
+  let isPageNavigating = false;
+
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', event => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+        link.target || link.hasAttribute('download') ||
+        isPageNavigating
+      ) return;
+
+      const destination = new URL(link.href, location.href);
+      if (destination.origin !== location.origin) return;
+
+      const destinationPage = destination.pathname.split('/').pop() || 'index.html';
+      const originPage = currentPage || 'index.html';
+      const originPosition = pageOrder.get(originPage);
+      const destinationPosition = pageOrder.get(destinationPage);
+
+      if (
+        originPosition === undefined ||
+        destinationPosition === undefined ||
+        destination.href === location.href ||
+        originPosition === destinationPosition
+      ) return;
+
+      event.preventDefault();
+      isPageNavigating = true;
+      const direction = destinationPosition > originPosition ? 'forward' : 'backward';
+
+      try { sessionStorage.setItem(pageTransitionKey, direction); } catch (_) {}
+      document.body.classList.add(`page-leave-${direction}`);
+      document.body.style.pointerEvents = 'none';
+
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.setTimeout(() => {
+        location.href = destination.href;
+      }, reducedMotion ? 40 : 520);
+    });
+  });
+
+  window.addEventListener('pageshow', () => {
+    isPageNavigating = false;
+    document.body.style.pointerEvents = '';
+    document.body.classList.remove('page-leave-forward', 'page-leave-backward');
   });
 
   /* ============================================================
@@ -330,22 +405,30 @@ document.addEventListener('DOMContentLoaded', function () {
      ============================================================ */
   const activityFlipCards = Array.from(document.querySelectorAll('[data-flip-card]'));
   const activityFlipTimers = new WeakMap();
-  const activitySoundDefinitions = activityFlipCards.length ? {
-    back: { url: new URL('sounds/back.mp3', document.baseURI).href, volume: 0.25 },
-    front: { url: new URL('sounds/front.mp3', document.baseURI).href, volume: 0.25 },
-    left: { url: new URL('sounds/left.mp3', document.baseURI).href, volume: 0.5 },
-    right: { url: new URL('sounds/right.mp3', document.baseURI).href, volume: 0.5 }
-  } : {};
+  const activitySoundDefinitions = {
+    select: { url: new URL('sounds/select.mp3', document.baseURI).href, volume: 0.35 },
+    select2: { url: new URL('sounds/select2.mp3', document.baseURI).href, volume: 0.35 }
+  };
+  if (activityFlipCards.length) {
+    Object.assign(activitySoundDefinitions, {
+      back: { url: new URL('sounds/back.mp3', document.baseURI).href, volume: 0.25 },
+      front: { url: new URL('sounds/front.mp3', document.baseURI).href, volume: 0.25 },
+      left: { url: new URL('sounds/left.mp3', document.baseURI).href, volume: 0.5 },
+      right: { url: new URL('sounds/right.mp3', document.baseURI).href, volume: 0.5 }
+    });
+  }
   const activitySoundBuffers = new Map();
-  const activeActivitySources = new Set();
+  const activeActivitySources = new Map();
   const activeActivityFallbacks = new Set();
+  const activeInterfaceSources = new Map();
+  const activeInterfaceFallbacks = new Set();
   const ActivityAudioContext = window.AudioContext || window.webkitAudioContext;
   let activityAudioContext = null;
   let activitySoundRequest = 0;
 
   try {
-    activityAudioContext = ActivityAudioContext && activityFlipCards.length
-      ? new ActivityAudioContext()
+    activityAudioContext = ActivityAudioContext
+      ? new ActivityAudioContext({ latencyHint: 'interactive' })
       : null;
   } catch (_) {
     activityAudioContext = null;
@@ -361,9 +444,10 @@ document.addEventListener('DOMContentLoaded', function () {
     : Promise.resolve(false);
 
   function stopActivitySounds() {
-    activeActivitySources.forEach(source => {
+    activeActivitySources.forEach((gain, source) => {
       try { source.stop(); } catch (_) {}
       source.disconnect();
+      gain.disconnect();
     });
     activeActivitySources.clear();
 
@@ -399,6 +483,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const request = ++activitySoundRequest;
     stopActivitySounds();
 
+    // Supported mobile browsers expose AudioSession as the media-routing hint.
+    // Playback mode gives sound effects the best chance of playing with the
+    // hardware ringer muted, while normal browser volume controls still apply.
+    try {
+      if (navigator.audioSession) navigator.audioSession.type = 'playback';
+    } catch (_) {}
+
     if (!activityAudioContext || activityAudioContext.state === 'closed') {
       playActivitySoundFallback(names);
       return true;
@@ -426,11 +517,13 @@ document.addEventListener('DOMContentLoaded', function () {
         source.buffer = buffer;
         gain.gain.setValueAtTime(definition.volume, startAt);
         source.connect(gain).connect(activityAudioContext.destination);
-        activeActivitySources.add(source);
+        activeActivitySources.set(source, gain);
         source.addEventListener('ended', () => {
-          if (activeActivitySources.delete(source)) {
+          const activeGain = activeActivitySources.get(source);
+          if (activeGain) {
+            activeActivitySources.delete(source);
             source.disconnect();
-            gain.disconnect();
+            activeGain.disconnect();
           }
         }, { once: true });
         source.start(startAt);
@@ -448,6 +541,94 @@ document.addEventListener('DOMContentLoaded', function () {
   function playActivitySound(name) {
     void playActivitySounds(name);
   }
+
+  function prepareInterfaceAudioSession() {
+    try {
+      if (navigator.audioSession) navigator.audioSession.type = 'playback';
+    } catch (_) {}
+  }
+
+  function playInterfaceSoundFallback(name) {
+    const definition = activitySoundDefinitions[name];
+    if (!definition) return false;
+
+    const sound = new Audio(definition.url);
+    sound.preload = 'auto';
+    sound.volume = definition.volume;
+    activeInterfaceFallbacks.add(sound);
+
+    const release = () => activeInterfaceFallbacks.delete(sound);
+    sound.addEventListener('ended', release, { once: true });
+    sound.addEventListener('error', release, { once: true });
+    sound.play()?.catch(release);
+    return true;
+  }
+
+  async function playInterfaceSound(name) {
+    const definition = activitySoundDefinitions[name];
+    if (!definition) return false;
+    prepareInterfaceAudioSession();
+
+    if (!activityAudioContext || activityAudioContext.state === 'closed') {
+      return playInterfaceSoundFallback(name);
+    }
+
+    try {
+      if (activityAudioContext.state === 'suspended') await activityAudioContext.resume();
+      const loaded = await activitySoundBufferLoad;
+      const buffer = activitySoundBuffers.get(name);
+      if (!loaded || !buffer) return playInterfaceSoundFallback(name);
+
+      const startAt = activityAudioContext.currentTime + 0.006;
+      const source = activityAudioContext.createBufferSource();
+      const gain = activityAudioContext.createGain();
+      source.buffer = buffer;
+      gain.gain.setValueAtTime(definition.volume, startAt);
+      source.connect(gain).connect(activityAudioContext.destination);
+      activeInterfaceSources.set(source, gain);
+      source.addEventListener('ended', () => {
+        const activeGain = activeInterfaceSources.get(source);
+        if (!activeGain) return;
+        activeInterfaceSources.delete(source);
+        source.disconnect();
+        activeGain.disconnect();
+      }, { once: true });
+      source.start(startAt);
+      return true;
+    } catch (_) {
+      return playInterfaceSoundFallback(name);
+    }
+  }
+
+  document.addEventListener('click', event => {
+    const control = event.target.closest(
+      'a[href], button, input[type="button"], input[type="submit"], input[type="reset"], [role="button"]'
+    );
+    if (
+      !control ||
+      control.id === 'darkModeToggle' ||
+      control.disabled ||
+      control.getAttribute('aria-disabled') === 'true' ||
+      control.closest('[data-flip-card], .ecpc-deck-arrow, [data-ecpc-index]')
+    ) return;
+    void playInterfaceSound('select');
+  }, { capture: true });
+
+  const activityClickCueTimers = new WeakMap();
+
+  function dismissActivityClickCue(card) {
+    if (!card) return;
+    const timer = activityClickCueTimers.get(card);
+    if (timer) window.clearTimeout(timer);
+    activityClickCueTimers.delete(card);
+    card.classList.remove('is-click-cued');
+  }
+
+  activityFlipCards.forEach(card => {
+    card.classList.add('is-click-cued');
+    const timer = window.setTimeout(() => dismissActivityClickCue(card), 4000);
+    activityClickCueTimers.set(card, timer);
+  });
 
   function markActivityFlipAnimating(card) {
     const inner = card?.querySelector('.flip-card-inner');
@@ -510,11 +691,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setActivityFlipState(card, false);
     toggle?.addEventListener('click', event => {
+      dismissActivityClickCue(card);
       playActivitySound('left');
       setActivityFlipState(card, true, event.detail === 0);
     });
     back?.addEventListener('click', event => {
       if (event.target.closest('a')) return;
+      dismissActivityClickCue(card);
       playActivitySound('right');
       setActivityFlipState(card, false, event.detail === 0);
     });
@@ -589,39 +772,46 @@ document.addEventListener('DOMContentLoaded', function () {
       updateEcpcControlPosition();
     }
 
-    function moveEcpc(step) {
-      showEcpc(currentIndex + step);
+    async function changeEcpcWithSound(index, movingForward) {
+      if (!slides.length) return false;
+      const originIndex = currentIndex;
+      const destinationIndex = (index + slides.length) % slides.length;
+      if (destinationIndex === originIndex) return false;
+
+      // Carousel photos physically travel left when advancing and right when
+      // returning. Card flips keep their original left/right sound mapping.
+      const soundStarted = movingForward
+        ? await playActivitySounds('left', 'front')
+        : await playActivitySounds('right', 'back');
+      if (!soundStarted || currentIndex !== originIndex) return false;
+      showEcpc(destinationIndex);
+      return true;
     }
 
-    async function moveEcpcWithSound(step) {
-      if (!slides.length) return;
-      const originIndex = currentIndex;
-      const destinationIndex = (currentIndex + step + slides.length) % slides.length;
-      const movingRight = destinationIndex > currentIndex;
-      const soundStarted = movingRight
-        ? await playActivitySounds('right', 'front')
-        : await playActivitySounds('left', 'back');
-      if (!soundStarted || currentIndex !== originIndex) return;
-      showEcpc(destinationIndex);
+    function moveEcpcWithSound(step) {
+      return changeEcpcWithSound(currentIndex + step, step > 0);
     }
 
     prevButton?.addEventListener('click', () => {
-      moveEcpcWithSound(-1);
+      void moveEcpcWithSound(-1);
     });
     nextButton?.addEventListener('click', () => {
-      moveEcpcWithSound(1);
+      void moveEcpcWithSound(1);
     });
     indicators.forEach(indicator => {
-      indicator.addEventListener('click', () => showEcpc(Number(indicator.dataset.ecpcIndex)));
+      indicator.addEventListener('click', () => {
+        const destinationIndex = Number(indicator.dataset.ecpcIndex);
+        void changeEcpcWithSound(destinationIndex, destinationIndex > currentIndex);
+      });
     });
     ecpcDeck.addEventListener('keydown', event => {
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
-        moveEcpc(-1);
+        void moveEcpcWithSound(-1);
       }
       if (event.key === 'ArrowRight') {
         event.preventDefault();
-        moveEcpc(1);
+        void moveEcpcWithSound(1);
       }
     });
 
@@ -633,7 +823,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = event.changedTouches[0].clientX - touchStartX;
         if (Math.abs(distance) > 48) {
           suppressFlipClick = true;
-          moveEcpc(distance < 0 ? 1 : -1);
+          void moveEcpcWithSound(distance < 0 ? 1 : -1);
           window.setTimeout(() => { suppressFlipClick = false; }, 350);
         }
       }, { passive: true });
