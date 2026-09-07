@@ -1,119 +1,44 @@
-# Hassan Gebril – Personal Portfolio
+# Hassan Gebril — Portfolio
 
-A responsive personal portfolio website built with HTML, CSS, and JavaScript to showcase my background as an AI / Data Science student, my projects, certifications, and contact links.
+A responsive, single-page portfolio for Hassan Gebril, a Machine Learning Developer and AI Engineer. It presents services, experience, activities, credentials, project case studies, and contact details in one focused experience.
 
-The site is intentionally simple (no heavy frameworks) but has a few dynamic touches: dark mode, hover effects, and a draggable “Hassan-bot” chat bubble.
+[View the live portfolio](https://hassang04.github.io/portfolio/) · [View the GitHub repository](https://github.com/HassanG04/portfolio)
 
----
+## Highlights
 
-## Live Demo
+- Client-focused machine-learning value proposition and clear calls to action.
+- About, education, experience, and offered services.
+- Interactive ECPC carousel and DEPI instructor card.
+- Project case studies with challenge, approach, and outcome details.
+- System-aware dark and light themes saved on the visitor's device.
+- Scroll-aware navigation, smooth motion, and interface sound cues.
+- Responsive layouts for desktop, tablet, and mobile.
 
-> [DEMO](https://hassang04.github.io/portfolio/)
+## Technology
 
----
+- HTML5
+- CSS3 and custom animations
+- Vanilla JavaScript
+- Bootstrap 5
+- Font Awesome 6
 
-## Features
-
-### Single-page structure
-
-- **Portfolio (`home.html`)**
-  - Hero section with:
-    - Profile picture.
-    - Client-focused machine-learning value proposition.
-    - Selected-work, About, and CV actions.
-  - Social icons: LinkedIn and GitHub.
-  - Offered services and core technical competencies.
-  - Featured project outcomes and evidence-led credibility section.
-  - Clear LinkedIn project CTA.
-  - Scroll-aware navigation linking to Introduction, About, Services, Activity, Accomplishments, and Contact.
-  - Section-entry audio cue after the visitor's first interaction.
-
-- **About section (`home.html#about`)**
-  - Personal story and background.
-  - Education card (AAST – Artificial Intelligence, Data Science).
-  - Skills presented as competencies rather than percentage ratings.
-  - Cellula Robotics internship, independent project experience, and DEPI training.
-  - Profile image with hover effect (pop + purple spark aura).
-
-- **Services section (`home.html#services`)**
-  - Machine learning, AI-powered web applications, computer vision, and NLP.
-  - Database and data management foundations.
-  - Practical MLOps and model delivery.
-
-- **Activity section (`home.html#activity`)**
-  - Interactive ECPC journey with team stories and animated profile-card flips.
-  - DEPI Soft Skills feature with an instructor profile link.
-
-- **Accomplishments section (`home.html#accomplishments`)**
-  - **Credentials and achievements** (cards with hover expansion):
-    - CCNA – Cisco Certified Network Associate.
-    - Cellula – NLP Internship.
-    - ICPC – Competitive Programming achievement.
-  - **Projects** presented as challenge–approach–outcome case studies:
-    - River Flood Protection – U-Net Mini segmentation + Flask UI.  
-      Links to: `River-Flood-Prediction` GitHub repo.
-    - Shoplifting Detection – GRU action recognition + Django deployment.  
-      Links to: `ShopLifting_Detection` GitHub repo.
-    - This Portfolio Website – responsive static site.  
-      Links to: `HassanG04.github.io` repo.
-    - Uber Fare Prediction, Heart Disease Prediction, Emoji Recognition, and Cancerous Cell Detection.
-
-Legacy `index.html`, `about.html`, `activity.html`, and `accomplishments.html` routes redirect to the matching section in `home.html`.
-
----
-
-## UI / UX Features
-
-- **Dark Mode**
-  - Toggle button in navbar.
-  - Preference stored in `localStorage` (`portfolio-theme`).
-  - Works across all pages.
-
-- **Electric Accomplishments Title**
-  - “Accomplishments” page title with yellow electric glow + spark animation on hover.
-
-- **Hover Interactions**
-  - Certifications: card + image expansion on hover.
-  - Projects: card lift + blurred thumbnail + “Show me the project on Github” overlay on hover.
-  - About page profile: circular image pop with purple aura and sparkles on hover.
-
----
-
-## Tech Stack
-
-- **Frontend**
-  - HTML5
-  - CSS3 + custom animations
-  - Vanilla JavaScript (no frameworks)
-  - [Bootstrap 5](https://getbootstrap.com/) – grid and basic components
-  - [Font Awesome 6](https://fontawesome.com/) – icons
-
-- **No backend yet**
-  - Currently a static site.  
-  - All data (projects, certifications, text) is hard-coded in HTML.
-
----
-
-## Project Structure
+## Project structure
 
 ```text
-root/
-├── index.html              # Home / default landing page
-├── home.html               # Home compatibility page
-├── about.html               # About Me
-├── activity.html            # Activity
-├── accomplishments.html     # Certifications & Projects
+portfolio/
+├── index.html          # Complete portfolio and GitHub Pages entry point
+├── home.html           # Lightweight redirect for old shared links
+├── favicon.ico
 ├── css/
-│   └── style.css            # Main stylesheet (layout, dark mode, effects)
+│   └── style.css
 ├── js/
-│   └── script.js            # Theme, interactions, and page animations
-└── images/
-    ├── profile.jpg
-    ├── profile2.jpg
-    ├── cert_ccna.jpg
-    ├── cellula_nlp.jpg
-    ├── icpc.jpg
-    ├── river_flood.jpg
-    ├── shoplifting.jpg
-    ├── portfolio_site.jpg
-    └── AASTMT_Logo.png
+│   └── script.js
+├── images/             # Portfolio images used by index.html
+└── sounds/             # Interface sound cues
+```
+
+GitHub Pages serves `index.html` automatically, keeping the public address clean:
+
+```text
+https://hassang04.github.io/portfolio/
+```

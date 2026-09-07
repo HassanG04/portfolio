@@ -1,0 +1,16 @@
+# Local archives and temporary files
+*.zip
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor settings
+.idea/
+.vscode/
+
+# Local dependencies and build output
+node_modules/
+dist/
