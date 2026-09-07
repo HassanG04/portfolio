@@ -12,7 +12,6 @@ A responsive, single-page portfolio for Hassan Gebril, a Machine Learning Develo
 - Project case studies with challenge, approach, and outcome details.
 - System-aware dark and light themes saved on the visitor's device.
 - Scroll-aware navigation, smooth motion, and interface sound cues.
-- A quick-scroll wheel that moves to Introduction and returns to the cover.
 - A three-second activity-card hint triggered only when Activity enters view.
 - Responsive layouts for desktop, tablet, and mobile.
 
