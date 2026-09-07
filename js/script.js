@@ -79,31 +79,48 @@ document.addEventListener('DOMContentLoaded', function () {
      SINGLE-PAGE NAVIGATION — highlight the section being viewed
      ============================================================ */
   const sectionNavLinks = Array.from(document.querySelectorAll('.nav-link[href^="#"]'));
-  const navSections = sectionNavLinks
-    .map(link => document.querySelector(link.getAttribute('href')))
-    .filter(Boolean);
+  const trackedSections = Array.from(document.querySelectorAll('[data-scroll-label]'));
   let navScrollFrame = 0;
+  let activeTrackedSectionId = null;
+  let sectionCueTimer = 0;
+  let sectionCueNavigationTarget = null;
+  let sectionCueNavigationTimer = 0;
 
   function updateActiveSection() {
     navScrollFrame = 0;
-    if (!navSections.length) return;
+    if (!trackedSections.length) return;
 
     const marker = window.scrollY + (window.innerHeight * 0.36);
-    let activeSection = navSections[0];
-    navSections.forEach(section => {
+    let activeSection = trackedSections[0];
+    trackedSections.forEach(section => {
       if (section.offsetTop <= marker) activeSection = section;
     });
 
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
-      activeSection = navSections[navSections.length - 1];
+      activeSection = trackedSections[trackedSections.length - 1];
     }
 
+    const navSectionId = activeSection.id === 'introduction' ? 'home' : activeSection.id;
+    const isNavbarNavigation = Boolean(sectionCueNavigationTarget);
     sectionNavLinks.forEach(link => {
-      const isActive = link.getAttribute('href') === `#${activeSection.id}`;
+      const isActive = link.getAttribute('href') === `#${navSectionId}`;
       link.classList.toggle('active', isActive);
       if (isActive) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
+
+    if (!isNavbarNavigation && activeTrackedSectionId && activeTrackedSectionId !== activeSection.id) {
+      window.clearTimeout(sectionCueTimer);
+      sectionCueTimer = window.setTimeout(() => {
+        void playInterfaceSound('select2');
+      }, 90);
+    }
+    activeTrackedSectionId = activeSection.id;
+
+    if (sectionCueNavigationTarget === activeSection.id) {
+      window.clearTimeout(sectionCueNavigationTimer);
+      sectionCueNavigationTarget = null;
+    }
   }
 
   window.addEventListener('scroll', () => {
@@ -115,6 +132,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const navbarMenu = document.getElementById('navbarNav');
   sectionNavLinks.forEach(link => {
     link.addEventListener('click', () => {
+      sectionCueNavigationTarget = link.getAttribute('href')?.slice(1) || null;
+      window.clearTimeout(sectionCueTimer);
+      window.clearTimeout(sectionCueNavigationTimer);
+      sectionCueNavigationTimer = window.setTimeout(() => {
+        sectionCueNavigationTarget = null;
+      }, 2000);
+
       if (!navbarMenu?.classList.contains('show') || !window.bootstrap?.Collapse) return;
       window.bootstrap.Collapse.getOrCreateInstance(navbarMenu).hide();
     });
@@ -400,6 +424,17 @@ document.addEventListener('DOMContentLoaded', function () {
         activitySoundBuffers.set(name, buffer);
       })).then(() => true).catch(() => false)
     : Promise.resolve(false);
+
+  function unlockInterfaceAudio() {
+    prepareInterfaceAudioSession();
+    if (activityAudioContext?.state === 'suspended') {
+      activityAudioContext.resume().catch(() => {});
+    }
+  }
+
+  document.addEventListener('pointerdown', unlockInterfaceAudio, { once: true, capture: true });
+  document.addEventListener('keydown', unlockInterfaceAudio, { once: true, capture: true });
+  document.addEventListener('touchstart', unlockInterfaceAudio, { once: true, capture: true, passive: true });
 
   function stopActivitySounds() {
     activeActivitySources.forEach((gain, source) => {

@@ -2490,12 +2490,13 @@ html[data-theme="light"] .result-metric { color:var(--accent-purple-dark); }
 .about-profile-panel,
 .about-story-card,
 .education-summary-card {
-  height:100%;
   border:1px solid var(--border-glass);
   border-radius:24px;
   background:var(--bg-card);
   box-shadow:var(--shadow-soft);
 }
+.about-profile-panel,
+.about-story-card { height:100%; }
 .about-profile-panel { padding:clamp(25px,4vw,38px); text-align:center; }
 .about-profile-panel .profile-image-wrapper { margin:0 auto 25px; }
 .about-profile-copy > span {

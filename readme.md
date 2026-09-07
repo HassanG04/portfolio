@@ -26,6 +26,7 @@ The site is intentionally simple (no heavy frameworks) but has a few dynamic tou
   - Featured project outcomes and evidence-led credibility section.
   - Clear LinkedIn project CTA.
   - Scroll-aware navigation linking to Introduction, About, Services, Activity, Accomplishments, and Contact.
+  - Section-entry audio cue after the visitor's first interaction.
 
 - **About section (`home.html#about`)**
   - Personal story and background.
