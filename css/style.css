@@ -2580,10 +2580,8 @@ html[data-theme="light"] .result-metric { color:var(--accent-purple-dark); }
   object-fit:cover;
   border-bottom:1px solid var(--border-glass);
 }
-.credential-card > img.credential-card-image--contain {
-  object-fit:contain;
-  padding:12px;
-  background:#ece8df;
+.credential-card > img.credential-card-image--bue {
+  object-position:center 48%;
 }
 .credential-card > div { padding:23px; }
 .credential-card span {
