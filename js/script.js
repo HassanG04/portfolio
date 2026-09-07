@@ -411,12 +411,13 @@ document.addEventListener('DOMContentLoaded', function () {
   let activitySoundRequest = 0;
   const bootAudio = new Audio(activitySoundDefinitions.boot.url);
   const ambienceToggle = document.getElementById('ambienceToggle');
-  const ambienceToggleLabel = ambienceToggle?.querySelector('.ambience-toggle-label');
+  const ambienceTooltip = document.getElementById('ambienceTooltip');
   const ambienceAudio = new Audio(new URL('sounds/ambience.mp3', document.baseURI).href);
   const ambienceVolume = 0.14;
   const ambiencePreferenceKey = 'portfolio-ambience-enabled';
   let ambienceEnabled = true;
   let ambienceFadeFrame = 0;
+  let ambienceFadeSequence = 0;
   let ambiencePlayAttempt = null;
   let bootCuePending = true;
   let bootCueAttempt = null;
@@ -473,18 +474,20 @@ document.addEventListener('DOMContentLoaded', function () {
     ambienceToggle.title = label;
     const icon = ambienceToggle.querySelector('i');
     if (icon) icon.className = ambienceEnabled ? 'fas fa-volume-high' : 'fas fa-volume-xmark';
-    if (ambienceToggleLabel) ambienceToggleLabel.textContent = label;
+    if (ambienceTooltip) ambienceTooltip.textContent = label;
   }
 
   function fadeAmbienceTo(targetVolume, duration, onComplete) {
+    const sequence = ++ambienceFadeSequence;
     window.cancelAnimationFrame(ambienceFadeFrame);
     const startVolume = ambienceAudio.volume;
     const startedAt = performance.now();
     const change = targetVolume - startVolume;
 
     const step = now => {
+      if (sequence !== ambienceFadeSequence) return;
       const progress = Math.min((now - startedAt) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
+      const eased = progress * progress * (3 - 2 * progress);
       ambienceAudio.volume = Math.max(0, Math.min(1, startVolume + change * eased));
       if (progress < 1) ambienceFadeFrame = window.requestAnimationFrame(step);
       else {
@@ -499,7 +502,7 @@ document.addEventListener('DOMContentLoaded', function () {
   async function startAmbience() {
     if (!ambienceEnabled) return false;
     if (!ambienceAudio.paused) {
-      fadeAmbienceTo(ambienceVolume, 1800);
+      fadeAmbienceTo(ambienceVolume, 2600);
       return true;
     }
     if (ambiencePlayAttempt) return ambiencePlayAttempt;
@@ -512,7 +515,7 @@ document.addEventListener('DOMContentLoaded', function () {
           ambienceAudio.pause();
           return false;
         }
-        fadeAmbienceTo(ambienceVolume, 1800);
+        fadeAmbienceTo(ambienceVolume, 2600);
         return true;
       })
       .catch(() => false)
@@ -527,9 +530,8 @@ document.addEventListener('DOMContentLoaded', function () {
       ambienceAudio.volume = 0;
       return;
     }
-    fadeAmbienceTo(0, 700, () => {
-      ambienceAudio.pause();
-      ambienceAudio.currentTime = 0;
+    fadeAmbienceTo(0, 1800, () => {
+      if (!ambienceEnabled) ambienceAudio.pause();
     });
   }
 
