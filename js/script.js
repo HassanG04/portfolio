@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let activitySoundRequest = 0;
   const bootAudio = new Audio(activitySoundDefinitions.boot.url);
   const ambienceToggle = document.getElementById('ambienceToggle');
-  const ambienceTooltip = document.getElementById('ambienceTooltip');
+  const ambienceToggleLabel = ambienceToggle?.querySelector('.ambience-toggle-label');
   const ambienceAudio = new Audio(new URL('sounds/ambience.mp3', document.baseURI).href);
   const ambienceVolume = 0.14;
   const ambiencePreferenceKey = 'portfolio-ambience-enabled';
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ambienceToggle.title = label;
     const icon = ambienceToggle.querySelector('i');
     if (icon) icon.className = ambienceEnabled ? 'fas fa-volume-high' : 'fas fa-volume-xmark';
-    if (ambienceTooltip) ambienceTooltip.textContent = label;
+    if (ambienceToggleLabel) ambienceToggleLabel.textContent = label;
   }
 
   function fadeAmbienceTo(targetVolume, duration, onComplete) {
