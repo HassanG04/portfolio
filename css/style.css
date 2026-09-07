@@ -406,17 +406,31 @@ html[data-theme="light"] .navbar.scrolled {
   position:absolute; bottom:28px; left:50%;
   transform:translateX(-50%);
   display:flex; flex-direction:column; align-items:center; gap:8px;
+  padding:8px 11px;
+  border:1px solid transparent;
+  border-radius:15px;
+  background:transparent;
   color:var(--text-muted); font-size:.72rem;
   font-weight:600; letter-spacing:.12em; text-transform:uppercase;
   animation:fade-in 1s 1.2s ease both;
   cursor:pointer;
+  z-index:40;
+  transition:color .28s ease,background .28s ease,border-color .28s ease,
+             box-shadow .28s ease,transform .45s cubic-bezier(.22,1,.36,1);
+}
+.scroll-hint:hover { color:var(--accent-purple-light); }
+.scroll-hint:focus-visible {
+  outline:3px solid rgba(192,132,252,.72);
+  outline-offset:4px;
 }
 .scroll-mouse {
   width:22px; height:36px;
   border:2px solid var(--border-glass);
   border-radius:11px;
   display:flex; justify-content:center; padding-top:5px;
+  transition:transform .45s cubic-bezier(.22,1,.36,1),border-color .28s ease;
 }
+.scroll-hint:hover .scroll-mouse { border-color:var(--accent-purple); }
 .scroll-wheel {
   width:3px; height:7px;
   background:var(--accent-purple);
@@ -426,6 +440,28 @@ html[data-theme="light"] .navbar.scrolled {
 @keyframes wheel-scroll {
   0%   { transform:translateY(0); opacity:1; }
   100% { transform:translateY(13px); opacity:0; }
+}
+.scroll-hint.is-returning {
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  left:auto;
+  flex-direction:row;
+  padding:10px 13px;
+  border-color:var(--border-glass);
+  background:var(--bg-glass);
+  box-shadow:var(--shadow-soft),0 0 24px rgba(109,40,217,.14);
+  backdrop-filter:blur(16px) saturate(140%);
+  transform:none;
+}
+.scroll-hint.is-returning .scroll-mouse { transform:rotate(180deg); }
+.scroll-hint.is-returning:hover {
+  border-color:var(--border-accent);
+  background:var(--bg-card-hover);
+  transform:translateY(-3px);
+}
+@media(max-width:575.98px) {
+  .scroll-hint.is-returning { right:14px; bottom:14px; }
 }
 
 /* ===== SECTIONS ===== */

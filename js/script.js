@@ -388,6 +388,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const activityFlipCards = Array.from(document.querySelectorAll('[data-flip-card]'));
   const activityFlipTimers = new WeakMap();
   const activitySoundDefinitions = {
+    boot: { url: new URL('sounds/boot.mp3', document.baseURI).href, volume: 0.35 },
     select: { url: new URL('sounds/select.mp3', document.baseURI).href, volume: 0.35 },
     select2: { url: new URL('sounds/select2.mp3', document.baseURI).href, volume: 0.35 }
   };
@@ -407,6 +408,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const ActivityAudioContext = window.AudioContext || window.webkitAudioContext;
   let activityAudioContext = null;
   let activitySoundRequest = 0;
+  const bootAudio = new Audio(activitySoundDefinitions.boot.url);
+  let bootCuePending = true;
+  let bootCueAttempt = null;
+
+  bootAudio.preload = 'auto';
+  bootAudio.volume = activitySoundDefinitions.boot.volume;
 
   try {
     activityAudioContext = ActivityAudioContext
@@ -425,16 +432,36 @@ document.addEventListener('DOMContentLoaded', function () {
       })).then(() => true).catch(() => false)
     : Promise.resolve(false);
 
+  function tryBootCue() {
+    if (!bootCuePending || bootCueAttempt) return bootCueAttempt;
+    prepareInterfaceAudioSession();
+    bootAudio.currentTime = 0;
+    bootCueAttempt = bootAudio.play()
+      .then(() => {
+        bootCuePending = false;
+        return true;
+      })
+      .catch(() => false)
+      .finally(() => {
+        bootCueAttempt = null;
+      });
+    return bootCueAttempt;
+  }
+
   function unlockInterfaceAudio() {
     prepareInterfaceAudioSession();
     if (activityAudioContext?.state === 'suspended') {
       activityAudioContext.resume().catch(() => {});
     }
+    if (bootCuePending) void tryBootCue();
   }
 
   document.addEventListener('pointerdown', unlockInterfaceAudio, { once: true, capture: true });
   document.addEventListener('keydown', unlockInterfaceAudio, { once: true, capture: true });
   document.addEventListener('touchstart', unlockInterfaceAudio, { once: true, capture: true, passive: true });
+
+  if (document.readyState === 'complete') void tryBootCue();
+  else window.addEventListener('load', () => void tryBootCue(), { once: true });
 
   function stopActivitySounds() {
     activeActivitySources.forEach((gain, source) => {
@@ -617,11 +644,44 @@ document.addEventListener('DOMContentLoaded', function () {
     card.classList.remove('is-click-cued');
   }
 
-  activityFlipCards.forEach(card => {
-    card.classList.add('is-click-cued');
-    const timer = window.setTimeout(() => dismissActivityClickCue(card), 4000);
-    activityClickCueTimers.set(card, timer);
-  });
+  function showActivityClickCues() {
+    activityFlipCards.forEach(card => {
+      dismissActivityClickCue(card);
+      if (card.classList.contains('is-flipped')) return;
+      card.classList.add('is-click-cued');
+      const timer = window.setTimeout(() => dismissActivityClickCue(card), 3000);
+      activityClickCueTimers.set(card, timer);
+    });
+  }
+
+  const activitySection = document.getElementById('activity');
+  let activityClickCueShown = false;
+  if (activitySection && activityFlipCards.length) {
+    if ('IntersectionObserver' in window) {
+      const activityCueObserver = new IntersectionObserver(entries => {
+        const activityEntry = entries[0];
+        if (activityEntry?.isIntersecting && !activityClickCueShown) {
+          activityClickCueShown = true;
+          showActivityClickCues();
+        } else if (!activityEntry?.isIntersecting) {
+          activityFlipCards.forEach(dismissActivityClickCue);
+        }
+      }, { threshold: 0.01, rootMargin: '-12% 0px -12% 0px' });
+      activityCueObserver.observe(activitySection);
+    } else {
+      const showCuesWhenVisible = () => {
+        if (activityClickCueShown) return;
+        const bounds = activitySection.getBoundingClientRect();
+        if (bounds.top < window.innerHeight * 0.82 && bounds.bottom > window.innerHeight * 0.18) {
+          activityClickCueShown = true;
+          showActivityClickCues();
+          window.removeEventListener('scroll', showCuesWhenVisible);
+        }
+      };
+      window.addEventListener('scroll', showCuesWhenVisible, { passive: true });
+      showCuesWhenVisible();
+    }
+  }
 
   function markActivityFlipAnimating(card) {
     const inner = card?.querySelector('.flip-card-inner');
@@ -841,10 +901,65 @@ document.addEventListener('DOMContentLoaded', function () {
      ============================================================ */
   const scrollHint = document.querySelector('.scroll-hint');
   if (scrollHint) {
+    const scrollHintLabel = scrollHint.querySelector('.scroll-hint-label');
+    const homeSection = document.getElementById('home');
+    const introductionSection = document.getElementById('introduction') || document.querySelector('main');
+    let scrollControlFrame = 0;
+
+    function updateScrollControl() {
+      scrollControlFrame = 0;
+      const isReturning = window.scrollY > window.innerHeight * 0.42;
+      scrollHint.classList.toggle('is-returning', isReturning);
+      if (scrollHintLabel) scrollHintLabel.textContent = isReturning ? 'Top' : 'Scroll';
+      scrollHint.setAttribute(
+        'aria-label',
+        isReturning ? 'Scroll quickly back to the top' : 'Scroll quickly to the introduction'
+      );
+    }
+
+    function fastScrollTo(element) {
+      if (!element) return;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const startY = window.scrollY;
+      const targetY = Math.max(0, element.getBoundingClientRect().top + startY);
+      const distance = targetY - startY;
+      const duration = reduceMotion ? 0 : 460;
+      if (!duration || Math.abs(distance) < 2) {
+        window.scrollTo(0, targetY);
+        return;
+      }
+
+      const startedAt = performance.now();
+      const animate = now => {
+        const progress = Math.min((now - startedAt) / duration, 1);
+        const eased = progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        window.scrollTo(0, startY + distance * eased);
+        if (progress < 1) window.requestAnimationFrame(animate);
+      };
+      window.requestAnimationFrame(animate);
+    }
+
     scrollHint.addEventListener('click', () => {
-      const next = document.querySelector('#introduction') || document.querySelector('main');
-      if (next) next.scrollIntoView({ behavior: 'smooth' });
+      const shouldReturn = scrollHint.classList.contains('is-returning');
+      const destination = shouldReturn ? homeSection : introductionSection;
+      if (!destination) return;
+
+      sectionCueNavigationTarget = destination.id || (shouldReturn ? 'home' : 'introduction');
+      window.clearTimeout(sectionCueTimer);
+      window.clearTimeout(sectionCueNavigationTimer);
+      sectionCueNavigationTimer = window.setTimeout(() => {
+        sectionCueNavigationTarget = null;
+      }, 1200);
+      fastScrollTo(destination);
     });
+
+    window.addEventListener('scroll', () => {
+      if (!scrollControlFrame) scrollControlFrame = window.requestAnimationFrame(updateScrollControl);
+    }, { passive: true });
+    window.addEventListener('resize', updateScrollControl, { passive: true });
+    updateScrollControl();
   }
 
   /* ============================================================
