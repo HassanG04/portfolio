@@ -1,34 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   /* ============================================================
-     PAGE-TO-PAGE SLIDE TRANSITIONS
-     ============================================================ */
-  const pageTransitionKey = 'portfolio-page-direction';
-  let incomingPageDirection = null;
-
-  try {
-    incomingPageDirection = sessionStorage.getItem(pageTransitionKey);
-    sessionStorage.removeItem(pageTransitionKey);
-  } catch (_) {}
-
-  if (incomingPageDirection === 'forward' || incomingPageDirection === 'backward') {
-    document.body.classList.add(`page-enter-${incomingPageDirection}`);
-  }
-
-  /* ============================================================
      PAGE LOADER
      ============================================================ */
   const loader = document.getElementById('page-loader');
   if (loader) {
-    if (incomingPageDirection) {
-      loader.classList.add('is-instant', 'hidden');
-    } else {
-      window.addEventListener('load', () => {
-        setTimeout(() => loader.classList.add('hidden'), 400);
-      });
-      // Fallback
-      setTimeout(() => loader && loader.classList.add('hidden'), 2500);
-    }
+    window.addEventListener('load', () => {
+      setTimeout(() => loader.classList.add('hidden'), 400);
+    });
+    // Fallback
+    setTimeout(() => loader && loader.classList.add('hidden'), 2500);
   }
 
   /* ============================================================
@@ -95,71 +76,48 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ============================================================
-     ACTIVE NAV LINK
+     SINGLE-PAGE NAVIGATION — highlight the section being viewed
      ============================================================ */
-  const currentPage = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-link').forEach(link => {
-    const href = link.getAttribute('href');
-    link.classList.toggle('active',
-      href === currentPage ||
-      (currentPage === '' && href === 'index.html') ||
-      (currentPage === 'index.html' && href === 'index.html')
-    );
-  });
+  const sectionNavLinks = Array.from(document.querySelectorAll('.nav-link[href^="#"]'));
+  const navSections = sectionNavLinks
+    .map(link => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+  let navScrollFrame = 0;
 
-  const pageOrder = new Map([
-    ['index.html', 0],
-    ['home.html', 0],
-    ['about.html', 1],
-    ['activity.html', 2],
-    ['accomplishments.html', 3]
-  ]);
-  let isPageNavigating = false;
+  function updateActiveSection() {
+    navScrollFrame = 0;
+    if (!navSections.length) return;
 
-  document.querySelectorAll('a[href]').forEach(link => {
-    link.addEventListener('click', event => {
-      if (
-        event.defaultPrevented ||
-        event.button !== 0 ||
-        event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
-        link.target || link.hasAttribute('download') ||
-        isPageNavigating
-      ) return;
-
-      const destination = new URL(link.href, location.href);
-      if (destination.origin !== location.origin) return;
-
-      const destinationPage = destination.pathname.split('/').pop() || 'index.html';
-      const originPage = currentPage || 'index.html';
-      const originPosition = pageOrder.get(originPage);
-      const destinationPosition = pageOrder.get(destinationPage);
-
-      if (
-        originPosition === undefined ||
-        destinationPosition === undefined ||
-        destination.href === location.href ||
-        originPosition === destinationPosition
-      ) return;
-
-      event.preventDefault();
-      isPageNavigating = true;
-      const direction = destinationPosition > originPosition ? 'forward' : 'backward';
-
-      try { sessionStorage.setItem(pageTransitionKey, direction); } catch (_) {}
-      document.body.classList.add(`page-leave-${direction}`);
-      document.body.style.pointerEvents = 'none';
-
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.setTimeout(() => {
-        location.href = destination.href;
-      }, reducedMotion ? 40 : 520);
+    const marker = window.scrollY + (window.innerHeight * 0.36);
+    let activeSection = navSections[0];
+    navSections.forEach(section => {
+      if (section.offsetTop <= marker) activeSection = section;
     });
-  });
 
-  window.addEventListener('pageshow', () => {
-    isPageNavigating = false;
-    document.body.style.pointerEvents = '';
-    document.body.classList.remove('page-leave-forward', 'page-leave-backward');
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+      activeSection = navSections[navSections.length - 1];
+    }
+
+    sectionNavLinks.forEach(link => {
+      const isActive = link.getAttribute('href') === `#${activeSection.id}`;
+      link.classList.toggle('active', isActive);
+      if (isActive) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!navScrollFrame) navScrollFrame = window.requestAnimationFrame(updateActiveSection);
+  }, { passive: true });
+  window.addEventListener('resize', updateActiveSection, { passive: true });
+  updateActiveSection();
+
+  const navbarMenu = document.getElementById('navbarNav');
+  sectionNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (!navbarMenu?.classList.contains('show') || !window.bootstrap?.Collapse) return;
+      window.bootstrap.Collapse.getOrCreateInstance(navbarMenu).hide();
+    });
   });
 
   /* ============================================================
@@ -247,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
      ============================================================ */
   const target = document.getElementById('typewriter-text');
   if (target) {
-    const words = ['Machine Learning Developer', 'Web Builder', 'Problem Solver', 'Creative Technologist'];
+    const words = ['Machine Learning Developer', 'Computer Vision Builder', 'NLP Developer', 'Python Web Developer'];
     let wi = 0, ci = words[0].length, deleting = true;
     function type() {
       const word = words[wi];
@@ -849,7 +807,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const scrollHint = document.querySelector('.scroll-hint');
   if (scrollHint) {
     scrollHint.addEventListener('click', () => {
-      const next = document.querySelector('main') || document.querySelector('#stats');
+      const next = document.querySelector('#introduction') || document.querySelector('main');
       if (next) next.scrollIntoView({ behavior: 'smooth' });
     });
   }

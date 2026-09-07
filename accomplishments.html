@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="0; url=home.html#accomplishments" />
+  <link rel="canonical" href="home.html#accomplishments" />
+  <script>window.location.replace('home.html#accomplishments');</script>
   <script>
     (() => {
       const savedTheme = localStorage.getItem('portfolio-theme');
@@ -11,8 +14,8 @@
       document.documentElement.style.colorScheme = theme;
     })();
   </script>
-  <title>Accomplishments | Hassan Gebril – AI Engineer</title>
-  <meta name="description" content="Hassan Gebril's certifications, projects, and achievements — CCNA, NLP internship, ECPC qualification, AI projects and more." />
+  <title>Accomplishments | Hassan Gebril</title>
+  <meta name="description" content="Machine learning and AI case studies by Hassan Gebril, including computer vision, NLP, healthcare prediction, model deployment, certifications, and ECPC achievement." />
 
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="images/thumbnail.png" />
@@ -64,12 +67,12 @@
   <!-- ===== PAGE HERO ===== -->
   <section class="page-hero">
     <div class="container text-center">
-      <span class="section-tag reveal">Track Record</span>
+      <span class="section-tag reveal">Selected work &amp; evidence</span>
       <h1 class="text-center reveal delay-1">
         <span class="page-title-accomplishments">Accomplishments</span>
       </h1>
       <p class="reveal delay-2" style="margin-top:14px;">
-        Certifications, projects, and milestones that define my journey.
+        The challenge, the approach, and the outcome—presented clearly for every featured build.
       </p>
     </div>
   </section>
@@ -86,8 +89,8 @@
           <i class="fas fa-certificate"></i>
         </div>
         <div>
-          <span class="section-tag" style="margin-bottom:2px;">Credentials</span>
-          <h2 class="section-heading mb-0">Certifications</h2>
+          <span class="section-tag" style="margin-bottom:2px;">Credentials &amp; recognition</span>
+          <h2 class="section-heading mb-0">Education in Practice</h2>
         </div>
       </div>
 
@@ -190,8 +193,8 @@
           <i class="fas fa-rocket"></i>
         </div>
         <div>
-          <span class="section-tag" style="margin-bottom:2px;">Built &amp; Shipped</span>
-          <h2 class="section-heading mb-0">Projects</h2>
+          <span class="section-tag" style="margin-bottom:2px;">Previous work</span>
+          <h2 class="section-heading mb-0">Project Case Studies</h2>
         </div>
       </div>
 
@@ -219,10 +222,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">River Flood Protection</h5>
-              <p class="card-text">
-                U-Net Mini segmentation model detecting river flooding from satellite imagery.
-                Flask web interface for real-time image upload and flood mask generation.
-              </p>
+              <div class="case-study-copy">
+                <p><span>Challenge</span>Identify flooded river areas from satellite imagery.</p>
+                <p><span>Approach</span>Train a compact U-Net segmentation model and connect it to a Flask upload workflow.</p>
+                <p class="case-outcome"><span>Outcome</span>Generates visual flood masks for faster image-by-image review.</p>
+              </div>
               <div class="tech-tags">
                 <span class="tech-tag python">Python</span>
                 <span class="tech-tag cv">U-Net</span>
@@ -256,10 +260,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Shoplifting Detection</h5>
-              <p class="card-text">
-                GRU-based action recognition model trained on CCTV frame sequences to flag suspicious
-                movement. Django deployment with real-time video inference.
-              </p>
+              <div class="case-study-copy">
+                <p><span>Challenge</span>Recognize suspicious movement across CCTV frame sequences.</p>
+                <p><span>Approach</span>Train a GRU action-recognition model and serve inference through Django.</p>
+                <p class="case-outcome"><span>Outcome</span>An end-to-end prototype for model-assisted video review.</p>
+              </div>
               <div class="tech-tags">
                 <span class="tech-tag python">Python</span>
                 <span class="tech-tag cv">GRU</span>
@@ -293,10 +298,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">This Portfolio Website</h5>
-              <p class="card-text">
-                A responsive, dark-mode personal portfolio showcasing projects, certifications,
-                and AI engineering work — with particle animations and glassmorphism design.
-              </p>
+              <div class="case-study-copy">
+                <p><span>Challenge</span>Present multidisciplinary AI work without losing clarity or personality.</p>
+                <p><span>Approach</span>Build a responsive, theme-aware experience with accessible navigation and purposeful motion.</p>
+                <p class="case-outcome"><span>Outcome</span>A maintainable portfolio delivered with HTML, CSS, and JavaScript.</p>
+              </div>
               <div class="tech-tags">
                 <span class="tech-tag web">HTML</span>
                 <span class="tech-tag web">CSS</span>
@@ -330,10 +336,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Uber Fare Prediction</h5>
-              <p class="card-text">
-                XGBoost fare-estimation model deployed as a production Django app.
-                RMSE 2.095, MAE 1.239, R² 0.794 on held-out test set.
-              </p>
+              <div class="case-study-copy">
+                <p><span>Challenge</span>Estimate trip fares from structured ride data.</p>
+                <p><span>Approach</span>Train an XGBoost regressor, evaluate on held-out data, and deliver it through Django.</p>
+                <p class="case-outcome"><span>Outcome</span>RMSE 2.095 · MAE 1.239 · R² 0.794.</p>
+              </div>
               <div class="tech-tags">
                 <span class="tech-tag python">Python</span>
                 <span class="tech-tag ai">XGBoost</span>
@@ -366,11 +373,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Heart Disease Prediction</h5>
-              <p class="card-text">
-                Extended a 303-row single-centre dataset into a leakage-free 1,190-row 5-centre dataset.
-                Optuna-tuned 4-model stacking ensemble with MICE imputation and Youden-J threshold calibration.
-                0.92 AUC, 85% recall, SHAP explainability.
-              </p>
+              <div class="case-study-copy">
+                <p><span>Challenge</span>Improve generalisation beyond a small, single-centre healthcare dataset.</p>
+                <p><span>Approach</span>Build a leakage-free 1,190-row, five-centre dataset with MICE, Optuna, stacking, and SHAP.</p>
+                <p class="case-outcome"><span>Outcome</span>0.92 AUC · 85% recall with explainable predictions.</p>
+              </div>
               <div class="tech-tags">
                 <span class="tech-tag python">Python</span>
                 <span class="tech-tag ai">scikit-learn</span>
@@ -405,10 +412,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Twitter Emoji Predictor</h5>
-              <p class="card-text">
-                Fine-tuned DistilBERT for multi-class emoji prediction, achieving 93.1% test accuracy
-                vs. 71.6% TF-IDF baseline. Deployed as a Django app for real-time inference.
-              </p>
+              <div class="case-study-copy">
+                <p><span>Challenge</span>Predict the intended emoji from short social text.</p>
+                <p><span>Approach</span>Fine-tune DistilBERT, compare it with a TF-IDF baseline, and deploy through Django.</p>
+                <p class="case-outcome"><span>Outcome</span>93.1% test accuracy versus a 71.6% baseline.</p>
+              </div>
               <div class="tech-tags">
                 <span class="tech-tag python">Python</span>
                 <span class="tech-tag ai">DistilBERT</span>
@@ -442,10 +450,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">Cancerous Cell Detection</h5>
-              <p class="card-text">
-                Cleaned and validated 220,025 labeled images, removing 1,645 low-quality samples.
-                ResNet18 + ViT ensemble achieving 96.21% validation accuracy.
-              </p>
+              <div class="case-study-copy">
+                <p><span>Challenge</span>Classify cancerous cell imagery at dataset scale while controlling data quality.</p>
+                <p><span>Approach</span>Validate 220,025 images, remove 1,645 weak samples, and ensemble ResNet18 with ViT.</p>
+                <p class="case-outcome"><span>Outcome</span>96.21% validation accuracy.</p>
+              </div>
               <div class="tech-tags">
                 <span class="tech-tag python">Python</span>
                 <span class="tech-tag cv">OpenCV</span>
@@ -465,11 +474,11 @@
     <!-- Bottom CTA -->
     <div class="text-center mt-5 pt-3 reveal">
       <p style="color:var(--text-secondary);margin-bottom:20px;font-size:1.05rem;">
-        Like what you see? Let's build something together.
+        Have a prediction, vision, or NLP problem that needs a usable delivery path?
       </p>
       <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/"
          target="_blank" class="btn btn-primary me-3">
-        <i class="fab fa-linkedin me-2"></i>Connect on LinkedIn
+        <i class="fab fa-linkedin me-2"></i>Discuss a Project
       </a>
       <a href="https://drive.google.com/drive/folders/1PpwyqrEFpiQ_cHfw4pXXlBEPmE6P9rpv?usp=sharing"
          target="_blank" class="btn btn-cv">
@@ -483,12 +492,12 @@
   <footer>
     <div class="container text-center">
       <a class="footer-brand" href="index.html" aria-label="Go to home page">HG.</a>
-      <p class="footer-tagline">Hassan Gebril — AI Engineer &amp; Creative Builder</p>
+      <p class="footer-tagline">Hassan Gebril — Machine Learning Developer &amp; AI Engineer</p>
       <div class="footer-social justify-content-center">
-        <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" class="social-btn linkedin">
+        <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" class="social-btn linkedin" aria-label="LinkedIn">
           <i class="fab fa-linkedin-in"></i>
         </a>
-        <a href="https://github.com/HassanG04" target="_blank" class="social-btn github">
+        <a href="https://github.com/HassanG04" target="_blank" class="social-btn github" aria-label="GitHub">
           <i class="fab fa-github"></i>
         </a>
       </div>

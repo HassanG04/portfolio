@@ -14,40 +14,50 @@ The site is intentionally simple (no heavy frameworks) but has a few dynamic tou
 
 ## Features
 
-### Current Pages
+### Single-page structure
 
-- **Home (`index.html`)**
+- **Portfolio (`home.html`)**
   - Hero section with:
     - Profile picture.
-    - Intro text.
-    - “About Me” button.
-    - **Green CV button** linking to my Google Drive CV.
+    - Client-focused machine-learning value proposition.
+    - Selected-work, About, and CV actions.
   - Social icons: LinkedIn and GitHub.
-  - “View Accomplishments” button.
-  - “Quick Introduction” and “My Skills” cards.
-  - CTA button with randomized responses.
+  - Offered services and core technical competencies.
+  - Featured project outcomes and evidence-led credibility section.
+  - Clear LinkedIn project CTA.
+  - Scroll-aware navigation linking to Introduction, About, Services, Activity, Accomplishments, and Contact.
 
-- **About (`about.html`)**
+- **About section (`home.html#about`)**
   - Personal story and background.
   - Education card (AAST – Artificial Intelligence, Data Science).
+  - Skills presented as competencies rather than percentage ratings.
+  - Cellula Robotics internship, independent project experience, and DEPI training.
   - Profile image with hover effect (pop + purple spark aura).
 
-- **Activity (`activity.html`)**
+- **Services section (`home.html#services`)**
+  - Machine learning, AI-powered web applications, computer vision, and NLP.
+  - Database and data management foundations.
+  - Practical MLOps and model delivery.
+
+- **Activity section (`home.html#activity`)**
   - Interactive ECPC journey with team stories and animated profile-card flips.
   - DEPI Soft Skills feature with an instructor profile link.
 
-- **Accomplishments (`accomplishments.html`)**
-  - **Certifications** (cards with hover expansion):
+- **Accomplishments section (`home.html#accomplishments`)**
+  - **Credentials and achievements** (cards with hover expansion):
     - CCNA – Cisco Certified Network Associate.
     - Cellula – NLP Internship.
     - ICPC – Competitive Programming achievement.
-  - **Projects** (cards fully clickable; hover blur + overlay text):
+  - **Projects** presented as challenge–approach–outcome case studies:
     - River Flood Protection – U-Net Mini segmentation + Flask UI.  
       Links to: `River-Flood-Prediction` GitHub repo.
     - Shoplifting Detection – GRU action recognition + Django deployment.  
       Links to: `ShopLifting_Detection` GitHub repo.
     - This Portfolio Website – responsive static site.  
       Links to: `HassanG04.github.io` repo.
+    - Uber Fare Prediction, Heart Disease Prediction, Emoji Recognition, and Cancerous Cell Detection.
+
+Legacy `index.html`, `about.html`, `activity.html`, and `accomplishments.html` routes redirect to the matching section in `home.html`.
 
 ---
 
