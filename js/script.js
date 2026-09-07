@@ -410,11 +410,26 @@ document.addEventListener('DOMContentLoaded', function () {
   let activityAudioContext = null;
   let activitySoundRequest = 0;
   const bootAudio = new Audio(activitySoundDefinitions.boot.url);
+  const ambienceToggle = document.getElementById('ambienceToggle');
+  const ambienceTooltip = document.getElementById('ambienceTooltip');
+  const ambienceAudio = new Audio(new URL('sounds/ambience.mp3', document.baseURI).href);
+  const ambienceVolume = 0.14;
+  const ambiencePreferenceKey = 'portfolio-ambience-enabled';
+  let ambienceEnabled = true;
+  let ambienceFadeFrame = 0;
+  let ambiencePlayAttempt = null;
   let bootCuePending = true;
   let bootCueAttempt = null;
 
   bootAudio.preload = 'auto';
   bootAudio.volume = activitySoundDefinitions.boot.volume;
+  ambienceAudio.preload = 'auto';
+  ambienceAudio.loop = true;
+  ambienceAudio.volume = 0;
+
+  try {
+    ambienceEnabled = localStorage.getItem(ambiencePreferenceKey) !== 'false';
+  } catch (_) {}
 
   try {
     activityAudioContext = ActivityAudioContext
@@ -449,20 +464,112 @@ document.addEventListener('DOMContentLoaded', function () {
     return bootCueAttempt;
   }
 
-  function unlockInterfaceAudio() {
+  function updateAmbienceToggle() {
+    if (!ambienceToggle) return;
+    const label = ambienceEnabled ? 'Disable Ambience' : 'Enable Ambience';
+    ambienceToggle.classList.toggle('is-muted', !ambienceEnabled);
+    ambienceToggle.setAttribute('aria-label', label);
+    ambienceToggle.setAttribute('aria-pressed', String(!ambienceEnabled));
+    ambienceToggle.title = label;
+    const icon = ambienceToggle.querySelector('i');
+    if (icon) icon.className = ambienceEnabled ? 'fas fa-volume-high' : 'fas fa-volume-xmark';
+    if (ambienceTooltip) ambienceTooltip.textContent = label;
+  }
+
+  function fadeAmbienceTo(targetVolume, duration, onComplete) {
+    window.cancelAnimationFrame(ambienceFadeFrame);
+    const startVolume = ambienceAudio.volume;
+    const startedAt = performance.now();
+    const change = targetVolume - startVolume;
+
+    const step = now => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      ambienceAudio.volume = Math.max(0, Math.min(1, startVolume + change * eased));
+      if (progress < 1) ambienceFadeFrame = window.requestAnimationFrame(step);
+      else {
+        ambienceFadeFrame = 0;
+        onComplete?.();
+      }
+    };
+
+    ambienceFadeFrame = window.requestAnimationFrame(step);
+  }
+
+  async function startAmbience() {
+    if (!ambienceEnabled) return false;
+    if (!ambienceAudio.paused) {
+      fadeAmbienceTo(ambienceVolume, 1800);
+      return true;
+    }
+    if (ambiencePlayAttempt) return ambiencePlayAttempt;
+
+    prepareInterfaceAudioSession();
+    ambienceAudio.volume = 0;
+    ambiencePlayAttempt = ambienceAudio.play()
+      .then(() => {
+        if (!ambienceEnabled) {
+          ambienceAudio.pause();
+          return false;
+        }
+        fadeAmbienceTo(ambienceVolume, 1800);
+        return true;
+      })
+      .catch(() => false)
+      .finally(() => {
+        ambiencePlayAttempt = null;
+      });
+    return ambiencePlayAttempt;
+  }
+
+  function stopAmbience() {
+    if (ambienceAudio.paused) {
+      ambienceAudio.volume = 0;
+      return;
+    }
+    fadeAmbienceTo(0, 700, () => {
+      ambienceAudio.pause();
+      ambienceAudio.currentTime = 0;
+    });
+  }
+
+  function setAmbienceEnabled(enabled) {
+    ambienceEnabled = enabled;
+    try {
+      localStorage.setItem(ambiencePreferenceKey, String(enabled));
+    } catch (_) {}
+    updateAmbienceToggle();
+    if (enabled) void startAmbience();
+    else stopAmbience();
+  }
+
+  ambienceToggle?.addEventListener('click', () => {
+    setAmbienceEnabled(!ambienceEnabled);
+  });
+  updateAmbienceToggle();
+
+  function unlockInterfaceAudio(event) {
     prepareInterfaceAudioSession();
     if (activityAudioContext?.state === 'suspended') {
       activityAudioContext.resume().catch(() => {});
     }
     if (bootCuePending) void tryBootCue();
+    if (ambienceEnabled && !event?.target?.closest?.('#ambienceToggle')) void startAmbience();
   }
 
   document.addEventListener('pointerdown', unlockInterfaceAudio, { once: true, capture: true });
   document.addEventListener('keydown', unlockInterfaceAudio, { once: true, capture: true });
   document.addEventListener('touchstart', unlockInterfaceAudio, { once: true, capture: true, passive: true });
 
-  if (document.readyState === 'complete') void tryBootCue();
-  else window.addEventListener('load', () => void tryBootCue(), { once: true });
+  if (document.readyState === 'complete') {
+    void tryBootCue();
+    void startAmbience();
+  } else {
+    window.addEventListener('load', () => {
+      void tryBootCue();
+      void startAmbience();
+    }, { once: true });
+  }
 
   function stopActivitySounds() {
     activeActivitySources.forEach((gain, source) => {
