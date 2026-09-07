@@ -389,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const activityFlipTimers = new WeakMap();
   const activitySoundDefinitions = {
     boot: { url: new URL('sounds/boot.mp3', document.baseURI).href, volume: 0.35 },
+    cursor: { url: new URL('sounds/cursor.mp3', document.baseURI).href, volume: 0.22 },
     select: { url: new URL('sounds/select.mp3', document.baseURI).href, volume: 0.35 },
     select2: { url: new URL('sounds/select2.mp3', document.baseURI).href, volume: 0.35 }
   };
@@ -633,6 +634,35 @@ document.addEventListener('DOMContentLoaded', function () {
     ) return;
     void playInterfaceSound('select');
   }, { capture: true });
+
+  const cursorSoundTargets = document.querySelectorAll([
+    'button',
+    '.btn',
+    '.social-btn',
+    '.stat-card',
+    '.skill-card',
+    '.intro-card',
+    '.about-story-card',
+    '.experience-card',
+    '.timeline-card',
+    '.credential-card',
+    '.portfolio-case-link',
+    '.cta-card',
+    '[data-flip-card]',
+    '.contact-card',
+    '.trust-points a'
+  ].join(','));
+  let cursorSoundLastPlayedAt = 0;
+
+  cursorSoundTargets.forEach(target => {
+    target.addEventListener('pointerenter', event => {
+      if (event.pointerType === 'touch') return;
+      const now = performance.now();
+      if (now - cursorSoundLastPlayedAt < 90) return;
+      cursorSoundLastPlayedAt = now;
+      void playInterfaceSound('cursor');
+    });
+  });
 
   const activityClickCueTimers = new WeakMap();
 
