@@ -412,10 +412,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const bootAudio = new Audio(activitySoundDefinitions.boot.url);
   const ambienceToggle = document.getElementById('ambienceToggle');
   const ambienceTooltip = document.getElementById('ambienceTooltip');
+  const ambienceVolumeSlider = document.getElementById('ambienceVolume');
+  const ambienceVolumeValue = document.getElementById('ambienceVolumeValue');
   const ambienceAudio = new Audio(new URL('sounds/ambience.mp3', document.baseURI).href);
-  const ambienceVolume = 0.14;
+  let ambienceVolume = 0.14;
   const ambiencePreferenceKey = 'portfolio-ambience-enabled';
-  let ambienceEnabled = true;
+  const ambienceVolumePreferenceKey = 'portfolio-ambience-volume';
+  let ambienceEnabled = false;
   let ambienceFadeFrame = 0;
   let ambienceFadeSequence = 0;
   let ambiencePlayAttempt = null;
@@ -429,7 +432,9 @@ document.addEventListener('DOMContentLoaded', function () {
   ambienceAudio.volume = 0;
 
   try {
-    ambienceEnabled = localStorage.getItem(ambiencePreferenceKey) !== 'false';
+    ambienceEnabled = localStorage.getItem(ambiencePreferenceKey) === 'true';
+    const savedVolume = Number.parseFloat(localStorage.getItem(ambienceVolumePreferenceKey));
+    if (Number.isFinite(savedVolume)) ambienceVolume = Math.max(0, Math.min(1, savedVolume));
   } catch (_) {}
 
   try {
@@ -473,8 +478,23 @@ document.addEventListener('DOMContentLoaded', function () {
     ambienceToggle.setAttribute('aria-pressed', String(!ambienceEnabled));
     ambienceToggle.title = label;
     const icon = ambienceToggle.querySelector('i');
-    if (icon) icon.className = ambienceEnabled ? 'fas fa-volume-high' : 'fas fa-volume-xmark';
+    if (icon) {
+      icon.className = !ambienceEnabled || ambienceVolume === 0
+        ? 'fas fa-volume-xmark'
+        : ambienceVolume < 0.45
+          ? 'fas fa-volume-low'
+          : 'fas fa-volume-high';
+    }
     if (ambienceTooltip) ambienceTooltip.textContent = label;
+  }
+
+  function updateAmbienceVolumeControl() {
+    if (!ambienceVolumeSlider) return;
+    const percentage = Math.round(ambienceVolume * 100);
+    ambienceVolumeSlider.value = String(percentage);
+    ambienceVolumeSlider.style.setProperty('--ambience-level', `${percentage}%`);
+    if (ambienceVolumeValue) ambienceVolumeValue.textContent = `${percentage}%`;
+    updateAmbienceToggle();
   }
 
   function fadeAmbienceTo(targetVolume, duration, onComplete) {
@@ -548,7 +568,19 @@ document.addEventListener('DOMContentLoaded', function () {
   ambienceToggle?.addEventListener('click', () => {
     setAmbienceEnabled(!ambienceEnabled);
   });
+  ambienceVolumeSlider?.addEventListener('input', event => {
+    ambienceVolume = Math.max(0, Math.min(1, Number(event.currentTarget.value) / 100));
+    try {
+      localStorage.setItem(ambienceVolumePreferenceKey, String(ambienceVolume));
+    } catch (_) {}
+    updateAmbienceVolumeControl();
+    if (ambienceEnabled && !ambienceAudio.paused) fadeAmbienceTo(ambienceVolume, 140);
+  });
+  ambienceVolumeSlider?.addEventListener('change', () => {
+    if (ambienceEnabled) void startAmbience();
+  });
   updateAmbienceToggle();
+  updateAmbienceVolumeControl();
 
   function unlockInterfaceAudio(event) {
     prepareInterfaceAudioSession();
