@@ -416,8 +416,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const ambienceVolumeValue = document.getElementById('ambienceVolumeValue');
   const ambienceAudio = new Audio(new URL('sounds/ambience.mp3', document.baseURI).href);
   let ambienceVolume = 0.14;
-  const ambiencePreferenceKey = 'portfolio-ambience-enabled';
-  const ambienceVolumePreferenceKey = 'portfolio-ambience-volume';
+  const ambiencePreferenceKey = 'portfolio_ambience_enabled';
+  const ambienceVolumePreferenceKey = 'portfolio_ambience_volume';
   let ambienceEnabled = false;
   let ambienceFadeFrame = 0;
   let ambienceFadeSequence = 0;
@@ -431,11 +431,21 @@ document.addEventListener('DOMContentLoaded', function () {
   ambienceAudio.loop = true;
   ambienceAudio.volume = 0;
 
-  try {
-    ambienceEnabled = localStorage.getItem(ambiencePreferenceKey) === 'true';
-    const savedVolume = Number.parseFloat(localStorage.getItem(ambienceVolumePreferenceKey));
-    if (Number.isFinite(savedVolume)) ambienceVolume = Math.max(0, Math.min(1, savedVolume));
-  } catch (_) {}
+  function readPreferenceCookie(name) {
+    const prefix = `${encodeURIComponent(name)}=`;
+    const entry = document.cookie.split(';').map(item => item.trim()).find(item => item.startsWith(prefix));
+    return entry ? decodeURIComponent(entry.slice(prefix.length)) : null;
+  }
+
+  function writePreferenceCookie(name, value) {
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; Max-Age=31536000; Path=/; SameSite=Lax`;
+  }
+
+  ambienceEnabled = readPreferenceCookie(ambiencePreferenceKey) === 'true';
+  const savedAmbienceVolume = Number.parseFloat(readPreferenceCookie(ambienceVolumePreferenceKey));
+  if (Number.isFinite(savedAmbienceVolume)) {
+    ambienceVolume = Math.max(0, Math.min(1, savedAmbienceVolume));
+  }
 
   try {
     activityAudioContext = ActivityAudioContext
@@ -475,8 +485,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const label = ambienceEnabled ? 'Disable Ambience' : 'Enable Ambience';
     ambienceToggle.classList.toggle('is-muted', !ambienceEnabled);
     ambienceToggle.setAttribute('aria-label', label);
-    ambienceToggle.setAttribute('aria-pressed', String(!ambienceEnabled));
-    ambienceToggle.title = label;
+    ambienceToggle.setAttribute('aria-pressed', String(ambienceEnabled));
     const icon = ambienceToggle.querySelector('i');
     if (icon) {
       icon.className = !ambienceEnabled || ambienceVolume === 0
@@ -519,9 +528,10 @@ document.addEventListener('DOMContentLoaded', function () {
     ambienceFadeFrame = window.requestAnimationFrame(step);
   }
 
-  async function startAmbience() {
+  async function startAmbience(fadeFromSilence = false) {
     if (!ambienceEnabled) return false;
     if (!ambienceAudio.paused) {
+      if (fadeFromSilence) ambienceAudio.volume = 0;
       fadeAmbienceTo(ambienceVolume, 2600);
       return true;
     }
@@ -557,11 +567,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function setAmbienceEnabled(enabled) {
     ambienceEnabled = enabled;
-    try {
-      localStorage.setItem(ambiencePreferenceKey, String(enabled));
-    } catch (_) {}
+    writePreferenceCookie(ambiencePreferenceKey, String(enabled));
     updateAmbienceToggle();
-    if (enabled) void startAmbience();
+    if (enabled) void startAmbience(true);
     else stopAmbience();
   }
 
@@ -570,9 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   ambienceVolumeSlider?.addEventListener('input', event => {
     ambienceVolume = Math.max(0, Math.min(1, Number(event.currentTarget.value) / 100));
-    try {
-      localStorage.setItem(ambienceVolumePreferenceKey, String(ambienceVolume));
-    } catch (_) {}
+    writePreferenceCookie(ambienceVolumePreferenceKey, String(ambienceVolume));
     updateAmbienceVolumeControl();
     if (ambienceEnabled && !ambienceAudio.paused) fadeAmbienceTo(ambienceVolume, 140);
   });
@@ -588,7 +594,9 @@ document.addEventListener('DOMContentLoaded', function () {
       activityAudioContext.resume().catch(() => {});
     }
     if (bootCuePending) void tryBootCue();
-    if (ambienceEnabled && !event?.target?.closest?.('#ambienceToggle')) void startAmbience();
+    if (ambienceEnabled && !event?.target?.closest?.('#ambienceToggle')) {
+      void startAmbience(ambienceAudio.paused);
+    }
   }
 
   document.addEventListener('pointerdown', unlockInterfaceAudio, { once: true, capture: true });
@@ -597,11 +605,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (document.readyState === 'complete') {
     void tryBootCue();
-    void startAmbience();
+    void startAmbience(true);
   } else {
     window.addEventListener('load', () => {
       void tryBootCue();
-      void startAmbience();
+      void startAmbience(true);
     }, { once: true });
   }
 

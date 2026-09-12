@@ -39,7 +39,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css?v=20260912-1" />
+  <link rel="stylesheet" href="css/style.css?v=20260912-4" />
 </head>
 <body>
 
@@ -82,7 +82,7 @@
         </ul>
       </div>
       <div class="ambience-control navbar-ambience-control" role="group" aria-label="Ambience controls">
-        <button class="ambience-toggle is-muted" id="ambienceToggle" type="button" aria-label="Enable Ambience" aria-describedby="ambienceTooltip" aria-pressed="true" title="Enable Ambience">
+        <button class="ambience-toggle is-muted" id="ambienceToggle" type="button" aria-label="Enable Ambience" aria-describedby="ambienceTooltip" aria-pressed="false">
           <i class="fas fa-volume-xmark" aria-hidden="true"></i>
           <span class="ambience-tooltip" id="ambienceTooltip" role="tooltip">Enable Ambience</span>
         </button>
@@ -458,7 +458,7 @@
         <div class="section-anchor-heading reveal">
           <span class="section-tag">Teamwork &amp; growth</span>
           <h2 class="section-heading">Activity</h2>
-          <p>Three ECPC chapters and one DEPI learning experience that shaped how I solve problems and work with people.</p>
+          <p>Three ECPC experiences, the next chapter ahead, and one DEPI learning experience that shaped how I solve problems and work with people.</p>
         </div>
 
         <div class="activity-intro reveal">
@@ -475,7 +475,9 @@
               <span class="ecpc-kicker"><i class="fas fa-code" aria-hidden="true"></i> ECPC Journey</span>
               <h2 id="ecpc-heading">Built by teamwork.</h2>
             </div>
-            <img class="ecpc-brand-mark" src="images/ecpc_logo.png" alt="Egyptian Collegiate Programming Contest" loading="lazy" />
+            <div class="ecpc-brand-emblem">
+              <img class="ecpc-brand-mark" src="images/ecpc_logo.png" alt="Egyptian Collegiate Programming Contest" loading="lazy" />
+            </div>
           </div>
 
           <div class="ecpc-body">
@@ -488,7 +490,7 @@
                         <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
                           <img class="flip-card-image" src="images/ECPC1.jpg" alt="Hassan with Adham El Behiry and Karim Ayman at ECPC" loading="lazy" />
                           <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's first ECPC"></button>
-                          <span class="ecpc-photo-number">01 / 03</span>
+                          <span class="ecpc-photo-number">01 / 04</span>
                           <span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-users" aria-hidden="true"></i><span>Meet the team</span></span>
                         </div>
                         <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
@@ -519,7 +521,7 @@
                         <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
                           <img class="flip-card-image" src="images/ECPC2.jpg" alt="Hassan with Mohammed Ossama and Yasin Moataz at ECPC" loading="lazy" />
                           <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's second ECPC"></button>
-                          <span class="ecpc-photo-number">02 / 03</span>
+                          <span class="ecpc-photo-number">02 / 04</span>
                           <span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-users" aria-hidden="true"></i><span>Meet the team</span></span>
                         </div>
                         <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
@@ -550,7 +552,7 @@
                         <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
                           <img class="flip-card-image" src="images/ECPC3.jpeg" alt="Hassan with Fatma Abaza and Rahma Hussein at ECPC" loading="lazy" />
                           <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's third ECPC"></button>
-                          <span class="ecpc-photo-number">03 / 03</span>
+                          <span class="ecpc-photo-number">03 / 04</span>
                           <span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-users" aria-hidden="true"></i><span>Meet the team</span></span>
                         </div>
                         <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
@@ -574,6 +576,22 @@
                       <p>From last year, I was ambitious to improve and reach a higher ranking. My team put in an overwhelming effort and solved multiple problems. Special thanks to Eng. Fatma Abaza and Eng. Rahma Hussein—their effort made this a truly special team.</p>
                     </div>
                   </article>
+
+                  <article class="ecpc-slide ecpc-future-slide" data-ecpc-slide="3" aria-label="Next ECPC chapter" aria-hidden="true" inert>
+                    <div class="ecpc-deck-card ecpc-future-card">
+                      <div class="ecpc-future-aura" aria-hidden="true"></div>
+                      <img src="images/ecpc_logo.png" alt="" loading="lazy" />
+                      <span class="ecpc-photo-number">04 / 04</span>
+                      <span class="ecpc-future-status"><i class="fas fa-hourglass-half" aria-hidden="true"></i> Under construction</span>
+                      <h3>Next Contest?</h3>
+                      <p>The next ECPC chapter is waiting to be written.</p>
+                    </div>
+                    <div class="ecpc-slide-caption">
+                      <span class="ecpc-chapter">Chapter four</span>
+                      <h3>Next Contest?</h3>
+                      <p>Preparation continues. This space will be updated when the next contest journey begins.</p>
+                    </div>
+                  </article>
                 </div>
 
                 <div class="ecpc-deck-controls">
@@ -586,6 +604,7 @@
                 <button type="button" class="is-active" data-ecpc-index="0" aria-current="true" aria-label="Show first ECPC experience">01</button>
                 <button type="button" data-ecpc-index="1" aria-label="Show second ECPC experience">02</button>
                 <button type="button" data-ecpc-index="2" aria-label="Show third ECPC experience">03</button>
+                <button type="button" data-ecpc-index="3" aria-label="Show the next ECPC chapter">04</button>
               </div>
             </div>
           </div>
@@ -614,6 +633,15 @@
             <h2 id="soft-skills-heading">Soft Skills</h2>
             <p>During my journey with <a href="https://www.linkedin.com/company/digital-egypt-pioneers-initiative-depi/" target="_blank" rel="noopener">DEPI</a>, the Soft Skills course became an important part of my professional development.</p>
             <p>I was lucky to have <a href="https://www.linkedin.com/in/hadeermakhlouf/" target="_blank" rel="noopener">Professor Hadeer Makhlouf</a> as my instructor. She helped us improve and expand our skill sets.</p>
+          </div>
+        </section>
+
+        <section class="activity-more reveal" aria-labelledby="activity-more-heading">
+          <span class="activity-more-icon" aria-hidden="true"><i class="fas fa-person-digging"></i></span>
+          <div>
+            <span class="section-tag">More to come</span>
+            <h2 id="activity-more-heading">More under construction</h2>
+            <p>New activities, collaborations, and learning milestones will be added here.</p>
           </div>
         </section>
       </div>
@@ -842,6 +870,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/script.js?v=20260912-1"></script>
+  <script src="js/script.js?v=20260912-4"></script>
 </body>
 </html>
