@@ -39,7 +39,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css?v=20260910-1" />
+  <link rel="stylesheet" href="css/style.css?v=20260912-1" />
 </head>
 <body>
 
@@ -151,6 +151,10 @@
         <!-- Image -->
         <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
           <div class="hero-img-wrap">
+            <a class="hero-contact-bubble" href="#contact" aria-label="Go to contact section">
+              <i class="fas fa-paper-plane" aria-hidden="true"></i>
+              <span>Contact me</span>
+            </a>
             <div class="hero-img-ring">
               <div class="hero-img-inner">
                 <img src="images/profile.jpg" alt="Hassan Gebril – AI Engineer" />
@@ -184,38 +188,53 @@
   <!-- ===== MAIN ===== -->
   <main>
 
-    <!-- STATS -->
+    <!-- FEATURED PUBLIC WORK -->
     <section id="introduction" class="section-wrap one-page-section" data-scroll-label="Introduction">
       <div class="container">
         <div class="section-anchor-heading reveal">
           <span class="section-tag">Start here</span>
           <h2 class="section-heading">Introduction</h2>
-          <p>A quick view of the work, evidence, and problem-solving experience behind this portfolio.</p>
+          <p>Three public projects that represent my work across computer vision, explainable machine learning, and NLP.</p>
         </div>
-        <div class="row g-4">
-          <div class="col-6 col-md-3 reveal delay-1">
-            <div class="stat-card">
-              <span class="stat-number" data-count="7" data-suffix="">0</span>
-              <span class="stat-label">Projects Showcased</span>
-            </div>
+        <div class="row g-4 intro-project-grid">
+          <div class="col-md-6 col-xl-4 reveal delay-1">
+            <a class="intro-project-link" href="https://github.com/HassanG04/River-Flood-Prediction" target="_blank" rel="noopener" aria-label="View River Flood Protection on GitHub">
+              <article class="intro-project-card">
+                <div class="intro-project-media"><img src="images/river_flood.jpg" alt="River flood segmentation result" loading="lazy" /></div>
+                <div class="intro-project-body">
+                  <span class="intro-project-type">Computer Vision</span>
+                  <h3>River Flood Protection</h3>
+                  <p>Turns satellite imagery into visual flood masks through a compact U-Net and a Flask review workflow.</p>
+                  <span class="intro-project-cta"><i class="fab fa-github" aria-hidden="true"></i> View public repository</span>
+                </div>
+              </article>
+            </a>
           </div>
-          <div class="col-6 col-md-3 reveal delay-2">
-            <div class="stat-card">
-              <span class="stat-number">96.21%</span>
-              <span class="stat-label">Best Validation Accuracy</span>
-            </div>
+          <div class="col-md-6 col-xl-4 reveal delay-2">
+            <a class="intro-project-link" href="https://github.com/HassanG04/yet_another_heart_disease_application" target="_blank" rel="noopener" aria-label="View Heart Disease Prediction on GitHub">
+              <article class="intro-project-card">
+                <div class="intro-project-media"><img src="images/heart_disease.png" alt="Heart disease prediction application" loading="lazy" /></div>
+                <div class="intro-project-body">
+                  <span class="intro-project-type">Explainable ML</span>
+                  <h3>Heart Disease Prediction</h3>
+                  <p>Combines multi-centre clinical data, model tuning, and SHAP explanations in an end-to-end application.</p>
+                  <span class="intro-project-cta"><i class="fab fa-github" aria-hidden="true"></i> View public repository</span>
+                </div>
+              </article>
+            </a>
           </div>
-          <div class="col-6 col-md-3 reveal delay-3">
-            <div class="stat-card">
-              <span class="stat-number">0.92</span>
-              <span class="stat-label">Heart Model AUC</span>
-            </div>
-          </div>
-          <div class="col-6 col-md-3 reveal delay-4">
-            <div class="stat-card">
-              <span class="stat-number" data-count="25" data-suffix="th">0th</span>
-              <span class="stat-label">ECPC Qualification</span>
-            </div>
+          <div class="col-md-6 col-xl-4 reveal delay-3">
+            <a class="intro-project-link" href="https://github.com/HassanG04/Emoji_Recognition" target="_blank" rel="noopener" aria-label="View Emoji Prediction with DistilBERT on GitHub">
+              <article class="intro-project-card">
+                <div class="intro-project-media"><img src="images/emoji_predictor.png" alt="Emoji prediction application" loading="lazy" /></div>
+                <div class="intro-project-body">
+                  <span class="intro-project-type">Natural Language Processing</span>
+                  <h3>Emoji Prediction with DistilBERT</h3>
+                  <p>Fine-tunes a transformer to understand short social text and delivers predictions through Django.</p>
+                  <span class="intro-project-cta"><i class="fab fa-github" aria-hidden="true"></i> View public repository</span>
+                </div>
+              </article>
+            </a>
           </div>
         </div>
       </div>
@@ -456,6 +475,7 @@
               <span class="ecpc-kicker"><i class="fas fa-code" aria-hidden="true"></i> ECPC Journey</span>
               <h2 id="ecpc-heading">Built by teamwork.</h2>
             </div>
+            <img class="ecpc-brand-mark" src="images/ecpc_logo.png" alt="Egyptian Collegiate Programming Contest" loading="lazy" />
           </div>
 
           <div class="ecpc-body">
@@ -822,6 +842,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/script.js?v=20260910-1"></script>
+  <script src="js/script.js?v=20260912-1"></script>
 </body>
 </html>
