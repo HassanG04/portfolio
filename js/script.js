@@ -1078,6 +1078,45 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ============================================================
+     CERTIFICATE IMAGE VIEWER
+     ============================================================ */
+  const certificateViewer = document.getElementById('certificateViewer');
+  const certificateViewerImage = document.getElementById('certificateViewerImage');
+  const certificateViewerTitle = document.getElementById('certificateViewerTitle');
+  const certificateViewerClose = document.getElementById('certificateViewerClose');
+  const certificatePreviewTriggers = Array.from(document.querySelectorAll('[data-certificate-preview]'));
+  let lastCertificateTrigger = null;
+
+  function closeCertificateViewer() {
+    if (!certificateViewer) return;
+    if (typeof certificateViewer.close === 'function' && certificateViewer.open) certificateViewer.close();
+    else certificateViewer.removeAttribute('open');
+  }
+
+  certificatePreviewTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      if (!certificateViewer || !certificateViewerImage || !certificateViewerTitle) return;
+      lastCertificateTrigger = trigger;
+      certificateViewerTitle.textContent = trigger.dataset.certificateTitle || 'Certificate';
+      certificateViewerImage.src = new URL(trigger.dataset.certificateSrc, document.baseURI).href;
+      certificateViewerImage.alt = trigger.dataset.certificateAlt || certificateViewerTitle.textContent;
+
+      if (typeof certificateViewer.showModal === 'function') certificateViewer.showModal();
+      else certificateViewer.setAttribute('open', '');
+      certificateViewerClose?.focus();
+    });
+  });
+
+  certificateViewerClose?.addEventListener('click', closeCertificateViewer);
+  certificateViewer?.addEventListener('click', event => {
+    if (event.target === certificateViewer) closeCertificateViewer();
+  });
+  certificateViewer?.addEventListener('close', () => {
+    certificateViewerImage?.removeAttribute('src');
+    lastCertificateTrigger?.focus();
+  });
+
+  /* ============================================================
      MAGNETIC BUTTONS (subtle)
      ============================================================ */
   document.querySelectorAll('.btn-primary,.btn-cv').forEach(btn => {

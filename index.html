@@ -39,7 +39,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/style.css?v=20260912-4" />
+  <link rel="stylesheet" href="css/style.css?v=20260912-5" />
 </head>
 <body>
 
@@ -582,7 +582,6 @@
                       <div class="ecpc-future-aura" aria-hidden="true"></div>
                       <img src="images/ecpc_logo.png" alt="" loading="lazy" />
                       <span class="ecpc-photo-number">04 / 04</span>
-                      <span class="ecpc-future-status"><i class="fas fa-hourglass-half" aria-hidden="true"></i> Under construction</span>
                       <h3>Next Contest?</h3>
                       <p>The next ECPC chapter is waiting to be written.</p>
                     </div>
@@ -659,19 +658,28 @@
         <div class="row g-4 mb-5">
           <div class="col-md-4 reveal delay-1">
             <article class="credential-card">
-              <img src="images/cellula_nlp.png" alt="Cellula Robotics NLP internship certificate" loading="lazy" />
+              <button class="certificate-preview-trigger" type="button" data-certificate-preview data-certificate-src="images/cellula_nlp.png" data-certificate-title="Cellula Robotics · NLP" data-certificate-alt="Cellula Robotics NLP internship certificate" aria-label="Inspect the Cellula Robotics NLP internship certificate">
+                <img src="images/cellula_nlp.png" alt="Cellula Robotics NLP internship certificate" loading="lazy" />
+                <span class="certificate-preview-cue"><i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i> Inspect certificate</span>
+              </button>
               <div><span>Internship</span><h3>Cellula Robotics · NLP</h3><p>Text preprocessing, embeddings, transformer architectures, and NLP deployment workflows.</p></div>
             </article>
           </div>
           <div class="col-md-4 reveal delay-2">
             <article class="credential-card">
-              <img src="images/icpc.png" alt="ECPC qualification achievement" loading="lazy" />
+              <button class="certificate-preview-trigger" type="button" data-certificate-preview data-certificate-src="images/icpc.png" data-certificate-title="25th in ECPC Qualification" data-certificate-alt="ECPC qualification achievement certificate" aria-label="Inspect the ECPC qualification achievement certificate">
+                <img src="images/icpc.png" alt="ECPC qualification achievement" loading="lazy" />
+                <span class="certificate-preview-cue"><i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i> Inspect certificate</span>
+              </button>
               <div><span>Achievement</span><h3>25th in ECPC Qualification</h3><p>Earned with my team through focused algorithmic problem-solving and preparation.</p></div>
             </article>
           </div>
           <div class="col-md-4 reveal delay-3">
             <article class="credential-card">
-              <img class="credential-card-image--bue" src="images/BUE.jpeg" alt="British University in Egypt Fundamentals and Applications in Artificial Intelligence certificate" loading="lazy" />
+              <button class="certificate-preview-trigger" type="button" data-certificate-preview data-certificate-src="images/BUE.jpeg" data-certificate-title="Fundamentals &amp; Applications in AI" data-certificate-alt="British University in Egypt Fundamentals and Applications in Artificial Intelligence certificate" aria-label="Inspect the British University in Egypt AI certificate">
+                <img class="credential-card-image--bue" src="images/BUE.jpeg" alt="British University in Egypt Fundamentals and Applications in Artificial Intelligence certificate" loading="lazy" />
+                <span class="certificate-preview-cue"><i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i> Inspect certificate</span>
+              </button>
               <div><span>Training</span><h3>Fundamentals &amp; Applications in AI</h3><p>A 12-hour applied artificial-intelligence course completed through The British University in Egypt.</p></div>
             </article>
           </div>
@@ -851,6 +859,23 @@
 
   </main>
 
+  <dialog class="certificate-viewer" id="certificateViewer" aria-labelledby="certificateViewerTitle">
+    <div class="certificate-viewer-panel">
+      <div class="certificate-viewer-head">
+        <div>
+          <span>Certificate preview</span>
+          <h2 id="certificateViewerTitle">Certificate</h2>
+        </div>
+        <button class="certificate-viewer-close" id="certificateViewerClose" type="button" aria-label="Close certificate preview">
+          <i class="fas fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="certificate-viewer-media">
+        <img id="certificateViewerImage" alt="" />
+      </div>
+    </div>
+  </dialog>
+
   <!-- ===== FOOTER ===== -->
   <footer>
     <div class="container text-center">
@@ -870,6 +895,6 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/script.js?v=20260912-4"></script>
+  <script src="js/script.js?v=20260912-5"></script>
 </body>
 </html>
