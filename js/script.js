@@ -779,7 +779,7 @@ document.addEventListener('DOMContentLoaded', function () {
       control.id === 'darkModeToggle' ||
       control.disabled ||
       control.getAttribute('aria-disabled') === 'true' ||
-      control.closest('[data-flip-card], .ecpc-deck-arrow, [data-ecpc-index]')
+      control.closest('[data-flip-card], .ecpc-deck-arrow, [data-ecpc-index], [data-certificate-preview], #certificateViewerClose')
     ) return;
     void playInterfaceSound('select');
   }, { capture: true });
@@ -1006,24 +1006,25 @@ document.addEventListener('DOMContentLoaded', function () {
       updateEcpcControlPosition();
     }
 
-    async function changeEcpcWithSound(index, movingForward) {
+    async function changeEcpcWithSound(index) {
       if (!slides.length) return false;
       const originIndex = currentIndex;
       const destinationIndex = (index + slides.length) % slides.length;
       if (destinationIndex === originIndex) return false;
 
-      // Carousel photos physically travel left when advancing and right when
-      // returning. Card flips keep their original left/right sound mapping.
-      const soundStarted = movingForward
-        ? await playActivitySounds('left', 'front')
-        : await playActivitySounds('right', 'back');
+      // Direction follows the visible chapter number, regardless of whether
+      // navigation came from an arrow, a numbered selector, or a swipe.
+      const chapterNumberIncreased = destinationIndex > originIndex;
+      const soundStarted = chapterNumberIncreased
+        ? await playActivitySounds('right', 'front')
+        : await playActivitySounds('left', 'back');
       if (!soundStarted || currentIndex !== originIndex) return false;
       showEcpc(destinationIndex);
       return true;
     }
 
     function moveEcpcWithSound(step) {
-      return changeEcpcWithSound(currentIndex + step, step > 0);
+      return changeEcpcWithSound(currentIndex + step);
     }
 
     prevButton?.addEventListener('click', () => {
@@ -1035,7 +1036,7 @@ document.addEventListener('DOMContentLoaded', function () {
     indicators.forEach(indicator => {
       indicator.addEventListener('click', () => {
         const destinationIndex = Number(indicator.dataset.ecpcIndex);
-        void changeEcpcWithSound(destinationIndex, destinationIndex > currentIndex);
+        void changeEcpcWithSound(destinationIndex);
       });
     });
     ecpcDeck.addEventListener('keydown', event => {
@@ -1090,7 +1091,12 @@ document.addEventListener('DOMContentLoaded', function () {
   function closeCertificateViewer() {
     if (!certificateViewer) return;
     if (typeof certificateViewer.close === 'function' && certificateViewer.open) certificateViewer.close();
-    else certificateViewer.removeAttribute('open');
+    else {
+      certificateViewer.removeAttribute('open');
+      void playInterfaceSound('select');
+      certificateViewerImage?.removeAttribute('src');
+      lastCertificateTrigger?.focus();
+    }
   }
 
   certificatePreviewTriggers.forEach(trigger => {
@@ -1100,6 +1106,7 @@ document.addEventListener('DOMContentLoaded', function () {
       certificateViewerTitle.textContent = trigger.dataset.certificateTitle || 'Certificate';
       certificateViewerImage.src = new URL(trigger.dataset.certificateSrc, document.baseURI).href;
       certificateViewerImage.alt = trigger.dataset.certificateAlt || certificateViewerTitle.textContent;
+      void playInterfaceSound('select2');
 
       if (typeof certificateViewer.showModal === 'function') certificateViewer.showModal();
       else certificateViewer.setAttribute('open', '');
@@ -1112,6 +1119,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (event.target === certificateViewer) closeCertificateViewer();
   });
   certificateViewer?.addEventListener('close', () => {
+    void playInterfaceSound('select');
     certificateViewerImage?.removeAttribute('src');
     lastCertificateTrigger?.focus();
   });

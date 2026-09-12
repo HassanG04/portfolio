@@ -2342,19 +2342,29 @@ footer { margin-top:100px; padding:72px 0 35px; border-top:1px solid var(--borde
   border-top:1px solid var(--border-glass);
 }
 .ecpc-deck-indicators button {
-  width:11px;
-  height:11px;
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
   padding:0;
-  overflow:hidden;
   border-radius:999px;
-  color:transparent;
-  background:var(--text-muted);
-  font-size:0;
-  opacity:.55;
-  transition:width .42s cubic-bezier(.22,1,.36,1),opacity .3s ease,background .3s ease,transform .3s ease;
+  border:1px solid var(--border-glass);
+  color:var(--text-muted);
+  background:var(--bg-glass);
+  font-size:.75rem;
+  font-weight:800;
+  line-height:1;
+  opacity:1;
+  transition:color .3s ease,border-color .3s ease,background .3s ease,transform .3s ease,box-shadow .3s ease;
 }
-.ecpc-deck-indicators button:hover { opacity:.88; transform:scale(1.15); }
-.ecpc-deck-indicators button.is-active { width:34px; opacity:1; background:var(--gradient-primary); transform:none; }
+.ecpc-deck-indicators button:hover { color:var(--text-primary); border-color:var(--border-accent); transform:translateY(-2px); }
+.ecpc-deck-indicators button.is-active {
+  color:#fff;
+  border-color:transparent;
+  background:var(--gradient-primary);
+  box-shadow:0 8px 22px rgba(124,58,237,.28);
+  transform:none;
+}
 
 /* Shared contact details on card backs. */
 .contact-avatar--photo {
@@ -3206,8 +3216,33 @@ html[data-theme="light"] .result-metric { color:var(--accent-purple-dark); }
   .section-anchor-heading { margin-bottom:34px; }
   .hero-contact-bubble { top:-13px; padding:9px 14px; font-size:.72rem; }
   .intro-project-body { min-height:0; }
-  .ecpc-showcase-head { align-items:center; gap:18px; }
-  .ecpc-brand-mark { width:78px; }
+  .ecpc-showcase { border-radius:20px; }
+  .ecpc-showcase-head { align-items:center; gap:14px; padding:20px 17px 18px; }
+  .ecpc-showcase-head h2 { font-size:1.4rem; }
+  .ecpc-brand-mark { width:62px; }
+  .ecpc-slide { padding:16px 12px 20px; }
+  .ecpc-deck-card { aspect-ratio:4 / 3; border-radius:16px; }
+  .ecpc-deck-controls { padding:0 5px; }
+  .ecpc-deck-arrow { width:38px; height:38px; border-radius:11px; }
+  .ecpc-photo-number,
+  .ecpc-future-card .ecpc-photo-number { top:10px; left:10px; padding:6px 8px; font-size:.62rem; }
+  .ecpc-card-back { padding:14px 12px; }
+  .ecpc-contact-cards { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+  .ecpc-card-back .contact-card { min-width:0; padding:9px 6px 8px; border-radius:12px; }
+  .ecpc-card-back .contact-avatar--photo { width:42px; height:42px; }
+  .ecpc-card-back .contact-name { font-size:.69rem; }
+  .ecpc-card-back .contact-desc { font-size:.58rem; }
+  .ecpc-slide-caption { margin-top:15px; padding:0 2px; }
+  .ecpc-slide-caption .ecpc-chapter { margin-bottom:7px; font-size:.66rem; }
+  .ecpc-slide-caption h3 { margin-bottom:7px; font-size:1.3rem; }
+  .ecpc-slide-caption p { font-size:.82rem; line-height:1.58; }
+  .ecpc-future-card { gap:6px; padding:26px 44px 22px; }
+  .ecpc-future-card > img { width:88px; margin-bottom:3px; }
+  .ecpc-future-card h3 { font-size:1.45rem; }
+  .ecpc-future-card p { font-size:.76rem; line-height:1.45; }
+  .ecpc-deck-indicators { gap:8px; min-height:58px; padding:12px 14px; }
+  .ecpc-deck-indicators button,
+  .ecpc-deck-indicators button.is-active { width:32px; height:32px; }
   .activity-more { align-items:flex-start; padding:24px 20px; }
   .activity-more-icon { width:56px; height:56px; border-radius:17px; font-size:1.15rem; }
   .about-profile-panel,
