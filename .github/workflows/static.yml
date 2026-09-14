@@ -30,8 +30,8 @@ jobs:
       - name: Prepare website files
         run: |
           mkdir _site
-          cp index.html home.html favicon.ico .nojekyll _site/
-          cp -R css images js sounds _site/
+          cp index.html home.html favicon.ico sitemap.xml .nojekyll _site/
+          cp -R AI ML DS DA DE css images js sounds _site/
 
       - name: Upload website artifact
         uses: actions/upload-pages-artifact@v3
