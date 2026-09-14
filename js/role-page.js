@@ -208,23 +208,149 @@
       </div>
     </section>
 
-    <section class="section-wrap one-page-section role-activity-section" id="activity" data-scroll-label="Activity">
-      <div class="container">
+    <section id="activity" class="section-wrap one-page-section" data-scroll-label="Activity">
+      <div class="container activity-main">
         <div class="section-anchor-heading reveal">
-          <span class="section-tag">Beyond the portfolio</span>
+          <span class="section-tag">Teamwork &amp; growth</span>
           <h2 class="section-heading">Activity</h2>
-          <p>Experiences that strengthened how I solve problems, communicate, and work with a team.</p>
+          <p>Three ECPC experiences, the next chapter ahead, and one DEPI learning experience that shaped how I solve problems and work with people.</p>
         </div>
-        <div class="role-activity-grid">
-          <article class="role-activity-card reveal-left">
-            <div class="role-activity-media"><img src="../images/ECPC3.jpeg" alt="Hassan Gebril and his ECPC team" loading="lazy" /></div>
-            <div class="role-activity-body"><span>Competitive programming</span><h3>ECPC Journey</h3><p>Three ECPC participations sharpened my algorithmic thinking and teamwork. My team’s 25th-place finish in the ECPC qualification reflected focused preparation and steady improvement.</p></div>
-          </article>
-          <article class="role-activity-card reveal-right">
-            <div class="role-activity-media"><img src="../images/softskills.jpeg" alt="DEPI soft skills learning activity" loading="lazy" /></div>
-            <div class="role-activity-body"><span>Professional development</span><h3>DEPI Soft Skills</h3><p>DEPI training with Prof. Hadeer Makhlouf strengthened my communication, collaboration, and professional confidence—skills I bring to every technical project.</p></div>
-          </article>
+
+        <div class="activity-intro reveal">
+          <div><span class="section-tag">The journey so far</span><h2>ECPC taught me more than algorithms.</h2></div>
+          <p>Every contest brought a new team, a tougher challenge, and a better version of me. Use the arrows or numbered controls to move between chapters, and click a photo to meet the team.</p>
         </div>
+
+        <section class="ecpc-showcase reveal delay-1" aria-labelledby="ecpc-heading">
+          <div class="ecpc-showcase-head">
+            <div><span class="ecpc-kicker"><i class="fas fa-code" aria-hidden="true"></i> ECPC Journey</span><h2 id="ecpc-heading">Built by teamwork.</h2></div>
+            <div class="ecpc-brand-emblem"><img class="ecpc-brand-mark" src="../images/ecpc_logo.png" alt="Egyptian Collegiate Programming Contest" loading="lazy" /></div>
+          </div>
+
+          <div class="ecpc-body">
+            <div id="ecpcDeck" class="ecpc-deck" role="region" aria-roledescription="carousel" aria-label="Hassan's ECPC experiences" tabindex="0">
+              <div class="ecpc-deck-stage">
+                <div class="ecpc-slider-track" aria-live="polite">
+                  <article class="ecpc-slide is-active" data-ecpc-slide="0" aria-label="First ECPC experience" aria-hidden="false">
+                    <div class="flip-card ecpc-deck-card" data-flip-card>
+                      <div class="flip-card-inner">
+                        <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
+                          <img class="flip-card-image" src="../images/ECPC1.jpg" alt="Hassan with Adham El Behiry and Karim Ayman at ECPC" loading="lazy" />
+                          <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's first ECPC"></button>
+                          <span class="ecpc-photo-number">01 / 04</span>
+                          <span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-users" aria-hidden="true"></i><span>Meet the team</span></span>
+                        </div>
+                        <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
+                          <span class="ecpc-contacts-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the Team!</span>
+                          <div class="ecpc-contact-cards">
+                            <div class="contact-card"><img class="contact-avatar contact-avatar--photo" src="../images/hadeer-makhlouf.jpeg" alt="" loading="lazy" /><span class="contact-name">Eng. Adham El Behiry</span><span class="contact-desc">No description</span></div>
+                            <div class="contact-card"><img class="contact-avatar contact-avatar--photo" src="../images/hadeer-makhlouf.jpeg" alt="" loading="lazy" /><span class="contact-name">Eng. Karim Ayman</span><span class="contact-desc">No description</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ecpc-slide-caption"><span class="ecpc-chapter">Chapter one</span><h3>My first ECPC</h3><p>This was my first time participating in a major collegiate programming contest. ECPC 2024 was thrilling and a learning opportunity for all of us. It was a blast to work with Eng. Adham El Behiry and Eng. Karim Ayman.</p></div>
+                  </article>
+
+                  <article class="ecpc-slide" data-ecpc-slide="1" aria-label="Second ECPC experience" aria-hidden="true" inert>
+                    <div class="flip-card ecpc-deck-card" data-flip-card>
+                      <div class="flip-card-inner">
+                        <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
+                          <img class="flip-card-image" src="../images/ECPC2.jpg" alt="Hassan with Mohammed Ossama and Yasin Moataz at ECPC" loading="lazy" />
+                          <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's second ECPC"></button>
+                          <span class="ecpc-photo-number">02 / 04</span>
+                          <span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-users" aria-hidden="true"></i><span>Meet the team</span></span>
+                        </div>
+                        <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
+                          <span class="ecpc-contacts-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the Team!</span>
+                          <div class="ecpc-contact-cards">
+                            <div class="contact-card"><img class="contact-avatar contact-avatar--photo" src="../images/hadeer-makhlouf.jpeg" alt="" loading="lazy" /><span class="contact-name">Eng. Mohammed Ossama</span><span class="contact-desc">No description</span></div>
+                            <a class="contact-card is-linked" href="https://www.linkedin.com/in/yaseen-moataz-49b39b308/" target="_blank" rel="noopener" aria-label="Open Eng. Yasin Moataz's LinkedIn profile"><img class="contact-avatar contact-avatar--photo" src="../images/hadeer-makhlouf.jpeg" alt="" loading="lazy" /><span class="contact-name">Eng. Yasin Moataz</span><span class="contact-desc">No description</span></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ecpc-slide-caption"><span class="ecpc-chapter">Chapter two</span><h3>25th position in ECPC</h3><p>Fueled by the momentum of our first contest, we returned with a sharper strategy and fiercer ambition. My team and I achieved 25th position in the ECPC qualification round—a result that reflected our relentless preparation. Sharing this milestone with Eng. Mohammed Ossama and Eng. Yasin Moataz made the achievement even more rewarding.</p></div>
+                  </article>
+
+                  <article class="ecpc-slide" data-ecpc-slide="2" aria-label="Third ECPC experience" aria-hidden="true" inert>
+                    <div class="flip-card ecpc-deck-card" data-flip-card>
+                      <div class="flip-card-inner">
+                        <div class="flip-card-face flip-card-front flip-card-media ecpc-card-front">
+                          <img class="flip-card-image" src="../images/ECPC3.jpeg" alt="Hassan with Fatma Abaza and Rahma Hussein at ECPC" loading="lazy" />
+                          <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from Hassan's third ECPC"></button>
+                          <span class="ecpc-photo-number">03 / 04</span>
+                          <span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-users" aria-hidden="true"></i><span>Meet the team</span></span>
+                        </div>
+                        <div class="flip-card-face flip-card-back ecpc-card-back" aria-hidden="true" inert>
+                          <span class="ecpc-contacts-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the Team!</span>
+                          <div class="ecpc-contact-cards">
+                            <div class="contact-card"><img class="contact-avatar contact-avatar--photo" src="../images/hadeer-makhlouf.jpeg" alt="" loading="lazy" /><span class="contact-name">Eng. Fatma Abaza</span><span class="contact-desc">No description</span></div>
+                            <div class="contact-card"><img class="contact-avatar contact-avatar--photo" src="../images/hadeer-makhlouf.jpeg" alt="" loading="lazy" /><span class="contact-name">Eng. Rahma Hussein</span><span class="contact-desc">No description</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ecpc-slide-caption"><span class="ecpc-chapter">Chapter three</span><h3>Returning with ambition</h3><p>From last year, I was ambitious to improve and reach a higher ranking. My team put in an overwhelming effort and solved multiple problems. Special thanks to Eng. Fatma Abaza and Eng. Rahma Hussein—their effort made this a truly special team.</p></div>
+                  </article>
+
+                  <article class="ecpc-slide ecpc-future-slide" data-ecpc-slide="3" aria-label="Next ECPC chapter" aria-hidden="true" inert>
+                    <div class="ecpc-deck-card ecpc-future-card">
+                      <div class="ecpc-future-aura" aria-hidden="true"></div>
+                      <img src="../images/ecpc_logo.png" alt="" loading="lazy" />
+                      <span class="ecpc-photo-number">04 / 04</span>
+                      <h3>Next Contest?</h3><p>The next ECPC chapter is waiting to be written.</p>
+                    </div>
+                    <div class="ecpc-slide-caption"><span class="ecpc-chapter">Chapter four</span><h3>Next Contest?</h3><p>Preparation continues. This space will be updated when the next contest journey begins.</p></div>
+                  </article>
+                </div>
+
+                <div class="ecpc-deck-controls">
+                  <button class="ecpc-deck-arrow" id="ecpcPrev" type="button" aria-label="Previous ECPC story"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+                  <button class="ecpc-deck-arrow" id="ecpcNext" type="button" aria-label="Next ECPC story"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
+              </div>
+
+              <div class="ecpc-deck-indicators" aria-label="Choose an ECPC chapter">
+                <button type="button" class="is-active" data-ecpc-index="0" aria-current="true" aria-label="Show ECPC chapter 1">1</button>
+                <button type="button" data-ecpc-index="1" aria-label="Show ECPC chapter 2">2</button>
+                <button type="button" data-ecpc-index="2" aria-label="Show ECPC chapter 3">3</button>
+                <button type="button" data-ecpc-index="3" aria-label="Show ECPC chapter 4">4</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="soft-skills-section reveal" aria-labelledby="soft-skills-heading">
+          <div class="soft-skills-flip flip-card" id="softSkillsFlip" data-flip-card>
+            <div class="soft-skills-flip-inner flip-card-inner">
+              <div class="soft-skills-photo soft-skills-face flip-card-face flip-card-front flip-card-media">
+                <img class="flip-card-image" src="../images/softskills.jpeg" alt="Hassan with his DEPI soft skills class" loading="lazy" />
+                <button class="flip-card-hit-area" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet Hassan's soft skills instructor"></button>
+                <span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-chalkboard-user" aria-hidden="true"></i><span>Meet the instructor</span></span>
+                <a class="soft-skills-book-tag" id="softSkillsBookTag" href="https://depi.gov.eg/" target="_blank" rel="noopener" aria-label="Visit the DEPI website"><span>DEPI Community</span><i class="fas fa-people-group" aria-hidden="true"></i></a>
+              </div>
+              <div class="soft-skills-back soft-skills-face flip-card-face flip-card-back" aria-hidden="true" inert>
+                <span class="linkedin-id-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the instructor</span>
+                <a class="linkedin-id-card" href="https://www.linkedin.com/in/hadeermakhlouf/" target="_blank" rel="noopener" aria-label="Open Hadeer Makhlouf's LinkedIn profile">
+                  <img class="contact-avatar contact-avatar--lg contact-avatar--photo" src="../images/hadeer-makhlouf.jpeg" alt="Hadeer Makhlouf" loading="lazy" />
+                  <span class="linkedin-id-content"><strong>Hadeer Makhlouf</strong><small>Head of Training &middot; Octopus Outsourcing</small><span>Learning &amp; Development professional with more than seven years of experience designing people-focused learning experiences.</span><span class="linkedin-id-link"><i class="fab fa-linkedin-in" aria-hidden="true"></i> View LinkedIn profile</span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="soft-skills-copy">
+            <span class="section-tag">Beyond technical skills</span>
+            <h2 id="soft-skills-heading">Soft Skills</h2>
+            <p>During my journey with <a href="https://www.linkedin.com/company/digital-egypt-pioneers-initiative-depi/" target="_blank" rel="noopener">DEPI</a>, the Soft Skills course became an important part of my professional development.</p>
+            <p>I was lucky to have <a href="https://www.linkedin.com/in/hadeermakhlouf/" target="_blank" rel="noopener">Professor Hadeer Makhlouf</a> as my instructor. She helped us improve and expand our skill sets.</p>
+          </div>
+        </section>
+
+        <section class="activity-more reveal" aria-labelledby="activity-more-heading">
+          <span class="activity-more-icon" aria-hidden="true"><i class="fas fa-person-digging"></i></span>
+          <div><span class="section-tag">More to come</span><h2 id="activity-more-heading">More under construction</h2><p>New activities, collaborations, and learning milestones will be added here.</p></div>
+        </section>
       </div>
     </section>
 

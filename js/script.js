@@ -802,7 +802,6 @@ document.addEventListener('DOMContentLoaded', function () {
     '.portfolio-case-link',
     '.role-project-link',
     '.role-service-card',
-    '.role-activity-card',
     '.role-about-card',
     '.hero-contact-bubble',
     '.cta-card',
