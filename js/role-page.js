@@ -116,97 +116,102 @@
   const contactRole = roleKey === 'AI' ? 'an AI engineer' : `a ${role.label.toLowerCase()}`;
 
   const serviceMarkup = role.services.map((service, index) => `
-    <article class="role-service-card reveal delay-${(index % 3) + 1}">
-      <div class="role-card-icon"><i class="fas ${service.icon}" aria-hidden="true"></i></div>
-      <h3>${service.title}</h3>
-      <p>${service.copy}</p>
-      <div class="role-chip-row">${service.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
-    </article>`).join('');
+    <div class="col-md-6 col-xl-4 reveal delay-${(index % 3) + 1}">
+      <article class="skill-card">
+        <div class="skill-icon"><i class="fas ${service.icon}" aria-hidden="true"></i></div>
+        <h5>${service.title}</h5>
+        <p>${service.copy}</p>
+        <div class="tag-row">${service.tags.map(tag => `<span class="stag">${tag}</span>`).join('')}</div>
+      </article>
+    </div>`).join('');
+
+  const introProjectMarkup = role.projects.slice(0, 3).map((project, index) => {
+    const media = project.image
+      ? `<img src="../images/${project.image}" alt="${project.title} project preview" loading="lazy" />`
+      : `<div class="result-card-art" aria-hidden="true"><i class="fas ${project.icon}"></i><span>${role.short}</span></div>`;
+    return `
+      <div class="col-md-6 col-xl-4 reveal delay-${index + 1}">
+        <a class="intro-project-link" href="https://github.com/HassanG04/${project.repo}" target="_blank" rel="noopener" aria-label="View ${project.title} on GitHub">
+          <article class="intro-project-card">
+            <div class="intro-project-media">${media}</div>
+            <div class="intro-project-body"><span class="intro-project-type">${project.type}</span><h3>${project.title}</h3><p>${project.copy}</p><span class="intro-project-cta"><i class="fab fa-github" aria-hidden="true"></i> View public repository</span></div>
+          </article>
+        </a>
+      </div>`;
+  }).join('');
 
   const projectMarkup = role.projects.map((project, index) => {
     const media = project.image
       ? `<img src="../images/${project.image}" alt="${project.title} project preview" loading="lazy" />`
-      : `<div class="role-project-art" aria-hidden="true"><i class="fas ${project.icon}"></i><span>${role.short}</span></div>`;
+      : `<div class="result-card-art" aria-hidden="true"><i class="fas ${project.icon}"></i><span>${role.short}</span></div>`;
     return `
-      <a class="role-project-link reveal delay-${(index % 3) + 1}" href="https://github.com/HassanG04/${project.repo}" target="_blank" rel="noopener" aria-label="View ${project.title} on GitHub">
-        <article class="role-project-card">
-          <div class="role-project-media">${media}</div>
-          <div class="role-project-body">
-            <span>${project.type}</span>
-            <h3>${project.title}</h3>
-            <p>${project.copy}</p>
-            <strong><i class="fab fa-github" aria-hidden="true"></i> Open public repository <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></strong>
-          </div>
-        </article>
-      </a>`;
+      <div class="col-md-6 col-xl-4 reveal delay-${(index % 3) + 1}">
+        <a class="portfolio-case-link" href="https://github.com/HassanG04/${project.repo}" target="_blank" rel="noopener" aria-label="View ${project.title} on GitHub">
+          <article class="result-card portfolio-case-card">
+            ${media}
+            <div class="result-card-body"><span class="result-metric">${project.type}</span><h3>${project.title}</h3><div class="case-study-copy"><p><span>Focus</span>${project.copy}</p><p class="case-outcome"><span>Evidence</span>Public implementation and project documentation available for review.</p></div><span class="case-link"><i class="fab fa-github" aria-hidden="true"></i> Open repository</span></div>
+          </article>
+        </a>
+      </div>`;
+  }).join('');
+
+  const allCredentials = {
+    cv: { image: 'cellula_cv.png', title: 'Cellula Robotics · Computer Vision', copy: 'Completed practical training in computer-vision workflows and model development.' },
+    ml: { image: 'cellula_ml.png', title: 'Cellula Robotics · Machine Learning', copy: 'Completed practical training in machine-learning preparation, modelling, and evaluation.' },
+    nlp: { image: 'cellula_nlp.png', title: 'Cellula Robotics · NLP', copy: 'Worked with text preprocessing, embeddings, transformers, and NLP deployment workflows.' },
+    ecpc: { image: 'icpc.png', title: '25th in ECPC Qualification', copy: 'Earned with my team through focused algorithmic problem-solving and preparation.', type: 'Achievement' },
+    bue: { image: 'BUE.jpeg', title: 'Fundamentals & Applications in AI', copy: 'Completed a 12-hour applied artificial-intelligence course at The British University in Egypt.', type: 'Training', imageClass: 'credential-card-image--bue' }
+  };
+  const credentialKeys = roleKey === 'AI' ? ['cv', 'ml', 'nlp'] : roleKey === 'ML' || roleKey === 'DS' ? ['ml', 'nlp', 'bue'] : ['ml', 'ecpc', 'bue'];
+  const credentialMarkup = credentialKeys.map((key, index) => {
+    const credential = allCredentials[key];
+    const imageClass = credential.imageClass ? ` class="${credential.imageClass}"` : '';
+    return `<div class="col-md-4 reveal delay-${index + 1}"><article class="credential-card"><button class="certificate-preview-trigger" type="button" data-certificate-preview data-certificate-src="../images/${credential.image}" data-certificate-title="${credential.title}" data-certificate-alt="${credential.title} certificate" aria-label="Inspect the ${credential.title} certificate"><img${imageClass} src="../images/${credential.image}" alt="${credential.title} certificate" loading="lazy" /><span class="certificate-preview-cue"><i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i> Inspect certificate</span></button><div><span>${credential.type || 'Internship'}</span><h3>${credential.title}</h3><p>${credential.copy}</p></div></article></div>`;
   }).join('');
 
   root.innerHTML = `
-    <header class="role-hero one-page-section" id="overview" data-scroll-label="Overview">
+    <header class="hero-section" id="home" data-scroll-label="Cover">
       <div class="container">
-        <div class="role-hero-grid">
-          <div class="role-hero-copy reveal-left">
-            <span class="role-eyebrow">${role.eyebrow}</span>
-            <h1><span>Hassan Gebril</span>${role.label}</h1>
-            <p class="role-hero-lead">${role.headline}</p>
-            <p>${role.description}</p>
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 order-2 order-lg-1">
+            <div class="hero-badge"><span class="pulse-dot"></span>Available for freelance &amp; internship opportunities</div>
+            <h1 class="hero-title"><span class="greeting">Hello, I'm</span><span class="name">Hassan Gebril</span></h1>
+            <div class="typewriter-wrap"><span class="typewriter-prefix">I am a&nbsp;</span><span class="typewriter-text" id="typewriter-text" data-words="${role.label}|${role.skills.slice(0, 3).join(' Specialist|')} Specialist">${role.label}</span><span class="typewriter-cursor"></span></div>
+            <p class="hero-desc">${role.description}</p>
             <div class="hero-actions">
-              <a href="#accomplishments" class="btn btn-primary">View relevant work <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i></a>
+              <a href="#accomplishments" class="btn btn-primary">View Selected Work <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i></a>
               <a href="${shared.cv}" target="_blank" rel="noopener" class="btn btn-cv"><i class="fas fa-file-alt" aria-hidden="true"></i> View CV</a>
+              <a href="#about" class="btn btn-glass">About Me</a>
             </div>
+            <div class="hero-social"><a href="${shared.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="${shared.github}" target="_blank" rel="noopener" class="social-btn github" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a></div>
           </div>
-          <div class="role-portrait-card reveal-right">
-            <div class="role-portrait-aura" aria-hidden="true"></div>
-            <img src="../images/profile.jpg" alt="Hassan Gebril — ${role.label}" />
-            <div class="role-portrait-caption"><span>Available for opportunities</span><strong>${role.label}</strong><small>Alexandria, Egypt · Remote-ready</small></div>
+          <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
+            <div class="hero-img-wrap"><a class="hero-contact-bubble" href="#contact" aria-label="Go to contact section"><i class="fas fa-paper-plane" aria-hidden="true"></i><span>Contact me</span></a><div class="hero-img-ring"><div class="hero-img-inner"><img src="../images/profile.jpg" alt="Hassan Gebril — ${role.label}" /></div></div><div class="float-badge b1"><div class="badge-ico p"><i class="fas fa-brain"></i></div><div><div style="font-size:.75rem;color:var(--text-muted);margin-bottom:1px;">Focus</div><div>${role.label}</div></div></div><div class="float-badge b2"><div class="badge-ico c"><i class="fas fa-code"></i></div><div><div style="font-size:.75rem;color:var(--text-muted);margin-bottom:1px;">Delivery</div><div>Evidence + Usable Result</div></div></div></div>
           </div>
         </div>
       </div>
     </header>
 
-    <section class="section-wrap one-page-section role-about-section" id="about" data-scroll-label="About">
+    <section id="introduction" class="section-wrap one-page-section" data-scroll-label="Introduction">
+      <div class="container"><div class="section-anchor-heading reveal"><span class="section-tag">Start here</span><h2 class="section-heading">Introduction</h2><p>Three public projects selected for ${roleDescriptor} opportunities.</p></div><div class="row g-4 intro-project-grid">${introProjectMarkup}</div></div>
+    </section>
+
+    <section class="section-wrap pt-0"><div class="container"><div class="intro-card reveal"><span class="section-tag">Who I help</span><h2>${role.headline}</h2><p>${role.promise}</p></div></div></section>
+
+    <section id="about" class="section-wrap one-page-section" data-scroll-label="About">
       <div class="container">
-        <div class="section-anchor-heading reveal">
-          <span class="section-tag">About</span>
-          <h2 class="section-heading">An AI foundation shaped for ${roleDescriptor} work.</h2>
-          <p>I combine technical curiosity, disciplined problem-solving, and a focus on making each result useful to the people who need it.</p>
-        </div>
-        <div class="role-about-grid">
-          <article class="role-about-card reveal-left">
-            <div class="role-about-photo"><img src="../images/profile.jpg" alt="Hassan Gebril" loading="lazy" /></div>
-            <div>
-              <span class="role-about-kicker">My story</span>
-              <h3>From AI study to practical delivery</h3>
-              <p>I’m Hassan Gebril, an Artificial Intelligence student at AASTMT on the Data Science track. My experience spans applied machine learning projects, an NLP internship at Cellula Robotics, and competitive problem-solving through ECPC.</p>
-              <p>${role.description} I care about clear assumptions, measurable evaluation, and a handoff that another person can understand.</p>
-            </div>
-          </article>
-          <aside class="role-about-profile reveal-right" aria-label="Education and experience highlights">
-            <span class="section-tag">At a glance</span>
-            <ul>
-              <li><i class="fas fa-graduation-cap" aria-hidden="true"></i><span><strong>B.Sc. Artificial Intelligence</strong>Data Science Track · AASTMT</span></li>
-              <li><i class="fas fa-briefcase" aria-hidden="true"></i><span><strong>NLP Intern</strong>Cellula Robotics</span></li>
-              <li><i class="fas fa-location-dot" aria-hidden="true"></i><span><strong>Alexandria, Egypt</strong>Available for remote collaboration</span></li>
-            </ul>
-          </aside>
-        </div>
-        <div class="role-fit-card reveal">
-          <div><span class="section-tag">Where I add value</span><h2>${role.promise}</h2></div>
-          <div class="role-skill-cloud" aria-label="Relevant skills">${role.skills.map(skill => `<span>${skill}</span>`).join('')}</div>
-        </div>
+        <div class="section-anchor-heading reveal"><span class="section-tag">Story, education &amp; experience</span><h2 class="section-heading">About <span class="grad-text">Me</span></h2><p>A developer from Alexandria who enjoys turning difficult ${roleDescriptor} ideas into clear, usable results.</p></div>
+        <div class="row g-5 align-items-center"><div class="col-lg-5 reveal-left"><div class="about-profile-panel"><div class="profile-image-wrapper"><img src="../images/profile.jpg" alt="Hassan Gebril" class="profile-image" loading="lazy" /></div><div class="about-profile-copy"><span>Alexandria, Egypt</span><h3>Curious by nature. Practical by choice.</h3><p>Competitive programming keeps my thinking disciplined, while design and storytelling help me explain technical work clearly.</p></div></div></div><div class="col-lg-7 reveal-right"><div class="about-story-card"><span class="section-tag">My story</span><h3>Code became my canvas for solving real problems.</h3><p>I was born and raised in Alexandria and studied at Sidi Gaber Language School, where close friends introduced me to coding and problem-solving.</p><p>That spark led me to Artificial Intelligence. Today, I bring that foundation to ${roleDescriptor} work: ${role.description}</p></div></div></div>
+        <div class="row g-4 mt-2"><div class="col-lg-6 reveal-left"><span class="section-tag">Education</span><div class="timeline-card education-summary-card"><div class="d-flex align-items-center gap-3 mb-3"><img src="../images/AASTMT_Logo.png" alt="AASTMT" class="education-logo" loading="lazy" /><div><div class="timeline-title">Arab Academy for Science &amp; Technology</div></div></div><div class="timeline-sub">B.Sc. Artificial Intelligence · Data Science Track</div><p>Focused on machine learning, computer vision, NLP, data science, and the engineering foundations required to turn models into applications.</p><div class="toolkit-tags">${role.skills.slice(0, 4).map(skill => `<span>${skill}</span>`).join('')}</div></div></div><div class="col-lg-6 reveal-right"><span class="section-tag">Experience</span><div class="experience-stack"><article class="experience-card"><div class="experience-icon"><i class="fas fa-robot"></i></div><div><span class="experience-type">Industry internships</span><h3>Cellula Robotics</h3><p>Completed training across Machine Learning, Computer Vision, and NLP.</p></div></article><article class="experience-card"><div class="experience-icon"><i class="fas fa-laptop-code"></i></div><div><span class="experience-type">Applied project work</span><h3>Independent ${role.label} Projects</h3><p>Built public projects selected specifically for this professional focus.</p></div></article><article class="experience-card"><div class="experience-icon"><i class="fas fa-people-group"></i></div><div><span class="experience-type">Professional training</span><h3>DEPI Soft Skills Program</h3><p>Strengthened communication, collaboration, and professional readiness.</p></div></article></div></div></div>
+        <div class="about-value-grid mt-4 reveal"><article><span>01</span><h3>Understand before building</h3><p>I start with the decision or workflow the solution needs to improve.</p></article><article><span>02</span><h3>Measure what matters</h3><p>I compare approaches and explain outcomes with meaningful evaluation.</p></article><article><span>03</span><h3>Make it usable</h3><p>I care about the interface, explanation, and handoff as much as the technical work.</p></article></div>
       </div>
     </section>
 
-    <section class="section-wrap one-page-section" id="services" data-scroll-label="Services">
-      <div class="container">
-        <div class="section-anchor-heading reveal">
-          <span class="section-tag">${role.label} services</span>
-          <h2 class="section-heading">How I can help</h2>
-          <p>Focused services matched to this role, with scope and tools made explicit.</p>
-        </div>
-        <div class="role-service-grid">${serviceMarkup}</div>
-      </div>
+    <section id="services" class="section-wrap one-page-section" data-scroll-label="Services">
+      <div class="container"><div class="text-center mb-5 reveal"><span class="section-tag">Offered services</span><h2 class="section-heading">Services</h2><p class="section-sub">Role-specific support for ${roleDescriptor} projects.</p></div><div class="row g-4">${serviceMarkup}</div></div>
     </section>
+
+    <section class="section-wrap pt-0"><div class="container"><div class="toolkit-panel reveal"><div><span class="section-tag">Core competencies</span><h2 class="section-heading mb-2">A practical ${role.label.toLowerCase()} toolkit.</h2><p>Tools selected around the work this page is designed to support.</p></div><div class="toolkit-tags" aria-label="Core technical skills">${role.skills.map(skill => `<span>${skill}</span>`).join('')}</div></div></div></section>
 
     <section id="activity" class="section-wrap one-page-section" data-scroll-label="Activity">
       <div class="container activity-main">
@@ -354,54 +359,36 @@
       </div>
     </section>
 
-    <section class="section-wrap one-page-section role-work-section" id="accomplishments" data-scroll-label="Accomplishments">
+    <section class="section-wrap one-page-section" id="accomplishments" data-scroll-label="Accomplishments">
       <div class="container">
         <div class="section-anchor-heading reveal">
-          <span class="section-tag">Credentials and public evidence</span>
+          <span class="section-tag">Credentials, achievements &amp; previous work</span>
           <h2 class="section-heading">Accomplishments</h2>
-          <p>Training, competition experience, and public projects that support this professional focus.</p>
+          <p>Verified learning milestones and public case studies selected for ${roleDescriptor} work.</p>
         </div>
-        <div class="row g-4 role-credential-grid">
-          <div class="col-md-4 reveal delay-1">
-            <article class="credential-card">
-              <button class="certificate-preview-trigger" type="button" data-certificate-preview data-certificate-src="../images/cellula_nlp.png" data-certificate-title="Cellula Robotics · NLP" data-certificate-alt="Cellula Robotics NLP internship certificate" aria-label="Inspect the Cellula Robotics NLP internship certificate">
-                <img src="../images/cellula_nlp.png" alt="Cellula Robotics NLP internship certificate" loading="lazy" />
-                <span class="certificate-preview-cue"><i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i> Inspect certificate</span>
-              </button>
-              <div><span>Internship</span><h3>Cellula Robotics · NLP</h3><p>Hands-on work with text preprocessing, embeddings, transformers, and NLP deployment workflows.</p></div>
-            </article>
-          </div>
-          <div class="col-md-4 reveal delay-2">
-            <article class="credential-card">
-              <button class="certificate-preview-trigger" type="button" data-certificate-preview data-certificate-src="../images/icpc.png" data-certificate-title="25th in ECPC Qualification" data-certificate-alt="ECPC qualification achievement certificate" aria-label="Inspect the ECPC qualification achievement certificate">
-                <img src="../images/icpc.png" alt="ECPC qualification achievement" loading="lazy" />
-                <span class="certificate-preview-cue"><i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i> Inspect certificate</span>
-              </button>
-              <div><span>Achievement</span><h3>25th in ECPC Qualification</h3><p>Earned with my team through focused algorithmic problem-solving and preparation.</p></div>
-            </article>
-          </div>
-          <div class="col-md-4 reveal delay-3">
-            <article class="credential-card">
-              <button class="certificate-preview-trigger" type="button" data-certificate-preview data-certificate-src="../images/BUE.jpeg" data-certificate-title="Fundamentals &amp; Applications in AI" data-certificate-alt="British University in Egypt AI certificate" aria-label="Inspect the British University in Egypt AI certificate">
-                <img class="credential-card-image--bue" src="../images/BUE.jpeg" alt="British University in Egypt AI certificate" loading="lazy" />
-                <span class="certificate-preview-cue"><i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i> Inspect certificate</span>
-              </button>
-              <div><span>Training</span><h3>Fundamentals &amp; Applications in AI</h3><p>A 12-hour applied artificial-intelligence course completed through The British University in Egypt.</p></div>
-            </article>
-          </div>
+        <div class="row g-4 mb-5">${credentialMarkup}</div>
+        <div class="section-subheading reveal"><span class="section-tag">Project case studies</span><h3>Previous Work</h3><p>Only public GitHub repositories that support this professional focus are shown here.</p></div>
+        <div class="row g-4">${projectMarkup}</div>
+      </div>
+    </section>
+
+    <section class="section-wrap pt-0">
+      <div class="container">
+        <div class="trust-panel reveal">
+          <div><span class="section-tag">Credibility</span><h2>Trust the work, not anonymous praise.</h2><p>Every claim on this page is backed by public code, inspectable credentials, or documented teamwork.</p></div>
+          <div class="trust-points"><a href="${shared.github}" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i><span><strong>Public source code</strong>Review implementation details</span></a><a href="#activity"><i class="fas fa-people-group" aria-hidden="true"></i><span><strong>Named collaborators</strong>See the ECPC journey</span></a><a href="#accomplishments"><i class="fas fa-certificate" aria-hidden="true"></i><span><strong>Inspectable credentials</strong>Open the certificates</span></a></div>
         </div>
-        <div class="role-project-heading reveal"><span class="section-tag">Selected public evidence</span><h3>Relevant previous work</h3><p>Only public GitHub repositories that support this professional focus are shown here.</p></div>
-        <div class="role-project-grid">${projectMarkup}</div>
       </div>
     </section>
 
     <section class="section-wrap one-page-section" id="contact" data-scroll-label="Contact">
       <div class="container">
-        <div class="role-contact-card reveal">
-          <div><span class="section-tag">Start a conversation</span><h2>Need ${contactRole} for your next project?</h2><p>Share the problem, available data, and outcome you need. I’ll help define a practical next step.</p></div>
-          <div class="role-contact-actions">
-            <a class="btn btn-primary" href="${shared.linkedin}" target="_blank" rel="noopener"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Contact on LinkedIn</a>
-            <a class="btn btn-glass" href="${shared.github}" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> GitHub profile</a>
+        <div class="cta-card reveal">
+          <h2>Need ${contactRole} for your next project?</h2>
+          <p>Share the problem, available data, and outcome you need. I’ll help define a practical next step.</p>
+          <div class="contact-actions">
+            <a class="btn btn-white" href="${shared.linkedin}" target="_blank" rel="noopener"><i class="fab fa-linkedin-in me-2" aria-hidden="true"></i>Discuss a Project</a>
+            <a class="btn btn-cta-secondary" href="${shared.github}" target="_blank" rel="noopener"><i class="fab fa-github me-2" aria-hidden="true"></i>Review My GitHub</a>
           </div>
         </div>
       </div>

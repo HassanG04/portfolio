@@ -232,7 +232,9 @@ document.addEventListener('DOMContentLoaded', function () {
      ============================================================ */
   const target = document.getElementById('typewriter-text');
   if (target) {
-    const words = ['Machine Learning Developer', 'Computer Vision Builder', 'NLP Developer', 'Python Web Developer'];
+    const words = target.dataset.words
+      ? target.dataset.words.split('|').map(word => word.trim()).filter(Boolean)
+      : ['Machine Learning Developer', 'Computer Vision Builder', 'NLP Developer', 'Python Web Developer'];
     let wi = 0, ci = words[0].length, deleting = true;
     function type() {
       const word = words[wi];
