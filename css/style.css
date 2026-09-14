@@ -3143,68 +3143,6 @@ html[data-theme="light"] .result-metric { color:var(--accent-purple-dark); }
   .certificate-viewer-media img { max-height:calc(100vh - 125px); border-radius:9px; }
 }
 
-/* ===== ROLE-FOCUSED PORTFOLIO ROUTES ===== */
-.career-tracks-section {
-  position:relative;
-  z-index:2;
-  padding:38px 0;
-  border-bottom:1px solid var(--border-glass);
-  background:linear-gradient(180deg,rgba(139,92,246,.055),transparent);
-}
-.career-tracks-heading {
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);
-  align-items:end;
-  gap:36px;
-  margin-bottom:24px;
-}
-.career-tracks-heading h2 { margin:7px 0 0; font-size:clamp(1.65rem,3vw,2.35rem); }
-.career-tracks-heading p { margin:0; line-height:1.72; }
-.career-track-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
-.career-track-card {
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  gap:11px;
-  min-width:0;
-  padding:17px 15px;
-  border:1px solid var(--border-glass);
-  border-radius:16px;
-  color:var(--text-primary);
-  background:var(--bg-card);
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
-  text-decoration:none;
-  transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease,background .35s ease;
-}
-.career-track-card > span {
-  display:grid;
-  place-items:center;
-  width:38px;
-  height:38px;
-  border-radius:12px;
-  color:#fff;
-  background:var(--gradient-primary);
-  font-size:.7rem;
-  font-weight:850;
-  letter-spacing:.06em;
-}
-.career-track-card strong { overflow:hidden; font-size:.82rem; text-overflow:ellipsis; white-space:nowrap; }
-.career-track-card > i { color:var(--accent-purple-light); font-size:.75rem; transition:transform .3s ease; }
-.career-track-card:hover,
-.career-track-card:focus-visible { color:var(--text-primary); border-color:var(--border-accent); background:var(--bg-elevated); box-shadow:0 16px 38px rgba(76,29,149,.16); transform:translateY(-4px); }
-.career-track-card:hover > i,
-.career-track-card:focus-visible > i { transform:translateX(4px); }
-@media(max-width:991.98px) {
-  .career-track-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
-}
-@media(max-width:767.98px) {
-  .career-tracks-heading { grid-template-columns:1fr; gap:12px; }
-  .career-track-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
-@media(max-width:420px) {
-  .career-track-grid { grid-template-columns:1fr; }
-  .career-track-card strong { font-size:.88rem; }
-}
 .section-subheading { margin:0 0 30px; }
 .section-subheading h3 { margin:0 0 7px; font-size:clamp(1.65rem,3vw,2.3rem); }
 .section-subheading p { margin:0; }
