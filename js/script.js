@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  const portfolioAssetRoot = document.documentElement.dataset.assetRoot || '';
+  const portfolioAssetUrl = path => new URL(`${portfolioAssetRoot}${path}`, document.baseURI).href;
+
   /* ============================================================
      PAGE LOADER
      ============================================================ */
@@ -388,17 +391,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const activityFlipCards = Array.from(document.querySelectorAll('[data-flip-card]'));
   const activityFlipTimers = new WeakMap();
   const activitySoundDefinitions = {
-    boot: { url: new URL('sounds/boot.mp3', document.baseURI).href, volume: 0.35 },
-    cursor: { url: new URL('sounds/cursor.mp3', document.baseURI).href, volume: 0.22 },
-    select: { url: new URL('sounds/select.mp3', document.baseURI).href, volume: 0.35 },
-    select2: { url: new URL('sounds/select2.mp3', document.baseURI).href, volume: 0.35 }
+    boot: { url: portfolioAssetUrl('sounds/boot.mp3'), volume: 0.35 },
+    cursor: { url: portfolioAssetUrl('sounds/cursor.mp3'), volume: 0.22 },
+    select: { url: portfolioAssetUrl('sounds/select.mp3'), volume: 0.35 },
+    select2: { url: portfolioAssetUrl('sounds/select2.mp3'), volume: 0.35 }
   };
   if (activityFlipCards.length) {
     Object.assign(activitySoundDefinitions, {
-      back: { url: new URL('sounds/back.mp3', document.baseURI).href, volume: 0.25 },
-      front: { url: new URL('sounds/front.mp3', document.baseURI).href, volume: 0.25 },
-      left: { url: new URL('sounds/left.mp3', document.baseURI).href, volume: 0.5 },
-      right: { url: new URL('sounds/right.mp3', document.baseURI).href, volume: 0.5 }
+      back: { url: portfolioAssetUrl('sounds/back.mp3'), volume: 0.25 },
+      front: { url: portfolioAssetUrl('sounds/front.mp3'), volume: 0.25 },
+      left: { url: portfolioAssetUrl('sounds/left.mp3'), volume: 0.5 },
+      right: { url: portfolioAssetUrl('sounds/right.mp3'), volume: 0.5 }
     });
   }
   const activitySoundBuffers = new Map();
@@ -414,7 +417,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const ambienceTooltip = document.getElementById('ambienceTooltip');
   const ambienceVolumeSlider = document.getElementById('ambienceVolume');
   const ambienceVolumeValue = document.getElementById('ambienceVolumeValue');
-  const ambienceAudio = new Audio(new URL('sounds/ambience.mp3', document.baseURI).href);
+  const ambienceAudio = new Audio(portfolioAssetUrl('sounds/ambience.mp3'));
   let ambienceVolume = 0.14;
   const ambiencePreferenceKey = 'portfolio_ambience_enabled';
   const ambienceVolumePreferenceKey = 'portfolio_ambience_volume';
@@ -797,6 +800,10 @@ document.addEventListener('DOMContentLoaded', function () {
     '.credential-card',
     '.intro-project-link',
     '.portfolio-case-link',
+    '.career-track-card',
+    '.role-track-link',
+    '.role-project-link',
+    '.role-service-card',
     '.hero-contact-bubble',
     '.cta-card',
     '[data-flip-card]',

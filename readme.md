@@ -1,6 +1,6 @@
 # Hassan Gebril — Portfolio
 
-A responsive, single-page portfolio for Hassan Gebril, a Machine Learning Developer and AI Engineer. It presents services, experience, activities, credentials, project case studies, and contact details in one focused experience.
+A responsive portfolio for Hassan Gebril, with a complete general homepage and focused variants for AI, machine learning, data science, data analysis, and data engineering opportunities.
 
 [View the live portfolio](https://hassang04.github.io/portfolio/) · [View the GitHub repository](https://github.com/HassanG04/portfolio)
 
@@ -14,6 +14,12 @@ A responsive, single-page portfolio for Hassan Gebril, a Machine Learning Develo
 - Scroll-aware navigation, smooth motion, and interface sound cues.
 - A three-second activity-card hint triggered only when Activity enters view.
 - Responsive layouts for desktop, tablet, and mobile.
+- Clean role-focused routes with tailored positioning, services, skills, and public GitHub work:
+  - `/AI/` — AI Engineer
+  - `/ML/` — Machine Learning Engineer
+  - `/DS/` — Data Scientist
+  - `/DA/` — Data Analyst
+  - `/DE/` — Data Engineer
 
 ## Technology
 
@@ -29,11 +35,18 @@ A responsive, single-page portfolio for Hassan Gebril, a Machine Learning Develo
 portfolio/
 ├── index.html          # Complete portfolio and GitHub Pages entry point
 ├── home.html           # Lightweight redirect for old shared links
+├── AI/index.html       # AI Engineer portfolio route
+├── ML/index.html       # Machine Learning Engineer portfolio route
+├── DS/index.html       # Data Scientist portfolio route
+├── DA/index.html       # Data Analyst portfolio route
+├── DE/index.html       # Data Engineer portfolio route
 ├── favicon.ico
 ├── css/
-│   └── style.css
+│   ├── style.css
+│   └── role-page.css   # Shared role-page layout
 ├── js/
-│   └── script.js
+│   ├── script.js
+│   └── role-page.js    # Shared role-specific content and rendering
 ├── images/             # Portfolio images used by index.html
 └── sounds/             # Interface sound cues
 ```
@@ -42,4 +55,14 @@ GitHub Pages serves `index.html` automatically, keeping the public address clean
 
 ```text
 https://hassang04.github.io/portfolio/
+```
+
+Role pages use directory indexes, so their public addresses stay clean as well:
+
+```text
+https://hassang04.github.io/portfolio/AI/
+https://hassang04.github.io/portfolio/ML/
+https://hassang04.github.io/portfolio/DS/
+https://hassang04.github.io/portfolio/DA/
+https://hassang04.github.io/portfolio/DE/
 ```
