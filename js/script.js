@@ -79,6 +79,43 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ============================================================
+     PORTFOLIO MENU — role directory on desktop, full nav on mobile
+     ============================================================ */
+  const portfolioMenu = document.getElementById('portfolioMenu');
+  const portfolioMenuToggle = document.getElementById('portfolioMenuToggle');
+
+  function setPortfolioMenu(open) {
+    if (!portfolioMenu || !portfolioMenuToggle) return;
+    portfolioMenu.classList.toggle('is-open', open);
+    portfolioMenuToggle.classList.toggle('is-open', open);
+    portfolioMenuToggle.setAttribute('aria-expanded', String(open));
+    portfolioMenu.setAttribute('aria-hidden', String(!open));
+    portfolioMenu.inert = !open;
+
+    const icon = portfolioMenuToggle.querySelector('i');
+    if (icon) icon.className = open ? 'fas fa-xmark' : 'fas fa-bars';
+  }
+
+  portfolioMenuToggle?.addEventListener('click', event => {
+    event.stopPropagation();
+    setPortfolioMenu(!portfolioMenu?.classList.contains('is-open'));
+  });
+
+  document.addEventListener('pointerdown', event => {
+    if (!portfolioMenu?.classList.contains('is-open')) return;
+    if (portfolioMenu.contains(event.target) || portfolioMenuToggle?.contains(event.target)) return;
+    setPortfolioMenu(false);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !portfolioMenu?.classList.contains('is-open')) return;
+    setPortfolioMenu(false);
+    portfolioMenuToggle?.focus();
+  });
+
+  window.addEventListener('resize', () => setPortfolioMenu(false), { passive: true });
+
+  /* ============================================================
      SINGLE-PAGE NAVIGATION — highlight the section being viewed
      ============================================================ */
   const sectionNavLinks = Array.from(document.querySelectorAll('.nav-link[href^="#"]'));
@@ -132,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', updateActiveSection, { passive: true });
   updateActiveSection();
 
-  const navbarMenu = document.getElementById('navbarNav');
   sectionNavLinks.forEach(link => {
     link.addEventListener('click', () => {
       sectionCueNavigationTarget = link.getAttribute('href')?.slice(1) || null;
@@ -142,8 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sectionCueNavigationTarget = null;
       }, 2000);
 
-      if (!navbarMenu?.classList.contains('show') || !window.bootstrap?.Collapse) return;
-      window.bootstrap.Collapse.getOrCreateInstance(navbarMenu).hide();
+      setPortfolioMenu(false);
     });
   });
 
@@ -427,13 +462,15 @@ document.addEventListener('DOMContentLoaded', function () {
   let ambienceFadeFrame = 0;
   let ambienceFadeSequence = 0;
   let ambiencePlayAttempt = null;
+  let ambienceLoopTransitioning = false;
+  const ambienceLoopFadeWindow = 2.8;
   let bootCuePending = true;
   let bootCueAttempt = null;
 
   bootAudio.preload = 'auto';
   bootAudio.volume = activitySoundDefinitions.boot.volume;
   ambienceAudio.preload = 'auto';
-  ambienceAudio.loop = true;
+  ambienceAudio.loop = false;
   ambienceAudio.volume = 0;
 
   function readPreferenceCookie(name) {
@@ -533,8 +570,42 @@ document.addEventListener('DOMContentLoaded', function () {
     ambienceFadeFrame = window.requestAnimationFrame(step);
   }
 
+  function restartAmbienceLoop() {
+    if (!ambienceEnabled) {
+      ambienceLoopTransitioning = false;
+      return;
+    }
+
+    ambienceAudio.currentTime = 0;
+    ambienceAudio.volume = 0;
+    ambienceLoopTransitioning = false;
+    const resume = ambienceAudio.paused ? ambienceAudio.play() : Promise.resolve();
+    Promise.resolve(resume)
+      .then(() => {
+        if (ambienceEnabled) fadeAmbienceTo(ambienceVolume, 2600);
+      })
+      .catch(() => {});
+  }
+
+  function beginAmbienceLoopTransition() {
+    if (ambienceLoopTransitioning || !ambienceEnabled || ambienceAudio.paused) return;
+    ambienceLoopTransitioning = true;
+    const remaining = Math.max(0, ambienceAudio.duration - ambienceAudio.currentTime);
+    const fadeDuration = Math.max(500, Math.min(2200, remaining * 820));
+    fadeAmbienceTo(0, fadeDuration, restartAmbienceLoop);
+  }
+
+  ambienceAudio.addEventListener('timeupdate', () => {
+    if (!Number.isFinite(ambienceAudio.duration)) return;
+    if (ambienceAudio.duration - ambienceAudio.currentTime <= ambienceLoopFadeWindow) {
+      beginAmbienceLoopTransition();
+    }
+  });
+  ambienceAudio.addEventListener('ended', restartAmbienceLoop);
+
   async function startAmbience(fadeFromSilence = false) {
     if (!ambienceEnabled) return false;
+    ambienceLoopTransitioning = false;
     if (!ambienceAudio.paused) {
       if (fadeFromSilence) ambienceAudio.volume = 0;
       fadeAmbienceTo(ambienceVolume, 2600);
@@ -561,6 +632,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function stopAmbience() {
+    ambienceLoopTransitioning = false;
     if (ambienceAudio.paused) {
       ambienceAudio.volume = 0;
       return;
@@ -572,6 +644,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function setAmbienceEnabled(enabled) {
     ambienceEnabled = enabled;
+    ambienceLoopTransitioning = false;
     writePreferenceCookie(ambiencePreferenceKey, String(enabled));
     updateAmbienceToggle();
     if (enabled) void startAmbience(true);
@@ -585,7 +658,9 @@ document.addEventListener('DOMContentLoaded', function () {
     ambienceVolume = Math.max(0, Math.min(1, Number(event.currentTarget.value) / 100));
     writePreferenceCookie(ambienceVolumePreferenceKey, String(ambienceVolume));
     updateAmbienceVolumeControl();
-    if (ambienceEnabled && !ambienceAudio.paused) fadeAmbienceTo(ambienceVolume, 140);
+    if (ambienceEnabled && !ambienceAudio.paused && !ambienceLoopTransitioning) {
+      fadeAmbienceTo(ambienceVolume, 140);
+    }
   });
   ambienceVolumeSlider?.addEventListener('change', () => {
     if (ambienceEnabled) void startAmbience();

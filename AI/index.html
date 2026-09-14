@@ -16,16 +16,71 @@
   <link rel="icon" type="image/x-icon" href="../images/favicon.ico?v=20260908" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="../css/style.css?v=20260914-7" />
+  <link rel="stylesheet" href="../css/style.css?v=20260914-8" />
 </head>
 <body data-role="AI">
   <div id="page-loader"><div class="loader-inner"><a class="loader-logo" href="#home" aria-label="Go to home section">HG.</a><div class="loader-ring"></div></div></div>
   <canvas id="particle-canvas"></canvas>
-  <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="#home">HG.</a><button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto align-items-center gap-1"><li class="nav-item"><a class="nav-link active" href="#home">Home</a></li><li class="nav-item"><a class="nav-link" href="#about">About</a></li><li class="nav-item"><a class="nav-link" href="#services">Services</a></li><li class="nav-item"><a class="nav-link" href="#activity">Activity</a></li><li class="nav-item"><a class="nav-link" href="#accomplishments">Accomplishments</a></li><li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li></ul></div><div class="navbar-utility-controls"><div class="ambience-control navbar-ambience-control" role="group" aria-label="Ambience controls"><button class="ambience-toggle is-muted" id="ambienceToggle" type="button" aria-label="Enable Ambience" aria-describedby="ambienceTooltip" aria-pressed="false"><i class="fas fa-volume-xmark" aria-hidden="true"></i><span class="ambience-tooltip" id="ambienceTooltip" role="tooltip">Enable Ambience</span></button><label class="ambience-volume-control" for="ambienceVolume"><span class="visually-hidden">Ambience volume</span><input class="ambience-volume-slider" id="ambienceVolume" type="range" min="0" max="100" step="1" value="14" aria-label="Ambience volume" aria-describedby="ambienceVolumeValue" /><output class="ambience-volume-value" id="ambienceVolumeValue" for="ambienceVolume">14%</output></label></div><button id="darkModeToggle" class="dark-toggle" type="button" aria-label="Switch color theme"><i class="fas fa-moon" aria-hidden="true"></i><span class="theme-toggle-label">Dark</span></button></div></div></nav>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#home">HG.</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center gap-1">
+          <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#activity">Activity</a></li>
+          <li class="nav-item"><a class="nav-link" href="#accomplishments">Accomplishments</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="navbar-utility-controls">
+        <div class="ambience-control navbar-ambience-control" role="group" aria-label="Ambience controls">
+          <button class="ambience-toggle is-muted" id="ambienceToggle" type="button" aria-label="Enable Ambience" aria-describedby="ambienceTooltip" aria-pressed="false">
+            <i class="fas fa-volume-xmark" aria-hidden="true"></i>
+            <span class="ambience-tooltip" id="ambienceTooltip" role="tooltip">Enable Ambience</span>
+          </button>
+          <label class="ambience-volume-control" for="ambienceVolume">
+            <span class="visually-hidden">Ambience volume</span>
+            <input class="ambience-volume-slider" id="ambienceVolume" type="range" min="0" max="100" step="1" value="14" aria-label="Ambience volume" aria-describedby="ambienceVolumeValue" />
+            <output class="ambience-volume-value" id="ambienceVolumeValue" for="ambienceVolume">14%</output>
+          </label>
+        </div>
+        <button id="darkModeToggle" class="dark-toggle" type="button" aria-label="Switch color theme">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+          <span class="theme-toggle-label">Dark</span>
+        </button>
+        <button class="portfolio-menu-toggle" id="portfolioMenuToggle" type="button" aria-controls="portfolioMenu" aria-expanded="false" aria-label="Browse portfolio pages">
+          <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="portfolio-menu" id="portfolioMenu" aria-hidden="true" inert>
+        <div class="portfolio-menu-mobile-nav" role="navigation" aria-label="Page sections">
+          <a class="nav-link active" href="#home">Home</a>
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#services">Services</a>
+          <a class="nav-link" href="#activity">Activity</a>
+          <a class="nav-link" href="#accomplishments">Accomplishments</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </div>
+        <div class="portfolio-menu-heading">
+          <span>Portfolio directory</span>
+          <strong>Choose a professional focus</strong>
+        </div>
+        <div class="portfolio-role-links">
+          <a class="portfolio-role-link" data-role-link="AI" href="../AI/"><span>AI</span><strong>AI Engineer</strong><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+          <a class="portfolio-role-link" data-role-link="ML" href="../ML/"><span>ML</span><strong>Machine Learning</strong><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+          <a class="portfolio-role-link" data-role-link="DS" href="../DS/"><span>DS</span><strong>Data Scientist</strong><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+          <a class="portfolio-role-link" data-role-link="DA" href="../DA/"><span>DA</span><strong>Data Analyst</strong><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+          <a class="portfolio-role-link" data-role-link="DE" href="../DE/"><span>DE</span><strong>Data Engineer</strong><i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+  </nav>
   <main id="rolePageRoot"></main>
   <footer><div class="container text-center"><a class="footer-brand" href="#home" aria-label="Go to home section">HG.</a><p class="footer-tagline">Hassan Gebril — <span data-role-label>AI Engineer</span></p><div class="footer-social justify-content-center"><a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" rel="noopener" class="social-btn linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="https://github.com/HassanG04" target="_blank" rel="noopener" class="social-btn github" aria-label="GitHub"><i class="fab fa-github"></i></a></div><div class="footer-divider"></div><p class="footer-copy">&copy; 2026 Hassan Gebril. Built with curiosity and care.</p></div></footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/role-page.js?v=20260914-6"></script>
-  <script src="../js/script.js?v=20260914-4"></script>
+  <script src="../js/script.js?v=20260914-5"></script>
 </body>
 </html>
