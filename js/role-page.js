@@ -118,6 +118,7 @@
   const serviceMarkup = role.services.map((service, index) => `
     <div class="col-md-6 col-xl-4 reveal delay-${(index % 3) + 1}">
       <article class="skill-card">
+        <span class="service-index" aria-hidden="true">0${index + 1}</span>
         <div class="skill-icon"><i class="fas ${service.icon}" aria-hidden="true"></i></div>
         <h5>${service.title}</h5>
         <p>${service.copy}</p>
@@ -128,7 +129,7 @@
   const introProjectMarkup = role.projects.slice(0, 3).map((project, index) => {
     const media = project.image
       ? `<img src="../images/${project.image}" alt="${project.title} project preview" loading="lazy" />`
-      : `<div class="result-card-art" aria-hidden="true"><i class="fas ${project.icon}"></i><span>${role.short}</span></div>`;
+      : `<div class="result-card-art project-visual project-visual--${roleKey.toLowerCase()}" aria-hidden="true"><span class="project-visual-icon"><i class="fas ${project.icon}"></i></span><span class="project-visual-label"><small>Public project</small>${project.title}</span></div>`;
     return `
       <div class="col-md-6 col-xl-4 reveal delay-${index + 1}">
         <a class="intro-project-link" href="https://github.com/HassanG04/${project.repo}" target="_blank" rel="noopener" aria-label="View ${project.title} on GitHub">
@@ -143,7 +144,7 @@
   const projectMarkup = role.projects.map((project, index) => {
     const media = project.image
       ? `<img src="../images/${project.image}" alt="${project.title} project preview" loading="lazy" />`
-      : `<div class="result-card-art" aria-hidden="true"><i class="fas ${project.icon}"></i><span>${role.short}</span></div>`;
+      : `<div class="result-card-art project-visual project-visual--${roleKey.toLowerCase()}" aria-hidden="true"><span class="project-visual-icon"><i class="fas ${project.icon}"></i></span><span class="project-visual-label"><small>${role.short} portfolio</small>${project.title}</span></div>`;
     return `
       <div class="col-md-6 col-xl-4 reveal delay-${(index % 3) + 1}">
         <a class="portfolio-case-link" href="https://github.com/HassanG04/${project.repo}" target="_blank" rel="noopener" aria-label="View ${project.title} on GitHub">
@@ -162,7 +163,8 @@
     ecpc: { image: 'icpc.png', title: '25th in ECPC Qualification', copy: 'Earned with my team through focused algorithmic problem-solving and preparation.', type: 'Achievement' },
     bue: { image: 'BUE.jpeg', title: 'Fundamentals & Applications in AI', copy: 'Completed a 12-hour applied artificial-intelligence course at The British University in Egypt.', type: 'Training', imageClass: 'credential-card-image--bue' }
   };
-  const credentialKeys = roleKey === 'AI' ? ['cv', 'ml', 'nlp'] : roleKey === 'ML' || roleKey === 'DS' ? ['ml', 'nlp', 'bue'] : ['ml', 'ecpc', 'bue'];
+  const roleCredential = { AI: 'cv', ML: 'ml', DS: 'ml', DA: 'ml', DE: 'ml' }[roleKey];
+  const credentialKeys = [roleCredential, 'bue', 'ecpc'];
   const credentialMarkup = credentialKeys.map((key, index) => {
     const credential = allCredentials[key];
     const imageClass = credential.imageClass ? ` class="${credential.imageClass}"` : '';
@@ -191,6 +193,16 @@
         </div>
       </div>
     </header>
+
+    <section class="role-signature-wrap" aria-label="${role.label} portfolio focus">
+      <div class="container">
+        <div class="role-signature reveal">
+          <span class="role-signature-code" aria-hidden="true">${role.short}</span>
+          <div class="role-signature-copy"><span class="section-tag">Portfolio focus</span><h2>${role.headline}</h2></div>
+          <div class="role-signature-points" aria-label="Core ${role.label} services">${role.services.map(service => `<span><i class="fas fa-check" aria-hidden="true"></i>${service.title}</span>`).join('')}</div>
+        </div>
+      </div>
+    </section>
 
     <section id="introduction" class="section-wrap one-page-section" data-scroll-label="Introduction">
       <div class="container"><div class="section-anchor-heading reveal"><span class="section-tag">Start here</span><h2 class="section-heading">Introduction</h2><p>Three public projects selected for ${roleDescriptor} opportunities.</p></div><div class="row g-4 intro-project-grid">${introProjectMarkup}</div></div>
