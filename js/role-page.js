@@ -1,6 +1,12 @@
 (() => {
   const shared = {
-    cv: 'https://drive.google.com/drive/folders/1PpwyqrEFpiQ_cHfw4pXXlBEPmE6P9rpv?usp=sharing',
+    resumes: {
+      AI: 'https://drive.google.com/file/d/1OtvoA3evwZXAcb-kifyhtX20TDkF-zF1/view?usp=sharing',
+      ML: 'https://drive.google.com/file/d/1QwQu9VR7pfQ150LYLhrRi9tzvpEFT1UZ/view?usp=drive_link',
+      DS: 'https://drive.google.com/file/d/1Hv3CbecJJjHXBKa5ne9_1nqPhPpaRrpr/view?usp=drive_link',
+      DA: 'https://drive.google.com/file/d/1mbtZ-syqCMoyOxkj6yaczp5xED4QxzLO/view?usp=drive_link',
+      DE: 'https://drive.google.com/file/d/1itIBuVUK0YW5qgI82nqqoZzbameo5YXP/view?usp=sharing'
+    },
     linkedin: 'https://www.linkedin.com/in/hassan-gebrill-98a08a299/',
     github: 'https://github.com/HassanG04'
   };
@@ -112,6 +118,7 @@
   const role = roles[roleKey];
   const root = document.getElementById('rolePageRoot');
   if (!role || !root) return;
+  const resumeUrl = shared.resumes[roleKey];
   const roleDescriptor = roleKey === 'AI' ? 'AI engineer' : role.label.toLowerCase();
   const contactRole = roleKey === 'AI' ? 'an AI engineer' : `a ${role.label.toLowerCase()}`;
 
@@ -182,7 +189,7 @@
             <p class="hero-desc">${role.description}</p>
             <div class="hero-actions">
               <a href="#accomplishments" class="btn btn-primary">View Selected Work <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i></a>
-              <a href="${shared.cv}" target="_blank" rel="noopener" class="btn btn-cv"><i class="fas fa-file-alt" aria-hidden="true"></i> View CV</a>
+              <a href="${resumeUrl}" target="_blank" rel="noopener" class="btn btn-cv"><i class="fas fa-file-alt" aria-hidden="true"></i> View ${role.short} Résumé</a>
               <a href="#about" class="btn btn-glass">About Me</a>
             </div>
             <div class="hero-social"><a href="${shared.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="${shared.github}" target="_blank" rel="noopener" class="social-btn github" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a></div>
@@ -220,7 +227,7 @@
     </section>
 
     <section id="services" class="section-wrap one-page-section" data-scroll-label="Services">
-      <div class="container"><div class="text-center mb-5 reveal"><span class="section-tag">Offered services</span><h2 class="section-heading">Services</h2><p class="section-sub">Role-specific support for ${roleDescriptor} projects.</p></div><div class="row g-4">${serviceMarkup}</div></div>
+      <div class="container"><div class="section-anchor-heading service-section-heading reveal"><span class="section-tag">Offered services</span><h2 class="section-heading">Services</h2><p class="section-sub">Role-specific support for ${roleDescriptor} projects.</p></div><div class="row g-4 service-card-grid">${serviceMarkup}</div></div>
     </section>
 
     <section class="section-wrap pt-0"><div class="container"><div class="toolkit-panel reveal"><div><span class="section-tag">Core competencies</span><h2 class="section-heading mb-2">A practical ${role.label.toLowerCase()} toolkit.</h2><p>Tools selected around the work this page is designed to support.</p></div><div class="toolkit-tags" aria-label="Core technical skills">${role.skills.map(skill => `<span>${skill}</span>`).join('')}</div></div></div></section>
