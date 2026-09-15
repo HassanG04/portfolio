@@ -48,7 +48,7 @@
       projects: [
         { type: 'Reproducible ML · Healthcare', title: 'Heart Disease Prediction', copy: 'Train-only preprocessing, held-out evaluation and real Django random-forest serving tests; educational only.', repo: 'yet_another_heart_disease_application', image: 'heart_disease.png' },
         { type: 'Model Serving · ONNX', title: 'Uber Fare Prediction', copy: 'Real ONNX Runtime inference through a validated Express API and a focused React interface.', repo: 'Uber-Fare-Prediction', image: 'uber_fare.png' },
-        { type: 'ML Systems · Relational Lineage', title: 'Hotel Cancellation Prediction', copy: 'Reusable XGBoost training, FastAPI serving, prediction lineage and Alembic migrations; PostgreSQL/container verification remains pending.', repo: 'Hotel-Cancellation-Prediciton', icon: 'fa-hotel' },
+        { type: 'ML Systems · Relational Lineage', title: 'Hotel Cancellation Prediction', copy: 'Reusable XGBoost training, FastAPI serving and Alembic lineage; actual PostgreSQL tests and Docker Compose startup passed in CI.', repo: 'Hotel-Cancellation-Prediciton', icon: 'fa-hotel' },
         { type: 'Reproducible ML · Native Export', title: 'Heart Detection Model', copy: 'Fixed-seed training, train-only imputation, explicit feature schema, native XGBoost export and tested CLI inference.', repo: 'heart-detection-model', icon: 'fa-heart-pulse' }
       ]
     },
@@ -107,7 +107,7 @@
       ],
       projects: [
         { type: 'Data Engineering · Validated ETL', title: 'Supermarket Sales ETL', copy: 'Schema validation, reject records, deduplication, financial reconciliation and repeatable clean CSV plus quality/business JSON outputs.', repo: 'DEPI_TASKS', icon: 'fa-database' },
-        { type: 'Data Modeling · Prediction Lineage', title: 'Hotel Cancellation Prediction', copy: 'Relational users, hotels, observations and model versions with constraints, indexes and migrations; PostgreSQL runtime verification remains pending.', repo: 'Hotel-Cancellation-Prediciton', icon: 'fa-hotel' },
+        { type: 'Data Modeling · Prediction Lineage', title: 'Hotel Cancellation Prediction', copy: 'Relational users, hotels, observations and model versions with constraints, indexes and migrations, verified against real PostgreSQL in CI.', repo: 'Hotel-Cancellation-Prediciton', icon: 'fa-hotel' },
         { type: 'Image Data · Processing Workflow', title: 'River Flood Protection', copy: 'Organises satellite inputs, segmentation processing, saved model artefacts, and a Flask review step.', repo: 'River-Flood-Prediction', image: 'river_flood.jpg' },
         { type: 'ML Data · Validation', title: 'Heart Detection Model', copy: 'Train-only imputation, missingness reporting, explicit one-hot schema and isolated evaluation splits.', repo: 'heart-detection-model', icon: 'fa-folder-tree' }
       ]

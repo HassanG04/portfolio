@@ -11,7 +11,7 @@ merged before the default-branch portfolio reflects this work.
 |---|---|---|
 | Python | ✅ | Tested packages, CLIs, pipelines and services across DEPI_TASKS, heart-detection-model, Cellula_LSTM_Week1, RAG_Cellula_Week_3 and others |
 | SQL | ✅ | Hotel-Cancellation-Prediciton: relational schema, foreign keys, uniqueness/check constraints, indexes, Alembic migration and cascade tests |
-| PostgreSQL | 🟡 | Hotel: real PostgreSQL driver/configuration, Compose service and migration; local tests used SQLite, remote engine verification pending |
+| PostgreSQL | ✅ | Hotel: relational driver/configuration/DDL/migration and ten actual PostgreSQL integration tests passed in remote CI |
 | MongoDB | 🔴 | Legacy hotel/ride code is not maintained portfolio evidence; unnecessary MongoDB dependency removed from the supported architecture |
 | ETL/ELT | ✅ | DEPI_TASKS: CSV ingestion → validation → normalization/deduplication → clean/reject outputs → quality and business summaries; real source run |
 | Data validation | ✅ | DEPI financial reconciliation; hotel closed feature contract; heart schema; flood pairing/mask ranges; video feature dimensions |
@@ -19,8 +19,8 @@ merged before the default-branch portfolio reflects this work.
 | Airflow | 🔴 | Not added: no current scheduled, incremental, dependency-heavy pipeline justifies its operational complexity |
 | Spark | 🔴 | Not added: current local datasets/workloads do not demonstrate a distributed-processing need |
 | Data warehouse | 🔴 | Not added: no implemented historical business analytics system requiring a cloud warehouse |
-| Docker | 🟡 | Hotel non-root Dockerfile, application/database Compose, volumes/health checks and container CI job; local Docker unavailable |
-| CI/CD | 🟡 | Real test/lint/build workflows in all supported code repositories; portfolio Pages workflow validates before publication. Remote run results must be checked |
+| Docker | ✅ | Hotel: actual image build, health-checked application/PostgreSQL Compose startup, health/docs requests and cleanup passed in remote CI |
+| CI/CD | ✅ | All seventeen code/site review-branch workflow suites passed actual remote execution at the recorded commits; real test/lint/build gates and hotel PostgreSQL/container jobs. Pages publishing is configured but this overhaul is not deployed |
 | AWS/GCP/Azure | 🔴 | No cloud deployment was provisioned or verified; GitHub Actions/Pages are not AWS/GCP/Azure evidence |
 | APIs | ✅ | Hotel authenticated FastAPI prediction API; Uber real ONNX HTTP inference; Django/Flask bounded inputs and safe error/health paths |
 | ML pipelines | ✅ | Hotel/heart/LSTM real retraining with isolated splits, source checksums, metadata and held-out reports; flood synthetic checkpoint smoke test |

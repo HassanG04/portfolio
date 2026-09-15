@@ -10,11 +10,13 @@ unavailable repositories are not claimed as inspected. In particular, the old po
 `cancer_cell_detection` reference was absent from the available owner inventory and was
 replaced with the verified supermarket ETL project rather than unsupported metrics.
 
-Changes are prepared for `codex/portfolio-overhaul` review branches. Default branches and live
+Changes are published on `codex/portfolio-overhaul` review branches in all eighteen changed
+repositories. Default branches and live
 deployments have not been overwritten. `repository-scan.json` records the original Git heads,
 complete original trees, workflows/tests and large artifacts. `validation-results.json`
 records the actual local check commands, exit codes and output. The skills matrix is separate
-in `skills-matrix.md`. Generated local clones/runtimes are excluded from this site's Git tree
+in `skills-matrix.md`; `publication-status.md` links every review comparison and exact remote
+CI evidence. Generated local clones/runtimes are excluded from this site's Git tree
 and Pages artifact. The user's existing `images/portfolio.png` change was preserved and is
 not part of this overhaul.
 
@@ -46,6 +48,9 @@ credential audit; any previously committed genuine credentials still require own
 ## Local verification summary
 
 All supported Python projects pass their declared lint/format and test checks after fixes.
+The refreshed local run passed 82 Python tests across the supported packages/applications
+and portfolio. Together with four Node tests and two native C++ tests, this is 88 actual
+passing tests; tiny synthetic tests are not treated as real-data quality benchmarks.
 The local suite includes real XGBoost, random-forest, native Keras LSTM and ONNX model loading;
 actual hotel/heart/LSTM training; HTTP API validation; data-quality failures; file cleanup;
 retrieval/tool routing; and a synthetic U-Net train/save/load/inference path.
@@ -57,10 +62,14 @@ prediction. Two native C++ schedule tests pass, and a real ESP32 firmware build 
 45,664/327,680 RAM bytes and 794,817/1,310,720 flash bytes. Physical hardware is unverified.
 
 Nineteen YAML files (workflows plus Compose) parsed successfully. Parsing is not workflow
-execution. Hotel migrations were exercised through upgrade → downgrade → upgrade on SQLite.
+execution. All seventeen code/site review-branch CI suites also passed actual remote
+execution at the commits recorded in `remote-ci-results.json`; profile-only docs need no
+runtime suite. Hotel migrations were exercised through upgrade → downgrade → upgrade on SQLite.
 Local Docker and PostgreSQL servers were unavailable. CI explicitly configures a PostgreSQL
-test database and a separate Docker build/Compose health smoke test; their remote results
-must be recorded before those runtime claims are upgraded. The integration fixtures use
+test database and a separate Docker build/Compose health smoke test; both actually passed
+in [the hotel CI run](https://github.com/HassanG04/Hotel-Cancellation-Prediciton/actions/runs/35028674614).
+The ten tests ran against PostgreSQL, and container build/startup, `/health` and `/docs`
+passed. These are CI checks, not a cloud or production deployment. The integration fixtures use
 `TEST_DATABASE_URL` rather than silently deleting an application database, and PostgreSQL
 fixtures require an explicitly named `*_test` database.
 
@@ -118,7 +127,7 @@ SQLite migration round trip passes. Real full-data training split 25,399/5,443/5
 validation accuracy 0.87268 (baseline 0.67242), test accuracy 0.86478, ROC AUC 0.92462.
 Default legacy-native version `xgb-12fafa9cc47d`; retraining does not silently replace it.
 Portfolio value: relational design, model lifecycle and application engineering.
-Remaining: remote PostgreSQL/container verification, public API authentication hardening,
+Remaining: public API authentication hardening,
 production HTTPS/security review and any real cloud deployment. No existing MongoDB
 production records were migrated or destroyed; no accessible production dataset was assumed.
 
@@ -333,7 +342,9 @@ raw-video extractor/pose asset and independent real-video evaluation/deployment.
 Before: research PDF and opaque `code.rar`, without inspectable source/tests/CI. Inspection
 showed the archive contains an LSTM/BLIP Streamlit demo and dataset, not implemented LLM
 quantization. Extracted selected source/data/trusted artifacts under `code/`, excluding caches
-and temporary files. Large legacy H5 remains ignored as an expanded duplicate; archive retained.
+and temporary files. Expanded CSV data and duplicate pickle/H5 artifacts stay local and
+ignored; permission review blocked dataset publication because redistribution terms are
+unknown. Only selected legacy Python source was published. The original archive was retained.
 
 Implemented: `src/quantization_lab` symmetric signed INT8 per-tensor/per-output-channel
 quantization, zero/range/channel validation, dequantization, storage including scale overhead,
@@ -369,6 +380,11 @@ inference. Client typecheck/build pass; client and backend current dependency au
 reported zero vulnerabilities. Version `onnx-524e1e3abd93`. Portfolio value: real JS model
 serving without a pretend LLM/backend. Remaining: engineered-feature provenance/units, source
 data/retraining/real holdout regression metrics, public serving hardening or cloud deployment.
+
+Browser verification against the built local UI and actual API returned `$30.64 USD` for
+the example trip. Passenger count zero displayed a clear validation error and cleared the
+previous estimate. This proves one end-to-end success/failure flow, not model quality,
+current ride pricing, broad accessibility or a latency benchmark.
 
 ### Automatic-Box-Opener — Embedded Application / Hybrid
 
@@ -415,9 +431,9 @@ existing GitHub Pages workflow. No backend/database/ML/AI pipeline required. Uns
 project metrics/architecture descriptions and no static integrity test gate.
 Implemented: evidence-corrected project cards and AI/ML/DE role content, verified ETL replacing
 unavailable cancer evidence, profile alignment, local-file/anchor/ID/dynamic-image validator,
-three tests, JavaScript syntax CI, Pages pre-upload gate, README, scan/results/report/matrix,
+six tests, JavaScript syntax CI, Pages pre-upload gate, README, scan/results/report/matrix,
 and clone/runtime exclusion. Existing appearance/interactions and user's image change preserved.
-Architecture: static Pages artifact → HTML/CSS/JS → project evidence links. Three tests and
+Architecture: static Pages artifact → HTML/CSS/JS → project evidence links. Six tests and
 both JS syntax checks pass; all seven pages' local routes/assets/anchors validate.
 Portfolio value: coherent honest engineering presentation and build hygiene. Remaining:
 current changes have not been deployed; offline checks do not verify external CDN/link uptime,
@@ -438,12 +454,29 @@ database/ML/AI/deployment/tests/CI/monitoring to engineer or claim as original p
 Read-only inspection completed; no changes. Remaining: owner-authored project source/purpose
 would be required for an overhaul. Fork history size is not current implementation evidence.
 
+### CI follow-up
+
+Remote execution found two differences the local checks could not expose: PlatformIO had
+no requirements/pyproject file for the setup action's default pip-cache hash, and the word
+generator needed explicit isort first-party classification for its uppercase `GC` module
+on Linux. The subsequent Linux run also exposed a shebang without a tracked executable
+bit; `GC.py` now has executable Git mode, and its usage examples name the actual file.
+Python Git attributes and the formatter explicitly use LF to prevent mixed Windows/Linux
+line endings from failing the formatting gate.
+Those configurations were fixed; latest verification results are recorded separately. Official current checkout,
+Python-setup and Node-setup action release tags replaced deprecated action runtimes;
+application language versions/stacks were not forced to match.
+The remote verifier rejects empty, unfinished, failed and stale-commit evidence; three of
+the portfolio's six tests exercise those rules. An optional in-memory `GITHUB_TOKEN` supports
+authenticated reads when GitHub's public API quota is exhausted, without recording secrets.
+
 ## Maturity and remaining work
 
 The supported code moves from exploratory/fragile prototypes to tested, documented local
 packages and application boundaries. This is not a claim of production maturity. The most
 important next evidence is real AI-provider evaluation, compatible raw-video extraction,
-authorized missing CV/NLP artifacts, and verification of the hotel containers/PostgreSQL.
+authorized missing CV/NLP artifacts, and security review before public serving. Hotel
+PostgreSQL integration and container startup have now passed actual remote CI.
 Cloud requires a selected account, explicit cost/security constraints and actual deployment
 checks; it was not provisioned speculatively. Review-branch publication and remote CI results
 are recorded separately. Merge/deployment decisions should preserve owner control.

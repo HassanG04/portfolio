@@ -1,5 +1,5 @@
 {
-  "verified_at_utc": "2026-09-15T21:58:03.477771+00:00",
+  "verified_at_utc": "2026-09-15T22:21:38.058253+00:00",
   "python": "D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\.venv\\Scripts\\python.exe",
   "repositories": {
     "DEPI_TASKS": [
@@ -36,7 +36,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": "...                                                                      [100%]\n3 passed in 0.52s\n"
+        "output": "...                                                                      [100%]\n3 passed in 0.46s\n"
       }
     ],
     "words_combination_generator": [
@@ -110,7 +110,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": ".....                                                                    [100%]\n5 passed in 0.03s\n"
+        "output": ".....                                                                    [100%]\n5 passed in 0.02s\n"
       }
     ],
     "Hotel-Cancellation-Prediciton": [
@@ -151,7 +151,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": "..........                                                               [100%]\n============================== warnings summary ===============================\n..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\n  D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n..\\.venv\\Lib\\site-packages\\starlette\\testclient.py:53\n  D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\.venv\\Lib\\site-packages\\starlette\\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n10 passed, 2 warnings in 2.78s\n"
+        "output": "..........                                                               [100%]\n============================== warnings summary ===============================\n..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\n  D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n..\\.venv\\Lib\\site-packages\\starlette\\testclient.py:53\n  D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\.venv\\Lib\\site-packages\\starlette\\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n10 passed, 2 warnings in 2.49s\n"
       }
     ],
     "Cellula_LSTM_Week1": [
@@ -188,7 +188,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": ".....                                                                    [100%]\n5 passed in 0.48s\n"
+        "output": ".....                                                                    [100%]\n5 passed in 0.43s\n"
       }
     ],
     "heart-detection-model": [
@@ -227,7 +227,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": "...........                                                              [100%]\n11 passed in 1.87s\n"
+        "output": "...........                                                              [100%]\n11 passed in 1.61s\n"
       }
     ],
     "yet_another_heart_disease_application": [
@@ -270,7 +270,7 @@
           "tests"
         ],
         "exit_code": 0,
-        "output": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.148s\n\nOK\n"
+        "output": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.162s\n\nOK\n"
       },
       {
         "command": [
@@ -280,7 +280,7 @@
           "predictor"
         ],
         "exit_code": 0,
-        "output": "Found 4 test(s).\nSystem check identified no issues (0 silenced).\n....\n----------------------------------------------------------------------\nRan 4 tests in 1.311s\n\nOK\n"
+        "output": "Found 4 test(s).\nSystem check identified no issues (0 silenced).\n....\n----------------------------------------------------------------------\nRan 4 tests in 1.268s\n\nOK\n"
       }
     ],
     "Cellula_NLP_Week4": [
@@ -323,7 +323,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": "....                                                                     [100%]\n4 passed in 1.76s\n"
+        "output": "....                                                                     [100%]\n4 passed in 1.48s\n"
       }
     ],
     "cellula_NLP_week6_and_week7": [
@@ -366,7 +366,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": ".....                                                                    [100%]\n5 passed in 0.41s\n"
+        "output": ".....                                                                    [100%]\n5 passed in 0.32s\n"
       }
     ],
     "cellula_NLP_week5": [
@@ -416,7 +416,7 @@
           "assistant"
         ],
         "exit_code": 0,
-        "output": "Found 8 test(s).\nSystem check identified no issues (0 silenced).\nAssistant feature failed: text\nTraceback (most recent call last):\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\cellula_NLP_week5\\assistant\\views.py\", line 45, in _feature_view\n    context.update(operation(_text(request, field)))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1139, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1143, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1198, in _execute_mock_call\n    raise effect\nRuntimeError: missing\n.Image workflow failed\nTraceback (most recent call last):\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\cellula_NLP_week5\\assistant\\views.py\", line 91, in image_view\n    context[\"caption\"] = generate_caption(str(path))\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1139, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1143, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1204, in _execute_mock_call\n    result = effect(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\cellula_NLP_week5\\assistant\\test_engineering.py\", line 74, in caption\n    raise RuntimeError(\"model unavailable\")\nRuntimeError: model unavailable\n......WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1789509505.691944    2472 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nWARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1789509508.140251    2472 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nI0000 00:00:1789509509.840980    2472 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.\nTo enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.\nWARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.\n.\n----------------------------------------------------------------------\nRan 8 tests in 4.863s\n\nOK\n"
+        "output": "Found 8 test(s).\nSystem check identified no issues (0 silenced).\nAssistant feature failed: text\nTraceback (most recent call last):\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\cellula_NLP_week5\\assistant\\views.py\", line 45, in _feature_view\n    context.update(operation(_text(request, field)))\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1139, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1143, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1198, in _execute_mock_call\n    raise effect\nRuntimeError: missing\n.Image workflow failed\nTraceback (most recent call last):\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\cellula_NLP_week5\\assistant\\views.py\", line 91, in image_view\n    context[\"caption\"] = generate_caption(str(path))\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1139, in __call__\n    return self._mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1143, in _mock_call\n    return self._execute_mock_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Hassan-PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\unittest\\mock.py\", line 1204, in _execute_mock_call\n    result = effect(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\cellula_NLP_week5\\assistant\\test_engineering.py\", line 74, in caption\n    raise RuntimeError(\"model unavailable\")\nRuntimeError: model unavailable\n......WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1789510918.128181   18700 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nWARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1789510920.296726   18700 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nI0000 00:00:1789510921.789247   18700 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.\nTo enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.\nWARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.\n.\n----------------------------------------------------------------------\nRan 8 tests in 4.252s\n\nOK\n"
       }
     ],
     "Emoji_Recognition": [
@@ -462,7 +462,7 @@
           "predictor"
         ],
         "exit_code": 0,
-        "output": "Found 4 test(s).\nSystem check identified no issues (0 silenced).\n..Emotion inference failed\nTraceback (most recent call last):\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\Emoji_Recognition\\tweet_emotion_django_app\\predictor\\views.py\", line 36, in predict\n    result = service.predict(request.POST.get(\"text\", \"\"))\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\Emoji_Recognition\\tweet_emotion_django_app\\predictor\\service.py\", line 54, in predict\n    self.load()\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\Emoji_Recognition\\tweet_emotion_django_app\\predictor\\service.py\", line 41, in load\n    raise RuntimeError(\"Trained TensorFlow weights are missing\")\nRuntimeError: Trained TensorFlow weights are missing\n..\n----------------------------------------------------------------------\nRan 4 tests in 0.022s\n\nOK\n"
+        "output": "Found 4 test(s).\nSystem check identified no issues (0 silenced).\n..Emotion inference failed\nTraceback (most recent call last):\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\Emoji_Recognition\\tweet_emotion_django_app\\predictor\\views.py\", line 36, in predict\n    result = service.predict(request.POST.get(\"text\", \"\"))\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\Emoji_Recognition\\tweet_emotion_django_app\\predictor\\service.py\", line 54, in predict\n    self.load()\n  File \"D:\\Projects\\Programming\\HassanG04.github.io-main\\.portfolio-repos\\Emoji_Recognition\\tweet_emotion_django_app\\predictor\\service.py\", line 41, in load\n    raise RuntimeError(\"Trained TensorFlow weights are missing\")\nRuntimeError: Trained TensorFlow weights are missing\n..\n----------------------------------------------------------------------\nRan 4 tests in 0.021s\n\nOK\n"
       }
     ],
     "River-Flood-Prediction": [
@@ -501,7 +501,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": "....                                                                     [100%]\n4 passed in 3.95s\n"
+        "output": "....                                                                     [100%]\n4 passed in 3.77s\n"
       }
     ],
     "ShopLifting_Detection": [
@@ -540,7 +540,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": "...                                                                      [100%]\n3 passed in 2.03s\n"
+        "output": "...                                                                      [100%]\n3 passed in 1.76s\n"
       }
     ],
     "Quantization_Cellula_Week_2": [
@@ -577,7 +577,7 @@
           "-q"
         ],
         "exit_code": 0,
-        "output": "....                                                                     [100%]\n4 passed in 0.13s\n"
+        "output": "....                                                                     [100%]\n4 passed in 0.10s\n"
       }
     ],
     "portfolio": [
@@ -591,7 +591,7 @@
           "tests"
         ],
         "exit_code": 0,
-        "output": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.082s\n\nOK\n"
+        "output": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.076s\n\nOK\n"
       },
       {
         "command": [

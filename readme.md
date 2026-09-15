@@ -8,6 +8,8 @@ A responsive portfolio for Hassan Gebril, with a complete general homepage and f
 
 The repository overhaul is documented in [the implementation report](docs/portfolio-overhaul-report.md),
 [the repository scan](docs/repository-scan.json), and [the skills evidence matrix](docs/skills-matrix.md).
+Review links and exact tested commits are listed in [publication evidence](docs/publication-status.md)
+and [remote CI results](docs/remote-ci-results.json). Default branches are unchanged.
 Those records distinguish local verification, configured infrastructure, and unavailable artifacts.
 The site deliberately avoids unsupported accuracy or deployment claims.
 
@@ -80,8 +82,8 @@ node --check js/script.js
 node --check js/role-page.js
 ```
 
-Three real tests check local references, directory routes, anchor parsing and the actual seven
-HTML pages. The validator accounts for role-page anchors/images inserted by JavaScript,
+Six real tests check local references, directory routes, anchor parsing, the actual seven
+HTML pages and rejection of stale/failed/unfinished CI evidence. The validator accounts for role-page anchors/images inserted by JavaScript,
 rejects paths leaving the site root, missing assets and duplicate IDs. External links are not
 claimed healthy by offline tests. CI checks the site; the existing Pages workflow validates
 before uploading its explicit static artifact. No database, backend or Docker is needed for
@@ -92,3 +94,8 @@ For the local multi-repository check, run `scripts/validate_portfolio.py` using 
 test Python environment and cloned repositories. It records actual results in
 `docs/validation-results.json`; optional native firmware and Node build checks are documented
 separately in the implementation report.
+
+`scripts/check_remote_ci.py` reads public review-branch checks and compares their commits
+with local reviewed heads. An optional `GITHUB_TOKEN` can avoid public API rate limits;
+use a token authorized to read those repositories' Actions results, never commit it.
+The script records no token, triggers no builds and changes no remote repository.
