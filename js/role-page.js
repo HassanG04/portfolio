@@ -27,9 +27,9 @@
       ],
       projects: [
         { type: 'Computer Vision · Segmentation', title: 'River Flood Protection', copy: 'A compact U-Net workflow that turns satellite imagery into flood masks and serves review through Flask.', repo: 'River-Flood-Prediction', image: 'river_flood.jpg' },
-        { type: 'Computer Vision · Video', title: 'Shoplifting Detection', copy: 'An end-to-end prototype for classifying suspicious activity in CCTV frame sequences and serving results through a web app.', repo: 'ShopLifting_Detection', image: 'shoplifting.png' },
-        { type: 'NLP · Transformers', title: 'Emoji Prediction with DistilBERT', copy: 'A transformer-based classifier for short social text, compared with a classical baseline and delivered through Django.', repo: 'Emoji_Recognition', image: 'emoji_predictor.png' },
-        { type: 'NLP · Semantic Retrieval', title: 'Retrieval-Augmented Code Generation', copy: 'A notebook pipeline that retrieves similar programming examples with MiniLM and FAISS before guiding generation.', repo: 'RAG_Cellula_Week_3', icon: 'fa-code-branch' }
+        { type: 'AI · Validated Agent', title: 'Context-Aware Agent', copy: 'Bounded Ollama routing with structured-output validation, Wikipedia fallback and safe failure handling; live model execution remains unverified.', repo: 'cellula_NLP_week6_and_week7', icon: 'fa-robot' },
+        { type: 'NLP · Serving Contract', title: 'Emoji Prediction with DistilBERT', copy: 'Validated Django serving contract and local-only model loading; trained transformer weights are missing.', repo: 'Emoji_Recognition', image: 'emoji_predictor.png' },
+        { type: 'AI · Retrieval Evaluation', title: 'Retrieval-Augmented Code Generation', copy: 'Reusable retrieval and generation boundaries with source-grounded prompts and a small repeatable retrieval evaluation.', repo: 'RAG_Cellula_Week_3', icon: 'fa-code-branch' }
       ]
     },
     ML: {
@@ -46,10 +46,10 @@
         { icon: 'fa-gears', title: 'Model Application Integration', copy: 'Package trained models into focused Flask or Django experiences that support testing and stakeholder review.', tags: ['Flask', 'Django', 'Python'] }
       ],
       projects: [
-        { type: 'Explainable ML · Healthcare', title: 'Heart Disease Prediction', copy: 'A multi-centre modelling workflow using imputation, tuning, stacking, and SHAP to support explainable predictions.', repo: 'yet_another_heart_disease_application', image: 'heart_disease.png' },
-        { type: 'Regression · XGBoost', title: 'Uber Fare Prediction', copy: 'A structured regression project that prepares ride data, evaluates XGBoost, and delivers estimates through Django.', repo: 'Uber-Fare-Prediction', image: 'uber_fare.png' },
-        { type: 'Classification · XGBoost', title: 'Hotel Cancellation Prediction', copy: 'A practical classification workflow for noisy reservation data, including cleaning, comparison, and web-ready inference.', repo: 'Hotel-Cancellation-Prediciton', icon: 'fa-hotel' },
-        { type: 'Model Comparison · Healthcare', title: 'Heart Detection Model', copy: 'An earlier modelling study comparing heart-disease classifiers and documenting the XGBoost approach.', repo: 'heart-detection-model', icon: 'fa-heart-pulse' }
+        { type: 'Reproducible ML · Healthcare', title: 'Heart Disease Prediction', copy: 'Train-only preprocessing, held-out evaluation and real Django random-forest serving tests; educational only.', repo: 'yet_another_heart_disease_application', image: 'heart_disease.png' },
+        { type: 'Model Serving · ONNX', title: 'Uber Fare Prediction', copy: 'Real ONNX Runtime inference through a validated Express API and a focused React interface.', repo: 'Uber-Fare-Prediction', image: 'uber_fare.png' },
+        { type: 'ML Systems · Relational Lineage', title: 'Hotel Cancellation Prediction', copy: 'Reusable XGBoost training, FastAPI serving, prediction lineage and Alembic migrations; PostgreSQL/container verification remains pending.', repo: 'Hotel-Cancellation-Prediciton', icon: 'fa-hotel' },
+        { type: 'Reproducible ML · Native Export', title: 'Heart Detection Model', copy: 'Fixed-seed training, train-only imputation, explicit feature schema, native XGBoost export and tested CLI inference.', repo: 'heart-detection-model', icon: 'fa-heart-pulse' }
       ]
     },
     DS: {
@@ -106,10 +106,10 @@
         { icon: 'fa-rotate', title: 'Reproducible ML Data Workflows', copy: 'Organise preparation and evaluation steps so downstream model experiments can be repeated and reviewed.', tags: ['Pipelines', 'Versioning', 'Documentation'] }
       ],
       projects: [
-        { type: 'Structured Data · Preparation', title: 'Hotel Cancellation Prediction', copy: 'Demonstrates cleaning, outlier handling, feature preparation, and a repeatable path from reservations to inference.', repo: 'Hotel-Cancellation-Prediciton', icon: 'fa-hotel' },
-        { type: 'Structured Data · Model Delivery', title: 'Uber Fare Prediction', copy: 'Shows the flow from raw trip records through prepared features to a Django-based prediction interface.', repo: 'Uber-Fare-Prediction', image: 'uber_fare.png' },
+        { type: 'Data Engineering · Validated ETL', title: 'Supermarket Sales ETL', copy: 'Schema validation, reject records, deduplication, financial reconciliation and repeatable clean CSV plus quality/business JSON outputs.', repo: 'DEPI_TASKS', icon: 'fa-database' },
+        { type: 'Data Modeling · Prediction Lineage', title: 'Hotel Cancellation Prediction', copy: 'Relational users, hotels, observations and model versions with constraints, indexes and migrations; PostgreSQL runtime verification remains pending.', repo: 'Hotel-Cancellation-Prediciton', icon: 'fa-hotel' },
         { type: 'Image Data · Processing Workflow', title: 'River Flood Protection', copy: 'Organises satellite inputs, segmentation processing, saved model artefacts, and a Flask review step.', repo: 'River-Flood-Prediction', image: 'river_flood.jpg' },
-        { type: 'Applied Learning · Notebooks', title: 'DEPI Data Tasks', copy: 'A public collection of notebook exercises that demonstrates consistent data handling and documented practice.', repo: 'DEPI_TASKS', icon: 'fa-folder-tree' }
+        { type: 'ML Data · Validation', title: 'Heart Detection Model', copy: 'Train-only imputation, missingness reporting, explicit one-hot schema and isolated evaluation splits.', repo: 'heart-detection-model', icon: 'fa-folder-tree' }
       ]
     }
   };

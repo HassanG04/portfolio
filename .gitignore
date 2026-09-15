@@ -14,3 +14,13 @@ desktop.ini
 # Local dependencies and build output
 node_modules/
 dist/
+
+# Local workspace used for cross-repository portfolio maintenance
+.portfolio-repos/
+
+# Local verification caches and credentials
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.env

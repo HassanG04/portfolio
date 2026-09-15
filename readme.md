@@ -6,6 +6,11 @@ A responsive portfolio for Hassan Gebril, with a complete general homepage and f
 
 ## Highlights
 
+The repository overhaul is documented in [the implementation report](docs/portfolio-overhaul-report.md),
+[the repository scan](docs/repository-scan.json), and [the skills evidence matrix](docs/skills-matrix.md).
+Those records distinguish local verification, configured infrastructure, and unavailable artifacts.
+The site deliberately avoids unsupported accuracy or deployment claims.
+
 - Client-focused machine-learning value proposition and clear calls to action.
 - About, education, experience, and offered services.
 - Interactive ECPC carousel and DEPI instructor card.
@@ -43,7 +48,6 @@ portfolio/
 ├── favicon.ico
 ├── css/
 │   ├── style.css
-│   └── role-page.css   # Shared role-page layout
 ├── js/
 │   ├── script.js
 │   └── role-page.js    # Shared role-specific content and rendering
@@ -66,3 +70,25 @@ https://hassang04.github.io/portfolio/DS/
 https://hassang04.github.io/portfolio/DA/
 https://hassang04.github.io/portfolio/DE/
 ```
+
+## Verification
+
+```bash
+python -m unittest discover -s tests
+python scripts/validate_site.py
+node --check js/script.js
+node --check js/role-page.js
+```
+
+Three real tests check local references, directory routes, anchor parsing and the actual seven
+HTML pages. The validator accounts for role-page anchors/images inserted by JavaScript,
+rejects paths leaving the site root, missing assets and duplicate IDs. External links are not
+claimed healthy by offline tests. CI checks the site; the existing Pages workflow validates
+before uploading its explicit static artifact. No database, backend or Docker is needed for
+this static site. Local `.portfolio-repos/` clones, runtimes and generated development files
+are ignored and are never copied into the Pages artifact.
+
+For the local multi-repository check, run `scripts/validate_portfolio.py` using the explicit
+test Python environment and cloned repositories. It records actual results in
+`docs/validation-results.json`; optional native firmware and Node build checks are documented
+separately in the implementation report.

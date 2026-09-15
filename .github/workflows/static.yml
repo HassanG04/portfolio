@@ -27,6 +27,13 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Validate the website before publishing
+        run: |
+          python -m unittest discover -s tests
+          python scripts/validate_site.py
+          node --check js/script.js
+          node --check js/role-page.js
+
       - name: Prepare website files
         run: |
           mkdir _site

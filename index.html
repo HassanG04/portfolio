@@ -732,7 +732,7 @@
                 <div class="result-card-body">
                   <span class="result-metric">Computer Vision · Video</span>
                   <h3>Shoplifting Detection</h3>
-                  <div class="case-study-copy"><p><span>Challenge</span>Recognize suspicious movement across CCTV frame sequences.</p><p><span>Approach</span>Train a GRU action-recognition model and serve inference through Django.</p><p class="case-outcome"><span>Outcome</span>An end-to-end prototype for model-assisted video review.</p></div>
+                  <div class="case-study-copy"><p><span>Challenge</span>Classify video-derived features without mixing incompatible extractors.</p><p><span>Approach</span>Validate feature dimensions and run the saved three-model ensemble.</p><p class="case-outcome"><span>Outcome</span>Tested feature-level inference; raw-video extraction remains incomplete.</p></div>
                   <span class="case-link"><i class="fab fa-github"></i> Open repository</span>
                 </div>
               </article>
@@ -758,9 +758,9 @@
               <article class="result-card portfolio-case-card">
                 <img src="images/uber_fare.png" alt="Uber fare prediction application" loading="lazy" />
                 <div class="result-card-body">
-                  <span class="result-metric">RMSE 2.095 · R² 0.794</span>
+                  <span class="result-metric">ONNX · Express · React</span>
                   <h3>Uber Fare Prediction</h3>
-                  <div class="case-study-copy"><p><span>Challenge</span>Estimate trip fares from structured ride data.</p><p><span>Approach</span>Train XGBoost, evaluate on held-out data, and deliver it through Django.</p><p class="case-outcome"><span>Outcome</span>RMSE 2.095 · MAE 1.239 · R² 0.794.</p></div>
+                  <div class="case-study-copy"><p><span>Challenge</span>Serve the saved fare model through a real, validated interface.</p><p><span>Approach</span>Load ONNX Runtime in Express and connect a focused React form.</p><p class="case-outcome"><span>Outcome</span>Verified model and API tests; historical estimates are not live ride quotes.</p></div>
                   <span class="case-link"><i class="fab fa-github"></i> Open repository</span>
                 </div>
               </article>
@@ -772,9 +772,9 @@
               <article class="result-card portfolio-case-card">
                 <img src="images/heart_disease.png" alt="Heart disease prediction application" loading="lazy" />
                 <div class="result-card-body">
-                  <span class="result-metric">0.92 AUC · 85% Recall</span>
+                  <span class="result-metric">Reproducible ML · Django</span>
                   <h3>Heart Disease Prediction</h3>
-                  <div class="case-study-copy"><p><span>Challenge</span>Improve generalisation beyond a small, single-centre dataset.</p><p><span>Approach</span>Build a leakage-free five-centre dataset with MICE, Optuna, stacking, and SHAP.</p><p class="case-outcome"><span>Outcome</span>0.92 AUC and 85% recall with explainable predictions.</p></div>
+                  <div class="case-study-copy"><p><span>Challenge</span>Preserve training and inference feature consistency.</p><p><span>Approach</span>Train-only preprocessing, held-out evaluation and validated random-forest serving.</p><p class="case-outcome"><span>Outcome</span>Measured retraining report and real model-loading tests; educational, not clinically validated.</p></div>
                   <span class="case-link"><i class="fab fa-github"></i> Open repository</span>
                 </div>
               </article>
@@ -786,9 +786,9 @@
               <article class="result-card portfolio-case-card">
                 <img src="images/emoji_predictor.png" alt="Emoji prediction application" loading="lazy" />
                 <div class="result-card-body">
-                  <span class="result-metric">93.1% Test Accuracy</span>
+                  <span class="result-metric">NLP · Serving contract</span>
                   <h3>Emoji Prediction with DistilBERT</h3>
-                  <div class="case-study-copy"><p><span>Challenge</span>Predict the intended emoji from short social text.</p><p><span>Approach</span>Fine-tune DistilBERT, compare against TF-IDF, and deploy through Django.</p><p class="case-outcome"><span>Outcome</span>93.1% accuracy versus a 71.6% baseline.</p></div>
+                  <div class="case-study-copy"><p><span>Challenge</span>Handle text, label mapping and unavailable artifacts reliably.</p><p><span>Approach</span>Lazy local-only DistilBERT loading, validated probability outputs and Django error boundaries.</p><p class="case-outcome"><span>Outcome</span>Tested contracts and failure cases; trained transformer weights are missing.</p></div>
                   <span class="case-link"><i class="fab fa-github"></i> Open repository</span>
                 </div>
               </article>
@@ -796,13 +796,13 @@
           </div>
 
           <div class="col-md-6 col-xl-4 reveal delay-1">
-            <a class="portfolio-case-link" href="https://github.com/HassanG04/cancer_cell_detection" target="_blank" rel="noopener" aria-label="View Cancerous Cell Detection on GitHub">
+            <a class="portfolio-case-link" href="https://github.com/HassanG04/DEPI_TASKS" target="_blank" rel="noopener" aria-label="View Supermarket Sales ETL on GitHub">
               <article class="result-card portfolio-case-card">
-                <img src="images/cancer_detection.png" alt="Cancerous cell detection application" loading="lazy" />
+                <div class="result-card-art result-card-art--hotel" aria-hidden="true"><i class="fas fa-database"></i><span>ETL</span></div>
                 <div class="result-card-body">
-                  <span class="result-metric">96.21% Validation Accuracy</span>
-                  <h3>Cancerous Cell Detection</h3>
-                  <div class="case-study-copy"><p><span>Challenge</span>Classify cell imagery at scale while controlling data quality.</p><p><span>Approach</span>Validate 220,025 images and ensemble ResNet18 with a Vision Transformer.</p><p class="case-outcome"><span>Outcome</span>96.21% validation accuracy.</p></div>
+                  <span class="result-metric">Data Engineering · ETL</span>
+                  <h3>Supermarket Sales ETL</h3>
+                  <div class="case-study-copy"><p><span>Challenge</span>Prevent malformed transactions from contaminating business totals.</p><p><span>Approach</span>Validate, normalize, deduplicate, reconcile and retain reject reasons.</p><p class="case-outcome"><span>Outcome</span>959 accepted and 55 rejected rows from a verified 1,014-row run.</p></div>
                   <span class="case-link"><i class="fab fa-github"></i> Open repository</span>
                 </div>
               </article>
@@ -814,9 +814,9 @@
               <article class="result-card portfolio-case-card">
                 <div class="result-card-art result-card-art--hotel" aria-hidden="true"><i class="fas fa-hotel"></i><span>XGBoost</span></div>
                 <div class="result-card-body">
-                  <span class="result-metric">Classification · Flask</span>
+                  <span class="result-metric">FastAPI · SQL · XGBoost</span>
                   <h3>Hotel Cancellation Prediction</h3>
-                  <div class="case-study-copy"><p><span>Challenge</span>Predict booking cancellations from noisy hotel reservation data.</p><p><span>Approach</span>Clean outliers, compare binary classifiers, and select XGBoost as the strongest model.</p><p class="case-outcome"><span>Outcome</span>A practical prediction workflow prepared for use through Flask.</p></div>
+                  <div class="case-study-copy"><p><span>Challenge</span>Trace predictions to validated inputs and model versions.</p><p><span>Approach</span>Reusable training, FastAPI serving, relational lineage and migrations.</p><p class="case-outcome"><span>Outcome</span>Tested API and model paths; PostgreSQL/container verification is still required.</p></div>
                   <span class="case-link"><i class="fab fa-github"></i> Open repository</span>
                 </div>
               </article>
@@ -830,7 +830,7 @@
                 <div class="result-card-body">
                   <span class="result-metric">NLP · Semantic Retrieval</span>
                   <h3>Retrieval-Augmented Code Generation</h3>
-                  <div class="case-study-copy"><p><span>Challenge</span>Generate Python solutions with useful examples grounded in similar programming tasks.</p><p><span>Approach</span>Embed HumanEval prompts with MiniLM, retrieve examples through FAISS, and guide CodeGen with the retrieved context.</p><p class="case-outcome"><span>Outcome</span>A reusable notebook pipeline for retrieval-grounded code generation.</p></div>
+                  <div class="case-study-copy"><p><span>Challenge</span>Separate retrieval quality from code-generation correctness.</p><p><span>Approach</span>Reusable retriever/generator boundaries, source prompts and syntax validation.</p><p class="case-outcome"><span>Outcome</span>Repeatable retrieval evaluation; tiny fixture scores are not generation benchmarks.</p></div>
                   <span class="case-link"><i class="fab fa-github"></i> Open repository</span>
                 </div>
               </article>
