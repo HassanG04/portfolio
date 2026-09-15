@@ -68,8 +68,9 @@ runtime suite. Hotel migrations were exercised through upgrade → downgrade →
 Local Docker and PostgreSQL servers were unavailable. CI explicitly configures a PostgreSQL
 test database and a separate Docker build/Compose health smoke test; both actually passed
 in [the hotel CI run](https://github.com/HassanG04/Hotel-Cancellation-Prediciton/actions/runs/35028674614).
-The ten tests ran against PostgreSQL, and container build/startup, `/health` and `/docs`
-passed. These are CI checks, not a cloud or production deployment. The integration fixtures use
+The ten-test suite passed with PostgreSQL configured, including real API/database integration;
+container build/startup, `/health` and `/docs` also passed. These are CI checks, not a cloud or
+production deployment. The integration fixtures use
 `TEST_DATABASE_URL` rather than silently deleting an application database, and PostgreSQL
 fixtures require an explicitly named `*_test` database.
 

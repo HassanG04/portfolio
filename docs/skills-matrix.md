@@ -11,7 +11,7 @@ merged before the default-branch portfolio reflects this work.
 |---|---|---|
 | Python | ✅ | Tested packages, CLIs, pipelines and services across DEPI_TASKS, heart-detection-model, Cellula_LSTM_Week1, RAG_Cellula_Week_3 and others |
 | SQL | ✅ | Hotel-Cancellation-Prediciton: relational schema, foreign keys, uniqueness/check constraints, indexes, Alembic migration and cascade tests |
-| PostgreSQL | ✅ | Hotel: relational driver/configuration/DDL/migration and ten actual PostgreSQL integration tests passed in remote CI |
+| PostgreSQL | ✅ | Hotel: relational driver/configuration/DDL/migration and a ten-test suite including real PostgreSQL API/database integration passed in remote CI |
 | MongoDB | 🔴 | Legacy hotel/ride code is not maintained portfolio evidence; unnecessary MongoDB dependency removed from the supported architecture |
 | ETL/ELT | ✅ | DEPI_TASKS: CSV ingestion → validation → normalization/deduplication → clean/reject outputs → quality and business summaries; real source run |
 | Data validation | ✅ | DEPI financial reconciliation; hotel closed feature contract; heart schema; flood pairing/mask ranges; video feature dimensions |
