@@ -79,6 +79,43 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ============================================================
+     DEPI LEARNING PROGRESS — advances once per calendar month
+     ============================================================ */
+  document.querySelectorAll('[data-learning-progress]').forEach(progress => {
+    const parseMonth = value => {
+      const [year, month] = String(value).split('-').map(Number);
+      return Number.isFinite(year) && Number.isFinite(month) ? (year * 12) + month - 1 : null;
+    };
+
+    const startMonth = parseMonth(progress.dataset.learningStart);
+    const endMonth = parseMonth(progress.dataset.learningEnd);
+    if (startMonth === null || endMonth === null || endMonth < startMonth) return;
+
+    const now = new Date();
+    const currentMonth = (now.getFullYear() * 12) + now.getMonth();
+    const totalMonths = endMonth - startMonth + 1;
+    const completedMonths = Math.max(0, Math.min(totalMonths, currentMonth - startMonth + 1));
+    const percentage = Math.round((completedMonths / totalMonths) * 100);
+    const isComplete = currentMonth >= endMonth;
+    const label = isComplete ? 'Learning Complete' : 'Learning';
+    const fill = progress.querySelector('[data-learning-fill]');
+    const labelNode = progress.querySelector('[data-learning-label]');
+    const valueNode = progress.querySelector('[data-learning-value]');
+    const track = progress.querySelector('[role="progressbar"]');
+
+    if (labelNode) labelNode.textContent = label;
+    if (valueNode) valueNode.textContent = `${percentage}%`;
+    if (track) {
+      track.setAttribute('aria-valuenow', String(percentage));
+      track.setAttribute('aria-valuetext', `${label}, ${percentage}%`);
+    }
+    progress.classList.toggle('is-complete', isComplete);
+    window.requestAnimationFrame(() => {
+      if (fill) fill.style.setProperty('--learning-progress', `${percentage}%`);
+    });
+  });
+
+  /* ============================================================
      PORTFOLIO MENU — role directory on desktop, full nav on mobile
      ============================================================ */
   const portfolioMenu = document.getElementById('portfolioMenu');
@@ -882,6 +919,7 @@ document.addEventListener('DOMContentLoaded', function () {
     '.role-about-card',
     '.hero-contact-bubble',
     '.cta-card',
+    '.portfolio-menu-toggle',
     '[data-flip-card]',
     '.contact-card',
     '.trust-points a'
@@ -896,6 +934,20 @@ document.addEventListener('DOMContentLoaded', function () {
       cursorSoundLastPlayedAt = now;
       void playInterfaceSound('cursor');
     });
+  });
+
+  // The portfolio menu changes between an inert, closed panel and an active
+  // panel. Delegate its hover cue so every section and profession link keeps
+  // working each time the hamburger menu is opened.
+  document.addEventListener('pointerover', event => {
+    if (event.pointerType === 'touch') return;
+    const target = event.target.closest?.('.portfolio-menu a');
+    if (!target || target.contains(event.relatedTarget)) return;
+
+    const now = performance.now();
+    if (now - cursorSoundLastPlayedAt < 90) return;
+    cursorSoundLastPlayedAt = now;
+    void playInterfaceSound('cursor');
   });
 
   const activityClickCueTimers = new WeakMap();

@@ -371,6 +371,30 @@
           </div>
         </section>
 
+        <a class="depi-progress-card reveal" href="https://depi-tasks-pi.vercel.app/" target="_blank" rel="noopener" aria-label="Explore Hassan's DEPI Data Engineering learning progress">
+          <span class="depi-progress-visual" aria-hidden="true">
+            <span class="depi-progress-icon"><img src="../images/depi.png" alt="" loading="lazy" /></span>
+            <strong>DEPI</strong>
+            <small>Learning journey</small>
+          </span>
+          <span class="depi-progress-content">
+            <span class="depi-progress-eyebrow">Digital Egypt Pioneers Initiative</span>
+            <span class="depi-progress-title-row">
+              <span class="depi-progress-title">DEPI Data Engineering</span>
+              <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </span>
+            <span class="depi-progress-description">Follow my progress through the Data Engineering track, where I am building practical skills in Python, APIs, pandas, SQL, web scraping, Flask, and production-minded data engineering.</span>
+            <span class="depi-progress-skills" aria-label="Learning areas">
+              <span>Python</span><span>APIs</span><span>pandas</span><span>SQL</span><span>Flask</span>
+            </span>
+            <span class="depi-learning-progress" data-learning-progress data-learning-start="2026-01" data-learning-end="2026-12">
+              <span class="depi-learning-meta"><strong data-learning-label>Learning</strong><span data-learning-value>0%</span></span>
+              <span class="depi-learning-track" role="progressbar" aria-label="DEPI learning progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-learning-fill></span></span>
+              <span class="depi-learning-dates"><span>January 2026</span><span>December 2026</span></span>
+            </span>
+          </span>
+        </a>
+
         <section class="activity-more reveal" aria-labelledby="activity-more-heading">
           <span class="activity-more-icon" aria-hidden="true"><i class="fas fa-person-digging"></i></span>
           <div><span class="section-tag">More to come</span><h2 id="activity-more-heading">More under construction</h2><p>New activities, collaborations, and learning milestones will be added here.</p></div>
