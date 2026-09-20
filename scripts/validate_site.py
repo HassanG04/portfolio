@@ -75,8 +75,11 @@ def validate(root=ROOT):
         parser = PageParser()
         parser.feed(page.read_text(encoding="utf-8"))
         if "rolePageRoot" in parser.ids:
-            script = (root / "js/role-page.js").read_text(encoding="utf-8")
-            parser.ids.extend(re.findall(r'\bid="([^"$]+)"', script))
+            generated_markup = "\n".join(
+                (root / path).read_text(encoding="utf-8")
+                for path in ("js/role-page.js", "js/portfolio-components.js")
+            )
+            parser.ids.extend(re.findall(r'\bid="([^"$]+)"', generated_markup))
         if not parser.title:
             errors.append(f"{name}: missing title")
         if len(parser.ids) != len(set(parser.ids)):
@@ -85,12 +88,13 @@ def validate(root=ROOT):
             error = reference_error(root, page, reference, parser.ids)
             if error:
                 errors.append(f"{name}: {error}")
-    # Role-page images are inserted dynamically rather than being HTML attributes.
+    # Shared data images are inserted dynamically rather than being HTML attributes.
     for image in re.findall(
-        r"image: '([^']+)'", (root / "js/role-page.js").read_text(encoding="utf-8")
+        r"image: '([^']+)'",
+        (root / "js/portfolio-data.js").read_text(encoding="utf-8"),
     ):
         if not (root / "images" / image).is_file():
-            errors.append(f"missing dynamic project image {image}")
+            errors.append(f"missing dynamic portfolio image {image}")
     return errors
 
 

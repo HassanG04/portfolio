@@ -15,7 +15,8 @@ The site deliberately avoids unsupported accuracy or deployment claims.
 
 - Client-focused machine-learning value proposition and clear calls to action.
 - About, education, experience, and offered services.
-- Interactive ECPC carousel and DEPI instructor card.
+- Interactive ECPC carousel and shared DEPI/Soft Skills flip-card system.
+- Data-driven projects, services, credentials, experience, and activity content.
 - Project case studies with challenge, approach, and outcome details.
 - System-aware dark and light themes saved on the visitor's device.
 - Scroll-aware navigation, smooth motion, and interface sound cues.
@@ -49,13 +50,29 @@ portfolio/
 ├── DE/index.html       # Data Engineer portfolio route
 ├── favicon.ico
 ├── css/
-│   ├── style.css
+│   ├── style.css             # Existing identity, layout, and animation foundation
+│   └── design-system.css     # Shared premium cards, interaction states, and spacing
 ├── js/
-│   ├── script.js
-│   └── role-page.js    # Shared role-specific content and rendering
+│   ├── portfolio-data.js       # Single content source for every route
+│   ├── portfolio-components.js # Reusable card and activity renderers
+│   ├── main-page.js            # Main-page data bindings
+│   ├── role-page.js            # Profession-page composition
+│   └── script.js               # Navigation, motion, audio, theme, and behavior
 ├── images/             # Portfolio images used by index.html
 └── sounds/             # Interface sound cues
 ```
+
+## Updating portfolio content
+
+Edit `js/portfolio-data.js` to add or update projects, credentials, services,
+experience, profession copy, or activity content. Each data item declares the
+routes where it belongs through its `roles` array. For example, a credential with
+`roles: ['MAIN', 'AI', 'ML']` automatically appears on the homepage, AI page, and
+machine-learning page without editing any HTML.
+
+Reusable markup lives in `js/portfolio-components.js`. New interactive controls
+should use the `.interactable` class, although semantic links and buttons are also
+detected automatically by the delegated interaction system in `js/script.js`.
 
 GitHub Pages serves `index.html` automatically, keeping the public address clean:
 
@@ -79,6 +96,9 @@ https://hassang04.github.io/portfolio/DE/
 python -m unittest discover -s tests
 python scripts/validate_site.py
 node --check js/script.js
+node --check js/portfolio-data.js
+node --check js/portfolio-components.js
+node --check js/main-page.js
 node --check js/role-page.js
 ```
 

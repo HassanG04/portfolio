@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', function () {
           });
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
     revealEls.forEach(el => observer.observe(el));
   }
 
@@ -493,7 +493,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const ambienceVolumeValue = document.getElementById('ambienceVolumeValue');
   const ambienceAudio = new Audio(portfolioAssetUrl('sounds/ambience.mp3'));
   let ambienceVolume = 0.14;
-  const ambiencePreferenceKey = 'portfolio_ambience_enabled';
+  const ambiencePreferenceKey = 'portfolio_ambience_enabled_v2';
   const ambienceVolumePreferenceKey = 'portfolio_ambience_volume';
   let ambienceEnabled = false;
   let ambienceFadeFrame = 0;
@@ -505,8 +505,11 @@ document.addEventListener('DOMContentLoaded', function () {
   let bootCueAttempt = null;
 
   bootAudio.preload = 'auto';
+  bootAudio.autoplay = true;
+  bootAudio.playsInline = true;
   bootAudio.volume = activitySoundDefinitions.boot.volume;
-  ambienceAudio.preload = 'auto';
+  // Start fetching only after the saved/default preference is known.
+  ambienceAudio.preload = 'none';
   ambienceAudio.loop = false;
   ambienceAudio.volume = 0;
 
@@ -520,7 +523,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; Max-Age=31536000; Path=/; SameSite=Lax`;
   }
 
-  ambienceEnabled = readPreferenceCookie(ambiencePreferenceKey) === 'true';
+  // New visitors start with ambience enabled. An explicit mute is still saved
+  // and respected on later visits.
+  ambienceEnabled = readPreferenceCookie(ambiencePreferenceKey) !== 'false';
+  ambienceAudio.preload = ambienceEnabled ? 'auto' : 'none';
   const savedAmbienceVolume = Number.parseFloat(readPreferenceCookie(ambienceVolumePreferenceKey));
   if (Number.isFinite(savedAmbienceVolume)) {
     ambienceVolume = Math.max(0, Math.min(1, savedAmbienceVolume));
@@ -550,6 +556,7 @@ document.addEventListener('DOMContentLoaded', function () {
     bootCueAttempt = bootAudio.play()
       .then(() => {
         bootCuePending = false;
+        document.documentElement.dataset.audioState = 'ready';
         return true;
       })
       .catch(() => false)
@@ -642,6 +649,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function startAmbience(fadeFromSilence = false) {
     if (!ambienceEnabled) return false;
+    ambienceAudio.preload = 'auto';
     ambienceLoopTransitioning = false;
     if (!ambienceAudio.paused) {
       if (fadeFromSilence) ambienceAudio.volume = 0;
@@ -661,7 +669,10 @@ document.addEventListener('DOMContentLoaded', function () {
         fadeAmbienceTo(ambienceVolume, 2600);
         return true;
       })
-      .catch(() => false)
+      .catch(() => {
+        document.documentElement.dataset.audioState = 'waiting';
+        return false;
+      })
       .finally(() => {
         ambiencePlayAttempt = null;
       });
@@ -716,9 +727,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  /* Browsers that remember autoplay permission can begin immediately. Others
+     are retried as soon as the pointer enters the page, before a click. Modern
+     browsers may still require one trusted gesture; the normal click/keyboard
+     listeners below remain as the standards-compliant fallback. */
+  function retryAutomaticAudio() {
+    if (activityAudioContext?.state === 'suspended') {
+      activityAudioContext.resume().catch(() => {});
+    }
+    if (bootCuePending) void tryBootCue();
+    if (ambienceEnabled) void startAmbience(true);
+  }
+
   document.addEventListener('pointerdown', unlockInterfaceAudio, { once: true, capture: true });
   document.addEventListener('keydown', unlockInterfaceAudio, { once: true, capture: true });
   document.addEventListener('touchstart', unlockInterfaceAudio, { once: true, capture: true, passive: true });
+  document.addEventListener('pointerover', retryAutomaticAudio, { once: true, capture: true, passive: true });
+  window.addEventListener('focus', retryAutomaticAudio, { once: true });
 
   if (document.readyState === 'complete') {
     void tryBootCue();
@@ -901,53 +926,125 @@ document.addEventListener('DOMContentLoaded', function () {
     void playInterfaceSound('select');
   }, { capture: true });
 
-  const cursorSoundTargets = document.querySelectorAll([
-    'button',
-    '.btn',
-    '.social-btn',
-    '.stat-card',
-    '.skill-card',
-    '.intro-card',
-    '.about-story-card',
-    '.experience-card',
-    '.timeline-card',
-    '.credential-card',
-    '.intro-project-link',
-    '.portfolio-case-link',
-    '.role-project-link',
-    '.role-service-card',
-    '.role-about-card',
-    '.hero-contact-bubble',
-    '.cta-card',
-    '.portfolio-menu-toggle',
-    '[data-flip-card]',
-    '.contact-card',
-    '.trust-points a'
-  ].join(','));
+  const interactableSelector = [
+    '.interactable',
+    '.premium-card',
+    '.soft-skills-copy',
+    '.about-value-grid article',
+    '.toolkit-tags span',
+    'a[href]',
+    'button:not(:disabled)',
+    'input[type="button"]:not(:disabled)',
+    'input[type="submit"]:not(:disabled)',
+    'input[type="range"]:not(:disabled)',
+    '[role="button"]:not([aria-disabled="true"])',
+    '[data-flip-card]'
+  ].join(',');
   let cursorSoundLastPlayedAt = 0;
 
-  cursorSoundTargets.forEach(target => {
-    target.addEventListener('pointerenter', event => {
-      if (event.pointerType === 'touch') return;
-      const now = performance.now();
-      if (now - cursorSoundLastPlayedAt < 90) return;
-      cursorSoundLastPlayedAt = now;
-      void playInterfaceSound('cursor');
-    });
-  });
-
-  // The portfolio menu changes between an inert, closed panel and an active
-  // panel. Delegate its hover cue so every section and profession link keeps
-  // working each time the hamburger menu is opened.
+  // Delegation keeps audio and feedback automatic for data-rendered controls.
+  // New links, buttons, cards, and menu entries no longer need JS registration.
   document.addEventListener('pointerover', event => {
     if (event.pointerType === 'touch') return;
-    const target = event.target.closest?.('.portfolio-menu a');
+    const target = event.target.closest?.(interactableSelector);
     if (!target || target.contains(event.relatedTarget)) return;
 
     const now = performance.now();
     if (now - cursorSoundLastPlayedAt < 90) return;
     cursorSoundLastPlayedAt = now;
     void playInterfaceSound('cursor');
+  });
+
+  /* Pointer position moves only the glow. The card itself uses the same smooth
+     two-dimensional lift and scale as the portrait, keeping text crisp. */
+  const precisePointer = window.matchMedia('(hover:hover) and (pointer:fine)');
+  let activePointerCard = null;
+  let activePointerTag = null;
+  let pointerFrame = 0;
+  let pendingPointer = null;
+
+  // Idle animation starts on visibility, independently of pointer or focus.
+  // Pause cards outside the viewport to avoid animating the whole long page.
+  const cardMotionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      entry.target.dataset.motionVisible = String(entry.isIntersecting);
+    });
+  }, { rootMargin: '80px', threshold: 0 });
+  document.querySelectorAll('.premium-card').forEach(card => cardMotionObserver.observe(card));
+
+  function resetPointerCard(card) {
+    if (!card) return;
+    card.classList.remove('is-pointer-active');
+    card.style.removeProperty('--pointer-shadow-x');
+    card.style.removeProperty('--pointer-shadow-y');
+  }
+
+  function resetPointerTag(tag) {
+    if (!tag) return;
+    tag.style.removeProperty('--tag-light-x');
+    tag.style.removeProperty('--tag-light-y');
+    tag.style.removeProperty('--tag-shift-x');
+    tag.style.removeProperty('--tag-shift-y');
+  }
+
+  function updatePointerFeedback() {
+    pointerFrame = 0;
+    if (!pendingPointer) return;
+    const { target, clientX, clientY } = pendingPointer;
+    const tag = target.closest?.('.tech-tag');
+    const card = target.closest?.('.premium-card');
+    // Read both rectangles before changing styles, once per animation frame.
+    const tagBounds = tag?.getBoundingClientRect();
+    const cardBounds = card?.getBoundingClientRect();
+
+    if (activePointerTag && activePointerTag !== tag) resetPointerTag(activePointerTag);
+    activePointerTag = tag || null;
+    if (tagBounds?.width && tagBounds.height) {
+        const tagX = Math.max(0, Math.min(1, (clientX - tagBounds.left) / tagBounds.width));
+        const tagY = Math.max(0, Math.min(1, (clientY - tagBounds.top) / tagBounds.height));
+        tag.style.setProperty('--tag-light-x', `${(tagX * 100).toFixed(1)}%`);
+        tag.style.setProperty('--tag-light-y', `${(tagY * 100).toFixed(1)}%`);
+        tag.style.setProperty('--tag-shift-x', `${((tagX - 0.5) * 3).toFixed(1)}px`);
+        tag.style.setProperty('--tag-shift-y', `${((tagY - 0.5) * 2).toFixed(1)}px`);
+    }
+
+    if (!card) {
+      resetPointerCard(activePointerCard);
+      activePointerCard = null;
+      return;
+    }
+
+    if (activePointerCard && activePointerCard !== card) resetPointerCard(activePointerCard);
+    activePointerCard = card;
+    if (!cardBounds.width || !cardBounds.height) return;
+    const relativeX = Math.max(0, Math.min(1, (clientX - cardBounds.left) / cardBounds.width));
+    const relativeY = Math.max(0, Math.min(1, (clientY - cardBounds.top) / cardBounds.height));
+    card.style.setProperty('--pointer-shadow-x', `${((relativeX - 0.5) * 22).toFixed(1)}px`);
+    card.style.setProperty('--pointer-shadow-y', `${(10 + (relativeY - 0.5) * 12).toFixed(1)}px`);
+    card.classList.add('is-pointer-active');
+  }
+
+  document.addEventListener('pointermove', event => {
+    if (!precisePointer.matches || event.pointerType === 'touch') return;
+    pendingPointer = { target: event.target, clientX: event.clientX, clientY: event.clientY };
+    if (!pointerFrame) pointerFrame = window.requestAnimationFrame(updatePointerFeedback);
+  }, { passive: true });
+
+  document.addEventListener('pointerout', event => {
+    const tag = event.target.closest?.('.tech-tag');
+    if (tag && !tag.contains(event.relatedTarget)) {
+      resetPointerTag(tag);
+      if (activePointerTag === tag) activePointerTag = null;
+    }
+    const card = event.target.closest?.('.premium-card');
+    if (!card || card.contains(event.relatedTarget)) return;
+    resetPointerCard(card);
+    if (activePointerCard === card) activePointerCard = null;
+    if (!event.relatedTarget) {
+      window.cancelAnimationFrame(pointerFrame);
+      pointerFrame = 0;
+      pendingPointer = null;
+    }
   });
 
   const activityClickCueTimers = new WeakMap();
@@ -1048,6 +1145,8 @@ document.addEventListener('DOMContentLoaded', function () {
       back.scrollTop = 0;
     }
 
+    if (!shouldFlip && !moveFocus) toggle?.blur();
+
     if (moveFocus) {
       const focusTarget = shouldFlip ? back : toggle;
       window.requestAnimationFrame(() => focusTarget?.focus({ preventScroll: true }));
@@ -1092,17 +1191,20 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentIndex = 0;
     let touchStartX = 0;
     let suppressFlipClick = false;
+    let ecpcLayoutFrame = 0;
 
     function updateEcpcControlPosition() {
-      if (!stage || !slides[currentIndex]) return;
+      if (!stage || !slides[currentIndex] || ecpcLayoutFrame) return;
 
-      window.requestAnimationFrame(() => {
+      ecpcLayoutFrame = window.requestAnimationFrame(() => {
+        ecpcLayoutFrame = 0;
         const activeCard = slides[currentIndex].querySelector('.ecpc-deck-card');
         if (!activeCard) return;
-        const stageRect = stage.getBoundingClientRect();
-        const cardRect = activeCard.getBoundingClientRect();
-        const controlY = cardRect.top - stageRect.top + (cardRect.height / 2);
+        // Layout measurements exclude the outer card's hover/idle transform.
+        const controlY = activeCard.offsetTop + activeCard.offsetHeight / 2;
+        const slideHeight = slides[currentIndex].offsetHeight;
         stage.style.setProperty('--ecpc-control-y', `${controlY}px`);
+        stage.style.height = `${slideHeight}px`;
       });
     }
 
@@ -1141,7 +1243,7 @@ document.addEventListener('DOMContentLoaded', function () {
       updateEcpcControlPosition();
     }
 
-    async function changeEcpcWithSound(index) {
+    function changeEcpcWithSound(index) {
       if (!slides.length) return false;
       const originIndex = currentIndex;
       const destinationIndex = (index + slides.length) % slides.length;
@@ -1150,11 +1252,10 @@ document.addEventListener('DOMContentLoaded', function () {
       // Direction follows the visible chapter number, regardless of whether
       // navigation came from an arrow, a numbered selector, or a swipe.
       const chapterNumberIncreased = destinationIndex > originIndex;
-      const soundStarted = chapterNumberIncreased
-        ? await playActivitySounds('right', 'front')
-        : await playActivitySounds('left', 'back');
-      if (!soundStarted || currentIndex !== originIndex) return false;
+      // Rendering must never wait for audio decoding or autoplay permission.
       showEcpc(destinationIndex);
+      if (chapterNumberIncreased) void playActivitySounds('right', 'front');
+      else void playActivitySounds('left', 'back');
       return true;
     }
 
@@ -1210,6 +1311,8 @@ document.addEventListener('DOMContentLoaded', function () {
       ecpcResizeTimer = window.setTimeout(updateEcpcControlPosition, 120);
     });
 
+    const ecpcSizeObserver = new ResizeObserver(updateEcpcControlPosition);
+    slides.forEach(slide => ecpcSizeObserver.observe(slide));
     showEcpc(0, true);
   }
 
