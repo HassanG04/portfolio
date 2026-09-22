@@ -195,6 +195,7 @@
       },
       {
         chapter: 'Next contest', title: 'The next chapter', image: 'ecpc_logo.png', alt: 'Egyptian Collegiate Programming Contest logo',
+        progressUrl: 'https://codeforces.com/profile/Hassan_G04',
         description: 'The next contest is another chance to learn, collaborate, and return sharper. Preparation continues.',
         teammates: []
       }

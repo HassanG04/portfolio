@@ -506,7 +506,7 @@ body[data-role] .portfolio-case-grid > :nth-child(4n+2) .result-card > .result-c
 .ecpc-cover .ecpc-brand-emblem { width:76px; min-height:54px; }
 .ecpc-cover .ecpc-brand-mark { width:100%; max-height:62px; object-fit:contain; object-position:center; }
 .ecpc-deck-stage { border-radius:0; transition:height .28s ease; }
-.ecpc-slider-track { align-items:flex-start; }
+.ecpc-slider-track { align-items:stretch; }
 .ecpc-slide {
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(300px,.62fr);
@@ -575,8 +575,9 @@ body[data-role] .portfolio-case-grid > :nth-child(4n+2) .result-card > .result-c
 .ecpc-deck-indicators { min-height:48px; padding:9px 16px; }
 .ecpc-future-card {
   min-height:0;
-  aspect-ratio:3 / 2;
-  padding:clamp(34px,5vw,64px);
+  padding:0;
+  background:radial-gradient(ellipse at 50% 38%,rgba(139,92,246,.24),transparent 70%),var(--bg-card);
+  color:var(--text-primary);
 }
 .ecpc-future-card > .ecpc-future-logo {
   position:absolute;
@@ -607,6 +608,60 @@ body[data-role] .portfolio-case-grid > :nth-child(4n+2) .result-card > .result-c
   0%,100% { transform:translate(-50%,-53%) scale(1); }
   50% { transform:translate(-50%,calc(-53% - 8px)) scale(1.045); }
 }
+
+/* One frame and one navigation row for every chapter, on touch and desktop. */
+.ecpc-navigation {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:12px 20px;
+  border-top:1px solid var(--border-glass);
+  background:var(--bg-card);
+}
+.ecpc-navigation .ecpc-deck-arrow { width:44px; height:44px; flex-shrink:0; }
+.ecpc-navigation .ecpc-deck-indicators {
+  min-height:44px;
+  padding:0;
+  gap:6px;
+  border:0;
+  background:transparent;
+}
+.ecpc-navigation .ecpc-deck-indicators button { width:44px; height:44px; }
+.ecpc-progress-back {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow-y:auto;
+  gap:12px;
+  padding:24px;
+  text-align:center;
+  color:var(--text-primary);
+  background:radial-gradient(ellipse at 50% 0,rgba(139,92,246,.22),transparent 72%),var(--bg-card);
+}
+.ecpc-progress-kicker { color:var(--accent-purple-light); font-size:.65rem; font-weight:800; letter-spacing:.14em; }
+.ecpc-progress-back h3 { margin:0; font-size:clamp(1.2rem,2.6vw,1.9rem); }
+.ecpc-progress-back p { margin:0; max-width:32ch; color:var(--text-secondary); font-size:.9rem; line-height:1.5; }
+.ecpc-progress-link {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  min-height:44px;
+  padding:10px 20px;
+  border:1px solid var(--border-glass);
+  border-radius:12px;
+  background:var(--accent-purple);
+  color:#fff;
+  font-size:.9rem;
+  font-weight:700;
+  text-decoration:none;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.ecpc-progress-link:hover { color:#fff; transform:translateY(-2px); box-shadow:0 8px 26px rgba(139,92,246,.35); }
+.ecpc-progress-link:focus-visible { outline:2px solid var(--text-primary); outline-offset:4px; }
+.ecpc-progress-back small { color:var(--text-secondary); font-size:.65rem; }
 
 /* Only the illustrated DEPI tile flips. Its progress and website action stay
    visible, preventing the whole section from becoming a disorienting panel. */
@@ -879,6 +934,7 @@ html[data-theme="light"] .instructor-profile-card .linkedin-id-link { color:#075
   body[data-role] .portfolio-case-grid > * { grid-column:span 6!important; }
   .ecpc-slide {
     grid-template-columns:minmax(0,1fr);
+    align-content:start;
     row-gap:22px;
     padding:26px 34px 30px;
   }
@@ -927,13 +983,22 @@ html[data-theme="light"] .instructor-profile-card .linkedin-id-link { color:#075
   .ecpc-cover { min-height:82px; padding:14px 16px; }
   .ecpc-cover h3 { font-size:1.45rem; }
   .ecpc-cover .ecpc-brand-emblem { width:78px; min-height:62px; }
-  .ecpc-slide { grid-template-columns:minmax(0,1fr); row-gap:22px; padding:18px 8px 22px; }
+  .ecpc-slide { grid-template-columns:minmax(0,1fr); row-gap:20px; padding:16px 12px 24px; }
   .ecpc-slide .ecpc-deck-card { grid-column:1; grid-row:1; aspect-ratio:16 / 10; }
   .ecpc-slide .ecpc-slide-caption { grid-column:1; grid-row:2; padding:0 4px; }
-  .ecpc-slide-caption p { max-width:none; }
+  .ecpc-slide-caption p { max-width:none; margin-bottom:0; font-size:.94rem; line-height:1.65; }
+  .ecpc-slide-caption h3 { font-size:1.45rem; margin-bottom:12px; }
+  .ecpc-navigation { padding:10px 8px; gap:4px; }
+  .ecpc-navigation .ecpc-deck-indicators { gap:2px; }
+  .ecpc-navigation .ecpc-deck-indicators button { width:clamp(28px,9vw,40px); height:44px; }
+  .ecpc-progress-back { padding:12px; gap:7px; }
+  .ecpc-progress-back p { font-size:.76rem; }
+  .ecpc-progress-back h3 { font-size:1.2rem; }
+  .ecpc-progress-kicker { font-size:.55rem; }
+  .ecpc-progress-link { padding:8px 16px; font-size:.82rem; }
   .ecpc-deck-controls { padding-inline:6px; }
   .ecpc-deck-arrow { width:34px; height:36px; }
-  .ecpc-future-card { aspect-ratio:16 / 10; }
+  .ecpc-future-card { aspect-ratio:auto; }
   .ecpc-future-card > .ecpc-future-logo { width:clamp(120px,42vw,180px); }
   .depi-progress-card { padding:16px; border-radius:20px; }
   .depi-visual-flip { aspect-ratio:4 / 3; min-height:300px; border-radius:20px; }
@@ -952,6 +1017,8 @@ html[data-theme="light"] .instructor-profile-card .linkedin-id-link { color:#075
   .activity-subsection-number { width:45px; }
   .ecpc-cover .ecpc-brand-emblem { width:66px; }
   .ecpc-cover h3 { font-size:1.25rem; }
+  .ecpc-progress-kicker { display:none; }
+  .ecpc-progress-back { padding:10px; gap:6px; }
   .depi-progress-card { padding:11px; }
   .depi-visual-flip { aspect-ratio:4 / 3; }
   .depi-visual-back { gap:9px; padding:13px 11px; }

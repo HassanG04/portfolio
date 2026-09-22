@@ -1190,6 +1190,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextButton = document.getElementById('ecpcNext');
     let currentIndex = 0;
     let touchStartX = 0;
+    let touchStartY = 0;
     let suppressFlipClick = false;
     let ecpcLayoutFrame = 0;
 
@@ -1198,12 +1199,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       ecpcLayoutFrame = window.requestAnimationFrame(() => {
         ecpcLayoutFrame = 0;
-        const activeCard = slides[currentIndex].querySelector('.ecpc-deck-card');
-        if (!activeCard) return;
+        // Keep the frame stable across chapters, including their full captions.
         // Layout measurements exclude the outer card's hover/idle transform.
-        const controlY = activeCard.offsetTop + activeCard.offsetHeight / 2;
-        const slideHeight = slides[currentIndex].offsetHeight;
-        stage.style.setProperty('--ecpc-control-y', `${controlY}px`);
+        const slideHeight = Math.max(...slides.map(slide => slide.offsetHeight));
         stage.style.height = `${slideHeight}px`;
       });
     }
@@ -1289,10 +1287,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (stage) {
       stage.addEventListener('touchstart', event => {
         touchStartX = event.changedTouches[0].clientX;
+        touchStartY = event.changedTouches[0].clientY;
       }, { passive: true });
       stage.addEventListener('touchend', event => {
         const distance = event.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(distance) > 48) {
+        const verticalDistance = event.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(distance) > 48 && Math.abs(distance) > Math.abs(verticalDistance) * 1.25) {
           suppressFlipClick = true;
           void moveEcpcWithSound(distance < 0 ? 1 : -1);
           window.setTimeout(() => { suppressFlipClick = false; }, 350);
