@@ -1175,6 +1175,11 @@ document.addEventListener('DOMContentLoaded', function () {
       playActivitySound('right');
       setActivityFlipState(card, false, true);
     });
+    back?.querySelector('.profile-return')?.addEventListener('click', event => {
+      event.stopPropagation();
+      playActivitySound('right');
+      setActivityFlipState(card, false, true);
+    });
   });
 
   /* ============================================================

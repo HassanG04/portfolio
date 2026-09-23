@@ -179,17 +179,17 @@
   const activity = {
     ecpc: [
       {
-        chapter: 'Chapter one', title: 'My first ECPC', image: 'ECPC1.jpg', alt: 'Hassan with Adham El Behiry and Karim Ayman at ECPC',
+        chapter: 'Chapter one', title: 'My first ECPC', image: 'ECPC1.jpg', imageWidth: 2048, imageHeight: 1207, alt: 'Hassan with Adham El Behiry and Karim Ayman at ECPC',
         description: 'This was my first time participating in a major collegiate programming contest. ECPC 2024 was thrilling and a learning opportunity for all of us. It was a blast to work with Eng. Adham El Behiry and Eng. Karim Ayman.',
         teammates: [{ name: 'Adham El Behiry' }, { name: 'Karim Ayman' }]
       },
       {
-        chapter: 'Chapter two', title: '25th in qualification', image: 'ECPC2.jpg', alt: 'Hassan with Mohammed Ossama and Yasin Moataz at ECPC qualification',
+        chapter: 'Chapter two', title: '25th in qualification', image: 'ECPC2.jpg', imageWidth: 1600, imageHeight: 1066, alt: 'Hassan with Mohammed Ossama and Yasin Moataz at ECPC qualification',
         description: 'Fueled by the momentum of our first contest, we returned with a sharper strategy and fiercer ambition. Securing 25th place in ECPC qualification was a testament to our preparation. Sharing this milestone with Eng. Mohammed Ossama and Eng. Yasin Moataz made it even more rewarding.',
         teammates: [{ name: 'Mohammed Ossama' }, { name: 'Yasin Moataz', linkedin: 'https://www.linkedin.com/in/yaseen-moataz-49b39b308/' }]
       },
       {
-        chapter: 'Chapter three', title: 'A stronger return', image: 'ECPC3.jpeg', alt: 'Hassan with Fatma Abaza and Rahma Hussein at ECPC',
+        chapter: 'Chapter three', title: 'A stronger return', image: 'ECPC3.jpeg', imageWidth: 1200, imageHeight: 800, alt: 'Hassan with Fatma Abaza and Rahma Hussein at ECPC',
         description: 'From the previous year, I was ambitious to improve and aim higher. My team put in overwhelming effort and solved multiple problems. Special thanks to Eng. Fatma Abaza and Eng. Rahma Hussein for making this a truly special team.',
         teammates: [{ name: 'Fatma Abaza' }, { name: 'Rahma Hussein' }]
       },

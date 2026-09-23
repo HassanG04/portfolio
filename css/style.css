@@ -145,14 +145,11 @@ body.page-leave-backward {
   }
 }
 
-@media(prefers-reduced-motion:reduce) {
-
-  body.page-enter-forward,
-  body.page-enter-backward,
-  body.page-leave-forward,
-  body.page-leave-backward {
-    animation: none;
-  }
+html[data-motion="reduced"] body.page-enter-forward,
+html[data-motion="reduced"] body.page-enter-backward,
+html[data-motion="reduced"] body.page-leave-forward,
+html[data-motion="reduced"] body.page-leave-backward {
+  animation: none;
 }
 
 /* Custom Scrollbar */
@@ -2987,32 +2984,20 @@ footer {
   transition-duration: .7s;
 }
 
-@media (prefers-reduced-motion:reduce) {
+/* One resolved site preference controls motion, including a saved opt-in. */
+html[data-motion="reduced"],
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  scroll-behavior: auto !important;
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+  transition-delay: 0ms !important;
+}
 
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-
-  #particle-canvas {
-    display: none;
-  }
-
-  /* Preserve only the explicitly requested, low-amplitude hero motion. */
-  .hero-contact-bubble {
-    animation: hero-contact-bob 3.4s ease-in-out infinite !important;
-  }
-
-  .hero-img-ring {
-    animation: profile-float 5.5s ease-in-out infinite !important;
-  }
-
-  .hero-img-inner img {
-    animation: profile-portrait-breathe 7s ease-in-out infinite !important;
-  }
+html[data-motion="reduced"] #particle-canvas {
+  display: none;
 }
 
 @media(max-width:991.98px) {
@@ -3534,7 +3519,7 @@ footer {
   transform-origin: right center;
 }
 
-.ecpc-deck-card:not(.is-active):hover {
+.ecpc-slide:not(.is-active) .ecpc-deck-card:hover {
   opacity: .82;
   border-color: rgba(192, 132, 252, .34);
 }
@@ -3614,7 +3599,7 @@ footer {
   transition: transform .5s ease, opacity .4s ease;
 }
 
-.ecpc-deck-card:not(.is-active) .ecpc-photo-number {
+.ecpc-slide:not(.is-active) .ecpc-photo-number {
   transform: scale(.85);
   opacity: .75;
 }
@@ -5668,22 +5653,6 @@ html[data-theme="light"] .ecpc-deck-arrow:focus-visible {
   }
 }
 
-@media(prefers-reduced-motion:reduce) {
-  .activity-main {
-    --activity-slide-duration: .38s;
-    --activity-flip-duration: .46s;
-  }
-
-  .flip-card-image,
-  .flip-card-prompt,
-  .flip-card::after,
-  .ecpc-slide-caption,
-  .ecpc-card-back .contact-card {
-    transition-duration: .22s;
-    transition-delay: 0s;
-  }
-}
-
 /* ===== CLIENT-FOCUSED PORTFOLIO CONTENT ===== */
 .toolkit-panel,
 .trust-panel,
@@ -6086,7 +6055,8 @@ html[data-theme="light"] .result-metric {
 
 /* ===== SINGLE-PAGE PORTFOLIO FLOW ===== */
 .one-page-section {
-  scroll-margin-top: calc(var(--navbar-height) + 20px);
+  /* The root scroll-padding already makes room for the fixed navbar. */
+  scroll-margin-top: 0;
   position: relative;
 }
 
@@ -7201,14 +7171,6 @@ body[data-role] .hero-section {
   overflow: hidden;
 }
 
-.intro-project-grid>div:nth-child(2) .intro-project-card {
-  margin-top: 28px;
-}
-
-.intro-project-grid>div:nth-child(3) .intro-project-card {
-  margin-top: 10px;
-}
-
 .intro-project-link:hover .intro-project-card,
 .intro-project-link:focus-visible .intro-project-card,
 .credential-card:hover,
@@ -7248,10 +7210,6 @@ body[data-role] .hero-section {
 .intro-card p {
   max-width: 760px;
   margin: 0;
-}
-
-.service-card-grid>div:nth-child(3n+2) .skill-card {
-  margin-top: 24px;
 }
 
 .skill-card {
