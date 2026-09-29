@@ -31,3 +31,69 @@ test('the shared activity renders on profession routes with correct photo paths'
   assert.ok(roleMarkup.includes('src="../images/softskills.jpeg"'));
   assert.ok(roleMarkup.includes('profile-id-back'));
 });
+
+test('freelance buttons expose only confirmed public profile URLs', () => {
+  const links = context.window.PORTFOLIO_COMPONENTS.renderFreelanceLinks();
+  assert.ok(links.includes('https://www.upwork.com/freelancers/~01a4a740c603955a24/'));
+  assert.ok(links.includes('https://khamsat.com/user/hassan_g04'));
+  assert.ok(!links.includes('mostaql.com'));
+});
+
+test('hero buttons are icon-only with accessible names and hover labels', () => {
+  const links = context.window.PORTFOLIO_COMPONENTS.renderFreelanceLinks({ variant: 'social' });
+  assert.equal((links.match(/class="social-btn /g) || []).length, 2);
+  assert.equal((links.match(/interactable/g) || []).length, 2);
+  assert.equal((links.match(/rel="noopener noreferrer"/g) || []).length, 2);
+  assert.ok(links.includes('class="fa-brands fa-upwork"'));
+  assert.ok(links.includes('src="images/khamsat-icon.png" alt=""'));
+  for (const label of ['Upwork', 'Khamsat']) {
+    assert.ok(links.includes(`title="${label}"`));
+    assert.ok(links.includes(`aria-label="Open Hassan's ${label} profile (new tab)"`));
+    assert.ok(!links.includes(`>${label}<`));
+  }
+  assert.ok(!links.includes('fa-arrow-up-right-from-square'));
+});
+
+test('contact uses matching compact icons and role pages resolve the local icon', () => {
+  const links = context.window.PORTFOLIO_COMPONENTS.renderFreelanceLinks({ assetRoot: '../' });
+  assert.equal((links.match(/class="social-btn /g) || []).length, 2);
+  assert.ok(links.includes('src="../images/khamsat-icon.png"'));
+  assert.ok(!links.includes('btn-glass'));
+});
+
+test('main page inserts freelance links immediately after LinkedIn in both locations', () => {
+  const html = readFileSync(join(__dirname, '../index.html'), 'utf8');
+  const slots = new Map();
+  const mainContext = { window: context.window, document: {
+    querySelector(selector) {
+      const slot = { innerHTML: '' };
+      slots.set(selector, slot);
+      return slot;
+    }
+  } };
+  runInNewContext(readFileSync(join(__dirname, '../js/main-page.js'), 'utf8'), mainContext);
+  for (const name of ['hero-freelance-links', 'freelance-links']) {
+    assert.match(html, new RegExp(`</a>\\s*<span class="freelance-links-slot" data-portfolio-render="${name}"`));
+    assert.ok(slots.get(`[data-portfolio-render="${name}"]`).innerHTML.includes('khamsat.com/user/hassan_g04'));
+  }
+});
+
+for (const role of ['AI', 'ML', 'DS', 'DA', 'DE']) {
+  test(`${role} places both freelance profiles beside LinkedIn in hero and contact`, () => {
+    const root = { innerHTML: '' };
+    runInNewContext(readFileSync(join(__dirname, '../js/role-page.js'), 'utf8'), {
+      window: context.window,
+      document: {
+        body: { dataset: { role } },
+        getElementById: () => root,
+        querySelectorAll: () => []
+      }
+    });
+    for (const url of context.window.PORTFOLIO_DATA.shared.freelanceProfiles.map(profile => profile.url)) {
+      assert.equal(root.innerHTML.split(`href="${url}"`).length - 1, 2);
+    }
+    assert.match(root.innerHTML, /aria-label="LinkedIn"><i[^>]+><\/i><\/a><a class="social-btn freelance-profile-link/);
+    assert.match(root.innerHTML, /Discuss a Project<\/a><a class="social-btn freelance-profile-link/);
+    assert.equal(root.innerHTML.split('src="../images/khamsat-icon.png"').length - 1, 2);
+  });
+}

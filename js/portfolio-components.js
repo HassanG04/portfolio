@@ -21,6 +21,18 @@
     return 'purple';
   };
   const renderTechTag = (tag, extraClass = '') => `<span class="${extraClass ? `${extraClass} ` : ''}tech-tag tech-tag--${techTone(tag)} interactable">${escapeHtml(tag)}</span>`;
+  const renderFreelanceLinks = ({ variant = 'contact', assetRoot = '' } = {}) => {
+    const profiles = Array.isArray(data.shared.freelanceProfiles) ? data.shared.freelanceProfiles : [];
+    const classes = variant === 'social'
+      ? 'social-btn freelance-profile-link freelance-profile-link--social interactable'
+      : 'social-btn freelance-profile-link interactable';
+    return profiles.map(profile => {
+      const icon = profile.iconImage
+        ? `<img src="${escapeHtml(asset(assetRoot, profile.iconImage))}" alt="" width="22" height="22" />`
+        : `<i class="${escapeHtml(profile.iconClass || 'fas fa-briefcase')}" aria-hidden="true"></i>`;
+      return `<a class="${classes}" href="${escapeHtml(profile.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(profile.label)}" aria-label="Open Hassan's ${escapeHtml(profile.label)} profile (new tab)">${icon}</a>`;
+    }).join('');
+  };
   const formatMonth = value => {
     const [year, month] = String(value).split('-').map(Number);
     if (!Number.isFinite(year) || !Number.isFinite(month)) return '';
@@ -189,6 +201,7 @@
     renderCredentialCards,
     renderExperienceCards,
     renderTechTag,
+    renderFreelanceLinks,
     renderActivity
   });
 }());

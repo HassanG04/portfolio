@@ -990,6 +990,13 @@ body[data-role] .hero-section {
 .cta-card p { max-width:64ch; margin-top:24px; font-size:1rem; }
 .cta-card .contact-actions,
 .cta-card > .d-flex { justify-content:flex-start!important; }
+.freelance-links-slot { display:contents; }
+.hero-social, .hero-socials { display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+.social-btn.freelance-profile-link { flex:0 0 42px; width:42px; height:42px; padding:0; font-size:1.25rem; }
+.freelance-profile-link img { display:block; width:22px; height:22px; object-fit:contain; border-radius:4px; }
+.contact-actions { align-items:center; }
+.freelance-profile-link:is(:hover,:focus-visible) { border-color:var(--accent-primary,#a78bfa); box-shadow:0 0 18px rgba(139,92,246,.25); }
+.freelance-profile-link:focus-visible { outline:2px solid var(--accent-primary,#a78bfa); outline-offset:4px; }
 html[data-theme="light"] .cta-card { background:radial-gradient(ellipse at 100% 0,rgba(139,92,246,.18),transparent 65%),#eee7fb; }
 html[data-theme="light"] .cta-card h2 { color:var(--text-primary); }
 html[data-theme="light"] .cta-card p { color:var(--text-secondary); }
