@@ -17,3 +17,4 @@ jobs:
       - run: python scripts/validate_site.py
       - run: node --check js/script.js
       - run: node --check js/role-page.js
+      - run: node --test tests/*.test.cjs

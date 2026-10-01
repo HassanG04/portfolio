@@ -10,7 +10,8 @@
     linkedin: 'https://www.linkedin.com/in/hassan-gebrill-98a08a299/',
     freelanceProfiles: [
       { label: 'Upwork', url: 'https://www.upwork.com/freelancers/~01a4a740c603955a24/', iconClass: 'fa-brands fa-upwork' },
-      { label: 'Khamsat', url: 'https://khamsat.com/user/hassan_g04', iconImage: 'khamsat-icon.png' }
+      { label: 'Khamsat', url: 'https://khamsat.com/user/hassan_g04', iconImage: 'khamsat-icon.png' },
+      { label: 'Fiverr', url: 'https://www.fiverr.com/hassan_g04', iconImage: 'fiverr-icon.png' }
     ],
     resumes: {
       AI: 'https://drive.google.com/file/d/1OtvoA3evwZXAcb-kifyhtX20TDkF-zF1/view?usp=sharing',

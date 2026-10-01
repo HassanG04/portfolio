@@ -6,94 +6,44 @@ const { runInNewContext } = require('node:vm');
 
 const source = readFileSync(join(__dirname, '../js/motion-preference.js'), 'utf8');
 
-function setup({ reduced = false, saved = null, storageBlocked = false } = {}) {
+function setup({ saved = null, reduced = false, storageBlocked = false } = {}) {
   const root = { dataset: {} };
-  const children = {};
-  const attributes = {};
-  const listeners = {};
-  const button = {
-    setAttribute: (key, value) => { attributes[key] = value; },
-    querySelector: key => children[key] ||= {},
-    addEventListener: (event, callback) => { listeners[event] = callback; }
-  };
-  let ready;
-  let onSystemChange;
-  let stored = saved;
-  let mounted = false;
-  const media = {
-    matches: reduced,
-    addEventListener: (_, callback) => { onSystemChange = callback; }
-  };
+  let created = false;
   runInNewContext(source, {
-    window: { matchMedia: () => media },
+    window: { matchMedia: () => ({ matches: reduced }) },
     document: {
       documentElement: root,
-      addEventListener: (_, callback) => { ready = callback; },
-      getElementById: () => ({ append: () => { mounted = true; } }),
-      createElement: () => button
+      createElement: () => { created = true; }
     },
     localStorage: {
-      getItem: () => { if (storageBlocked) throw new Error('Blocked'); return stored; },
-      setItem: (_, value) => { if (storageBlocked) throw new Error('Blocked'); stored = value; }
+      getItem: () => { if (storageBlocked) throw new Error('Blocked'); return saved; }
     }
   });
-  return {
-    root, attributes, children,
-    ready: () => ready(),
-    click: () => listeners.click(),
-    stored: () => stored,
-    mounted: () => mounted,
-    systemChange: reduced => { media.matches = reduced; onSystemChange(); }
-  };
+  return { root, created };
 }
 
-test('enables animations by default, including on reduced-motion systems', () => {
-  const site = setup({ reduced: true });
+test('animations start enabled and no settings control is created', () => {
+  const site = setup();
   assert.equal(site.root.dataset.motion, 'full');
-  site.ready();
-  assert.equal(site.mounted(), true);
-  assert.equal(site.attributes['aria-label'], 'Reduce animations');
-  assert.equal(site.attributes['aria-pressed'], 'true');
+  assert.equal(site.created, false);
+  assert.doesNotMatch(source, /motionPreferenceToggle|DOMContentLoaded/);
 });
 
-test('a saved full-motion choice overrides system reduction on every page', () => {
-  const site = setup({ reduced: true, saved: 'full' });
-  assert.equal(site.root.dataset.motion, 'full');
-  site.ready();
-  assert.equal(site.attributes['aria-label'], 'Reduce animations');
-  assert.equal(site.root.dataset.motion, 'full');
+test('the removed setting cannot silently disable animations', () => {
+  for (const saved of ['full', 'reduced', 'invalid']) {
+    assert.equal(setup({ saved, reduced: true }).root.dataset.motion, 'full');
+  }
 });
 
-test('toggle saves both choices and survives a reload', () => {
-  const site = setup({ saved: 'reduced' });
-  site.ready();
-  site.click();
-  assert.equal(site.root.dataset.motion, 'full');
-  assert.equal(site.stored(), 'full');
-  assert.equal(setup({ reduced: true, saved: site.stored() }).root.dataset.motion, 'full');
-  site.click();
-  assert.equal(site.root.dataset.motion, 'reduced');
-  assert.equal(site.stored(), 'reduced');
+test('animations do not depend on browser storage access', () => {
+  assert.equal(setup({ storageBlocked: true }).root.dataset.motion, 'full');
 });
 
-test('respects a saved reduced-motion choice', () => {
-  const site = setup({ saved: 'reduced' });
-  site.ready();
-  assert.equal(site.root.dataset.motion, 'reduced');
-  assert.equal(site.attributes['aria-label'], 'Enable animations');
-  site.click();
-  assert.equal(site.root.dataset.motion, 'full');
-});
-
-test('controls still work when browser storage is blocked', () => {
-  const site = setup({ reduced: true, storageBlocked: true });
-  site.ready();
-  site.click();
-  assert.equal(site.root.dataset.motion, 'reduced');
-  site.click();
-  assert.equal(site.root.dataset.motion, 'full');
-});
-
-test('ignores invalid saved values', () => {
-  assert.equal(setup({ saved: 'invalid', reduced: true }).root.dataset.motion, 'full');
+test('every portfolio loads the shared motion initializer before styles', () => {
+  for (const page of ['index.html', ...['AI', 'ML', 'DS', 'DA', 'DE'].map(role => `${role}/index.html`)]) {
+    const html = readFileSync(join(__dirname, '..', page), 'utf8');
+    assert.ok(html.includes('js/motion-preference.js'));
+    assert.ok(html.indexOf('js/motion-preference.js') < html.indexOf('css/style.css'));
+    assert.doesNotMatch(html, /motionPreferenceToggle/);
+  }
 });

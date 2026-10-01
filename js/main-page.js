@@ -12,7 +12,6 @@
     credentials: () => components.renderCredentialCards('MAIN', '', 3),
     projects: () => components.renderProjectCards('MAIN'),
     skills: () => data.main.skills.map(skill => components.renderTechTag(skill)).join(''),
-    'freelance-links': () => components.renderFreelanceLinks(),
     'hero-freelance-links': () => components.renderFreelanceLinks({ variant: 'social' }),
     activity: () => components.renderActivity('')
   };

@@ -33,6 +33,7 @@ jobs:
           python scripts/validate_site.py
           node --check js/script.js
           node --check js/role-page.js
+          node --test tests/*.test.cjs
 
       - name: Prepare website files
         run: |

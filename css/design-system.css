@@ -1216,27 +1216,6 @@ html[data-theme="light"] .is-linked > .profile-id-action { color:#075ca8; }
   .profile-id-grid { grid-template-columns:1fr; gap:18px; }
 }
 
-.motion-preference-toggle {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  width:100%;
-  margin-top:14px;
-  padding:14px 12px;
-  border:1px solid var(--border-glass);
-  border-radius:12px;
-  background:var(--bg-card);
-  color:var(--text-primary);
-  text-align:left;
-  transition:background .2s ease,border-color .2s ease,transform .2s ease;
-}
-.motion-preference-toggle:hover,
-.motion-preference-toggle:focus-visible { border-color:var(--accent-purple); background:rgba(139,92,246,.12); transform:translateY(-2px); }
-.motion-preference-toggle > i { color:var(--accent-purple); }
-.motion-preference-toggle strong { display:block; font-size:.85rem; }
-.motion-preference-description { display:block; margin-top:3px; font-size:.68rem; color:var(--text-secondary); }
-.motion-preference-state { margin-left:auto; color:var(--accent-purple); font-size:.75rem; font-weight:700; }
-
 html[data-motion="reduced"] .premium-card,
 html[data-motion="reduced"] .premium-card::after,
 html[data-motion="reduced"] .hero-actions .btn,
