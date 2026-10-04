@@ -51,7 +51,7 @@
     const about = data.shared.about;
     return `<div class="section-anchor-heading reveal"><span class="section-tag">About / Alexandria, Egypt</span><h2 class="section-heading">${escapeHtml(about.heading)}</h2><p>${escapeHtml(about.intro)}</p></div>
       <div class="about-editorial">
-        <figure class="about-portrait reveal-left"><img src="${asset(assetRoot, 'profile.jpg')}" alt="Hassan Gebril" loading="lazy" decoding="async" /><figcaption>${escapeHtml(data.shared.name)}<span>${escapeHtml(data.shared.identity)}</span></figcaption></figure>
+        <figure class="about-profile-panel premium-card reveal-left"><div class="profile-image-wrapper"><img src="${asset(assetRoot, 'profile.jpg')}" alt="Hassan Gebril" class="profile-image" loading="lazy" decoding="async" /></div><figcaption class="about-profile-copy">${escapeHtml(data.shared.name)}<span>${escapeHtml(data.shared.identity)}</span></figcaption></figure>
         <div class="about-prose reveal-right"><p>${escapeHtml(about.story)}</p><p>${escapeHtml(about.practice)}</p><div class="education-record"><img src="${asset(assetRoot, 'AASTMT_Logo.png')}" alt="AASTMT" loading="lazy" decoding="async" /><div><span class="record-label">Education</span><h3>${escapeHtml(about.education)}</h3><p>${escapeHtml(about.degree)}</p></div></div></div>
       </div><div class="experience-records reveal"><h3>Experience</h3><div class="experience-stack">${renderExperienceCards(roleKey)}</div></div>`;
   }

@@ -14,6 +14,17 @@ test('the formula strip and its animation are removed at their source', () => {
   }
 });
 
+test('the old About portrait structure is shared by main and specialist pages', () => {
+  for (const role of ['MAIN', 'AI', 'ML', 'DS', 'DA', 'DE']) {
+    const markup = context.window.PORTFOLIO_COMPONENTS.renderAbout(role, role === 'MAIN' ? '' : '../');
+    assert.match(markup, /about-profile-panel[^>]*><div class="profile-image-wrapper"><img[^>]+class="profile-image"/);
+    assert.doesNotMatch(markup, /about-portrait/);
+  }
+  const css = source('css/editorial.css');
+  assert.equal((css.match(/@keyframes rotate-ring/g) || []).length, 1);
+  assert.equal((css.match(/@keyframes pulse-glow/g) || []).length, 1);
+});
+
 test('general identity is AI Engineer and the honest scope stays explicit', () => {
   const { shared, professions } = context.window.PORTFOLIO_DATA;
   assert.equal(shared.identity, 'AI Engineer');
