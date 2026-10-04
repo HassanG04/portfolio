@@ -9,8 +9,10 @@ const source = readFileSync(join(__dirname, '../js/motion-preference.js'), 'utf8
 function setup({ saved = null, reduced = false, storageBlocked = false } = {}) {
   const root = { dataset: {} };
   let created = false;
+  let onChange;
+  const preference = { matches: reduced, addEventListener: (event, callback) => { if (event === 'change') onChange = callback; } };
   runInNewContext(source, {
-    window: { matchMedia: () => ({ matches: reduced }) },
+    window: { matchMedia: () => preference },
     document: {
       documentElement: root,
       createElement: () => { created = true; }
@@ -19,7 +21,7 @@ function setup({ saved = null, reduced = false, storageBlocked = false } = {}) {
       getItem: () => { if (storageBlocked) throw new Error('Blocked'); return saved; }
     }
   });
-  return { root, created };
+  return { root, created, change(reduce) { preference.matches = reduce; onChange(); } };
 }
 
 test('animations start enabled and no settings control is created', () => {
@@ -29,10 +31,19 @@ test('animations start enabled and no settings control is created', () => {
   assert.doesNotMatch(source, /motionPreferenceToggle|DOMContentLoaded/);
 });
 
-test('the removed setting cannot silently disable animations', () => {
+test('the OS preference takes priority over any stale removed setting', () => {
   for (const saved of ['full', 'reduced', 'invalid']) {
-    assert.equal(setup({ saved, reduced: true }).root.dataset.motion, 'full');
+    assert.equal(setup({ saved, reduced: true }).root.dataset.motion, 'reduced');
+    assert.equal(setup({ saved, reduced: false }).root.dataset.motion, 'full');
   }
+});
+
+test('OS motion preference changes apply while the page is open', () => {
+  const site = setup();
+  site.change(true);
+  assert.equal(site.root.dataset.motion, 'reduced');
+  site.change(false);
+  assert.equal(site.root.dataset.motion, 'full');
 });
 
 test('animations do not depend on browser storage access', () => {

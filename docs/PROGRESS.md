@@ -1,4 +1,4 @@
-# Portfolio completion checklist
+# Portfolio design, features and refactor checklist
 
 Work branch: `design-overhaul-2`. Never change `main` or publish.
 Existing Round 2 baseline: `.baseline/round-2/baseline/`; do not regenerate.
@@ -6,16 +6,18 @@ Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit
 
 | Unit | Status | Evidence / next action |
 | --- | --- | --- |
-| U1 Verify existing fixes | done | Geometry and tag states: 108 views each; 38 interaction checks; 16 audio cases; zero protected-style differences. Initials badges and refreshed 390/1440 main/AI screenshots verified in both themes. |
-| U2 ECPC drag / reduced motion | todo | Existing navigation still uses touchstart/touchend; no changes yet. |
-| U3 CSS cleanup | todo | Legacy three-file override chain remains; audit, remove dead selectors, consolidate Activity, then merge files in separate commits. |
-| U4 Shared section builders / data | todo | Portrait, About, cards and inspector are shared; full page templates and people registry still need consolidation. |
-| U5 Repo hygiene | todo | Existing QA scripts remain in scripts/; no image deletion approved. |
-| U6 JS modules (lowest priority) | todo | Main behavior still in script.js; defer if session budget reaches its stopping threshold. |
-| U7 Final report | todo | Report only verified evidence and explicitly list unfinished units. |
+| U1 Reconcile existing fixes | done | 48 mouse/touch groups pass across six routes, both themes/motion preferences; 16 audio cases; unchanged 1,352 tokens/144 protected flip states. Prior geometry/ID/tag evidence remains valid. |
+| U2 Focused visual fixes | todo | Only remove hero figcaption/line and leading-dash labels; contain DEPI return control. Keep every font unchanged pending an approved later style tile. |
+| U3 Features | todo | Existing-design Hassan progress badge, Discord ID 753929399291609130, ECPC corner-only grab flip; no ribbons or touch hold. |
+| U4 Shared structure / CSS cleanup | todo | Shared section builders, people registry and canonical layered CSS; current override chain remains. |
+| U5 Redesign / motion | skipped | Canceled by latest user request; no icon-text reveal, cursor, command palette or video-reference work. |
+| U6 Hygiene / report | todo | Consolidate QA, document architecture, list unused images without deleting, report verified results. |
+| U7 JS modules | skipped | Canceled by latest user request. |
 
 ## Current evidence
 
+- Revised U1: `.baseline/round-2/phase-1/carousel-checks.json` has 49 passing groups (48 navigation groups plus 16-case audio-isolation summary). `.baseline/round-2/unit-2-contract-diff.json` has no differences; the `unit-2` folder name predates the revised numbering.
+- Revised U1 code gate: 11 Python tests, 26 Node tests, every JS syntax check, seven-page validator and git diff whitespace checks pass. Seven protected flip/navigation/audio functions match the prior commit exactly. Preview server verified at port 4185 with no JavaScript errors.
 - Phase 0 passed before edits: 32 views, 576 screenshots, 576 flip states and 169 root properties per view.
 - Prior committed fixes: `4bfd19f` identity, `192b94d` formula removal, `9052656` old About treatment.
 - `.baseline/round-2/phase-1/measurements.json`: 108 views, no failures (all six routes, both themes, 320–2560 px live resizing).
@@ -31,4 +33,4 @@ Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit
 
 ## Resume rule
 
-Read this file, `git status`, and `git log --oneline -15` only; continue the first unfinished unit. Do not re-audit completed units. Update this file after every commit. No new style/personality features belong to these units.
+Read this file, `git status`, and `git log --oneline -15` only; continue the first unfinished unit. Do not re-audit completed units. Update this file after every commit. One commit per revised unit; stop after the current unit when about 25% of the session budget remains. Latest user scope overrides the earlier completion plan.

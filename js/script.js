@@ -1213,9 +1213,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const prevButton = document.getElementById('ecpcPrev');
     const nextButton = document.getElementById('ecpcNext');
     let currentIndex = 0;
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let suppressFlipClick = false;
+    const reducedCarouselMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let drag = null;
+    let suppressFlipClickUntil = 0;
     let ecpcLayoutFrame = 0;
 
     function updateEcpcControlPosition() {
@@ -1309,21 +1309,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (stage) {
-      stage.addEventListener('touchstart', event => {
-        touchStartX = event.changedTouches[0].clientX;
-        touchStartY = event.changedTouches[0].clientY;
-      }, { passive: true });
-      stage.addEventListener('touchend', event => {
-        const distance = event.changedTouches[0].clientX - touchStartX;
-        const verticalDistance = event.changedTouches[0].clientY - touchStartY;
-        if (Math.abs(distance) > 48 && Math.abs(distance) > Math.abs(verticalDistance) * 1.25) {
-          suppressFlipClick = true;
-          void moveEcpcWithSound(distance < 0 ? 1 : -1);
-          window.setTimeout(() => { suppressFlipClick = false; }, 350);
+      function finishEcpcDrag(event, cancelled = false) {
+        if (!drag || (event && event.pointerId !== drag.id)) return;
+        const gesture = drag;
+        drag = null;
+        stage.classList.remove('is-dragging');
+        if (stage.hasPointerCapture(gesture.id)) stage.releasePointerCapture(gesture.id);
+        if (!gesture.started) return;
+        suppressFlipClickUntil = performance.now() + 450;
+        const distance = event ? event.clientX - gesture.startX : gesture.distance;
+        const momentum = reducedCarouselMotion.matches || performance.now() - gesture.lastAt > 100 ? 0 : Math.max(-2.5, Math.min(2.5, gesture.velocity)) * 240;
+        const step = cancelled ? 0 : Math.max(1 - slides.length, Math.min(slides.length - 1, -Math.round((distance + momentum) / gesture.width)));
+        if (!step || !moveEcpcWithSound(step)) positionEcpcTrack(reducedCarouselMotion.matches);
+        else if (reducedCarouselMotion.matches) positionEcpcTrack(true);
+      }
+
+      stage.addEventListener('pointerdown', event => {
+        if (!event.isPrimary || event.button !== 0 || drag) return;
+        if (event.pointerType !== 'touch' && event.target.closest('h3,p,.ecpc-chapter,.ecpc-kicker,button,a,input,[data-flip-card]')) return;
+        suppressFlipClickUntil = 0;
+        drag = { id:event.pointerId, startX:event.clientX, startY:event.clientY, lastX:event.clientX, lastAt:performance.now(), width:stage.clientWidth, distance:0, velocity:0, started:false };
+      }, { passive:true });
+
+      // Consume the same rAF-throttled pointer stream as tags and the portrait.
+      document.addEventListener('portfolio:pointer', ({ detail }) => {
+        if (!drag) return;
+        const point = detail.samples.find(sample => sample.pointerId === drag.id);
+        if (!point) return;
+        const dx = point.clientX - drag.startX, dy = point.clientY - drag.startY;
+        if (!drag.started) {
+          if (Math.abs(dy) >= 6 && Math.abs(dy) > Math.abs(dx)) { drag = null; return; }
+          if (Math.abs(dx) < 6 || Math.abs(dx) <= Math.abs(dy) * 1.25) return;
+          drag.started = true;
+          stage.setPointerCapture(drag.id);
+          stage.classList.add('is-dragging');
         }
-      }, { passive: true });
+        const now = performance.now();
+        drag.velocity = drag.velocity * .35 + (point.clientX - drag.lastX) / Math.max(8, now - drag.lastAt) * .65;
+        drag.lastX = point.clientX;
+        drag.lastAt = now;
+        drag.distance = dx;
+        track.style.transform = `translate3d(calc(${-currentIndex * 100}% + ${dx}px),0,0)`;
+      });
+      document.addEventListener('pointerup', event => finishEcpcDrag(event));
+      stage.addEventListener('pointercancel', event => finishEcpcDrag(event, true));
+      stage.addEventListener('lostpointercapture', event => {
+        if (event.target === stage) finishEcpcDrag(event, true);
+      });
+      document.addEventListener('visibilitychange', () => { if (document.hidden) finishEcpcDrag(null, true); });
+      window.addEventListener('blur', () => finishEcpcDrag(null, true));
+      reducedCarouselMotion.addEventListener('change', () => finishEcpcDrag(null, true));
       stage.addEventListener('click', event => {
-        if (!suppressFlipClick) return;
+        if (event.detail === 0 || performance.now() >= suppressFlipClickUntil) return;
         event.preventDefault();
         event.stopImmediatePropagation();
       }, true);

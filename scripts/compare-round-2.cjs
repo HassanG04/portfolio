@@ -8,6 +8,7 @@ const after = process.argv[2];
 if (!after || after === 'baseline') throw new Error('Specify a post-change capture directory.');
 const baseline = path.join(root, 'baseline');
 const output = path.join(root, after);
+const selectedWidths = (process.env.QA_WIDTHS || '').split(',').filter(Boolean).map(Number);
 const differences = [];
 let views = 0, tokens = 0, flipStates = 0;
 const read = file => JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -17,6 +18,7 @@ function compareObject(before, current, location) {
   }
 }
 for (const file of fs.readdirSync(baseline).filter(file => /^(main|AI)-\d+-(dark|light)\.json$/.test(file))) {
+  if (selectedWidths.length && !selectedWidths.includes(Number(file.split('-')[1]))) continue;
   const currentFile = path.join(output, file);
   if (!fs.existsSync(currentFile)) { differences.push({ location: file, error: 'Missing post-change capture' }); continue; }
   const before = read(path.join(baseline, file));

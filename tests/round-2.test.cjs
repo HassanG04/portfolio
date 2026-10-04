@@ -62,3 +62,12 @@ test('every entry point has consistent identity and social image descriptions', 
     assert.doesNotMatch(html, /(?:og:title|twitter:title)[^>]*Machine Learning Engineer/, file);
   }
 });
+
+test('carousel drag shares the pointer stream and does not cancel capture transferred from a photo', () => {
+  const js = source('js/script.js');
+  assert.equal((js.match(/addEventListener\('pointermove'/g) || []).length, 1);
+  assert.match(js, /if \(event\.target === stage\) finishEcpcDrag\(event, true\)/);
+  assert.match(js, /document\.addEventListener\('pointerup', event => finishEcpcDrag\(event\)\)/);
+  assert.match(js, /reducedCarouselMotion\.matches \|\| performance\.now\(\) - gesture\.lastAt > 100 \? 0/);
+  assert.doesNotMatch(js, /stage\.addEventListener\('touch(?:start|move|end)'/);
+});

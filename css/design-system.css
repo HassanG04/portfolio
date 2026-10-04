@@ -418,7 +418,10 @@ body[data-role] .section-wrap:nth-of-type(even) {
 .ecpc-cover h3 { margin:7px 0 0; font-size:clamp(1.4rem,2vw,1.8rem); line-height:1.1; }
 .ecpc-cover .ecpc-brand-emblem { width:76px; min-height:54px; }
 .ecpc-cover .ecpc-brand-mark { width:100%; max-height:62px; object-fit:contain; object-position:center; }
-.ecpc-deck-stage { border-radius:0; background:transparent; transition:height .28s ease; }
+.ecpc-deck-stage { border-radius:0; background:transparent; transition:height .28s ease; touch-action:pan-y; cursor:grab; }
+.ecpc-deck-stage.is-dragging { cursor:grabbing; user-select:none; }
+.ecpc-deck-stage :is(h3,p,.ecpc-chapter,.ecpc-kicker) { cursor:text; }
+.ecpc-deck-stage.is-dragging .ecpc-slider-track { transition:none; }
 .ecpc-slider-track { align-items:stretch; }
 .ecpc-slide {
   display:grid;

@@ -10,7 +10,7 @@ const routes=(process.env.QA_ROUTES||'main,AI,ML,DS,DA,DE').split(',');
 (async()=>{
  const server=await startServer(),browser=await chromium.launch({channel:'chrome',headless:true});
  try{
-  if (!process.env.QA_AUDIO_ONLY) {
+  if (!process.env.QA_AUDIO_ONLY && !process.env.QA_CAROUSEL_ONLY) {
   for(const theme of ['dark','light']) {
    const context=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:theme});
    await context.addInitScript(theme=>localStorage.setItem('portfolio-theme',theme),theme);
@@ -110,6 +110,85 @@ const routes=(process.env.QA_ROUTES||'main,AI,ML,DS,DA,DE').split(',');
   checks.push({check:'new portrait motion respects OS reduced motion',pass:true});await reduced.close();
   }
 
+  if (process.env.QA_CAROUSEL_ONLY) {
+   if(process.env.QA_POINTER!=='touch') for(const theme of ['dark','light']) for(const reduced of [false,true]) {
+    const context=await browser.newContext({viewport:{width:1440,height:1000},colorScheme:theme,reducedMotion:reduced?'reduce':'no-preference'});
+    await context.addInitScript(theme=>localStorage.setItem('portfolio-theme',theme),theme);
+    const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+    for(const route of routes){
+     await page.goto(`${server.origin}/${route==='main'?'':route+'/'}`,{waitUntil:'networkidle'});
+     const stage=page.locator('.ecpc-deck-stage'),track=page.locator('.ecpc-slider-track');
+     await stage.evaluate(e=>e.scrollIntoView({block:'center',behavior:'instant'}));await wait(900);
+     assert.equal(await page.locator('html').getAttribute('data-motion'),reduced?'reduced':'full');
+     const active=()=>page.locator('[data-ecpc-index][aria-current="true"]').getAttribute('data-ecpc-index');
+     async function mouseDrag(fraction,delay=12){
+      const box=await stage.boundingBox(),startX=box.x+box.width*(fraction<0?.86:.14),y=box.y+8;
+      await page.mouse.move(startX,y);await page.mouse.down();await page.mouse.move(startX+(fraction<0?-3:3),y);await wait(35);
+      assert.equal(await stage.evaluate(e=>e.classList.contains('is-dragging')),false,'below threshold');
+      const start=await track.evaluate(e=>getComputedStyle(e).transform);
+      for(let step=1;step<=8;step++){
+       await page.mouse.move(startX+box.width*fraction*step/8,y);await wait(delay);
+       if(step===4){
+        assert.ok(await stage.evaluate(e=>e.classList.contains('is-dragging')));
+        assert.notEqual(await track.evaluate(e=>getComputedStyle(e).transform),start,'track follows pointer');
+        if(!reduced)assert.equal(await track.evaluate(e=>getComputedStyle(e).transitionDuration),'0s');
+       }
+      }
+      await page.mouse.up();await wait(950);
+      assert.equal(await stage.evaluate(e=>e.classList.contains('is-dragging')),false);
+      assert.equal(await page.locator('.ecpc-showcase .is-flipped').count(),0,'real drag must not flip');
+     }
+     await mouseDrag(-.6,35);assert.equal(await active(),'1');
+     await mouseDrag(.6,35);assert.equal(await active(),'0');
+     await mouseDrag(.6,35);assert.equal(await active(),'3','wrap to last chapter');
+     await page.locator('[data-ecpc-index="0"]').click({force:true});await wait(900);
+     await mouseDrag(-.45,1);assert.equal(await active(),reduced?'0':'1','reduced mode removes fling momentum');
+     await page.locator('[data-ecpc-index="0"]').click({force:true});await wait(900);
+     const text=await page.locator('[data-ecpc-slide="0"] p').boundingBox();
+     await page.mouse.move(text.x+5,text.y+8);await page.mouse.down();await page.mouse.move(text.x+110,text.y+8,{steps:8});await page.mouse.up();
+     assert.equal(await active(),'0','text selection must not navigate');
+     assert.equal(await stage.evaluate(e=>e.classList.contains('is-dragging')),false);
+     await page.evaluate(()=>getSelection().removeAllRanges());
+     const toggle=page.locator('[data-ecpc-slide="0"] [data-flip-toggle]');await toggle.click({force:true});await wait(950);
+     assert.ok(await toggle.evaluate(e=>e.closest('[data-flip-card]').classList.contains('is-flipped')));
+     await page.locator('[data-ecpc-slide="0"] .profile-return').click({force:true});await wait(950);
+     await page.locator('#ecpcNext').click({force:true});await wait(950);assert.equal(await active(),'1');
+     await page.locator('#ecpcDeck').focus();await page.keyboard.press('ArrowLeft');await wait(950);assert.equal(await active(),'0');
+     checks.push({route,theme,reduced,check:'mouse threshold, live drag, snap, wrap, fling, text selection, flip, arrows and keyboard',pass:true});
+     console.log(`Carousel mouse passed: ${route}/${theme}/${reduced?'reduced':'full'}`);
+    }
+    assert.deepEqual(errors,[]);await context.close();
+   }
+   if(process.env.QA_POINTER!=='mouse') for(const theme of ['dark','light']) for(const reduced of [false,true]){
+    const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,colorScheme:theme,reducedMotion:reduced?'reduce':'no-preference'});
+    await context.addInitScript(theme=>localStorage.setItem('portfolio-theme',theme),theme);
+    const page=await context.newPage();
+    for(const route of routes){
+    await page.goto(`${server.origin}/${route==='main'?'':route+'/'}`,{waitUntil:'networkidle'});
+    const stage=page.locator('.ecpc-deck-stage');await stage.evaluate(e=>e.scrollIntoView({block:'center',behavior:'instant'}));await wait(900);
+    const cdp=await context.newCDPSession(page),box=await page.locator('[data-ecpc-slide="0"] [data-flip-card]').boundingBox();
+    const x=box.x+box.width*.9,y=box.y+box.height*.55;
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:1}]});
+    for(let step=1;step<=10;step++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x-box.width*.85*step/10,y,id:1}]});await wait(35);}
+    assert.ok(await stage.evaluate(e=>e.classList.contains('is-dragging')));
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await wait(950);
+    assert.equal(await page.locator('[data-ecpc-index][aria-current="true"]').getAttribute('data-ecpc-index'),'1');
+    assert.equal(await page.locator('.ecpc-showcase .is-flipped').count(),0);
+    await page.locator('[data-ecpc-index="0"]').tap({force:true});await wait(900);
+    const verticalBox=await page.locator('[data-ecpc-slide="0"] [data-flip-card]').boundingBox(),vx=verticalBox.x+verticalBox.width/2,vy=verticalBox.y+verticalBox.height*.8;
+    const scroll=await page.evaluate(()=>scrollY);
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:vx,y:vy,id:1}]});
+    for(let step=1;step<=6;step++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:vx,y:vy-step*20,id:1}]});await wait(30);}
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await wait(500);
+    assert.equal(await page.locator('[data-ecpc-index][aria-current="true"]').getAttribute('data-ecpc-index'),'0');
+    assert.ok(Math.abs(await page.evaluate(()=>scrollY)-scroll)>20,'vertical touch scroll remains available');
+    checks.push({route,theme,reduced,check:'touch swipe over photo, click suppression and vertical scrolling',pass:true});
+    console.log(`Carousel touch passed: ${route}/${theme}/${reduced?'reduced':'full'}`);
+    }
+    await context.close();
+   }
+  }
+
   // Reuse the existing diagnostic probe without changing production audio.
   const audioContext=await browser.newContext({viewport:{width:1440,height:1000}});
   await audioContext.addInitScript({path:'.baseline/audio-probe.js'});
@@ -149,6 +228,6 @@ const routes=(process.env.QA_ROUTES||'main,AI,ML,DS,DA,DE').split(',');
   fs.writeFileSync('.baseline/round-2/phase-1/audio-checks.json',JSON.stringify(evidence,null,2));
   checks.push({check:'independent interface cues with ambience muted and volume zero',pass:true});
   await audioContext.close();
- }finally{await browser.close();await server.close();fs.mkdirSync('.baseline/round-2/phase-1',{recursive:true});fs.writeFileSync(`.baseline/round-2/phase-1/${process.env.QA_AUDIO_ONLY?'audio-summary':'interaction-checks'}.json`,JSON.stringify(checks,null,2));}
+ }finally{await browser.close();await server.close();fs.mkdirSync('.baseline/round-2/phase-1',{recursive:true});fs.writeFileSync(`.baseline/round-2/phase-1/${process.env.QA_CAROUSEL_ONLY?'carousel-checks':process.env.QA_AUDIO_ONLY?'audio-summary':'interaction-checks'}.json`,JSON.stringify(checks,null,2));}
  console.log(JSON.stringify({pass:true,checks:checks.length}));
 })().catch(e=>{console.error(e);process.exitCode=1});

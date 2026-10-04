@@ -1,5 +1,9 @@
-/* Keep motion enabled across every portfolio, without a settings button. */
+/* Resolve the OS preference before styles load, and follow changes live. */
 (() => {
-  // A stale choice from the removed toggle must not silently disable motion.
-  document.documentElement.dataset.motion = 'full';
+  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const applyPreference = () => {
+    document.documentElement.dataset.motion = preference.matches ? 'reduced' : 'full';
+  };
+  applyPreference();
+  preference.addEventListener('change', applyPreference);
 })();
