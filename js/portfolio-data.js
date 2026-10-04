@@ -5,7 +5,17 @@
 
   const shared = {
     name: 'Hassan Gebril',
+    identity: 'Machine Learning Engineer',
+    usp: 'I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.',
     location: 'Alexandria, Egypt',
+    about: {
+      heading: 'I work on the model and the handoff.',
+      intro: 'I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.',
+      story: 'I grew up in Alexandria and studied at Sidi Gaber Language School. Friends introduced me to programming, and competitive programming gave me a reason to keep practising.',
+      practice: 'That work led me to Artificial Intelligence. I now connect model experiments to Flask and Django applications, with the evaluation setup and implementation limits recorded in the repository.',
+      education: 'Arab Academy for Science & Technology',
+      degree: 'B.Sc. Artificial Intelligence · Data Science Track'
+    },
     github: 'https://github.com/HassanG04',
     linkedin: 'https://www.linkedin.com/in/hassan-gebrill-98a08a299/',
     freelanceProfiles: [
@@ -24,38 +34,38 @@
 
   const professions = {
     AI: {
-      label: 'AI Engineer', short: 'AI', eyebrow: 'Applied intelligence · end-to-end delivery',
-      headline: 'AI systems that connect models, interfaces, and real workflows.',
-      description: 'I help teams move from an AI idea to a working prototype by combining computer vision, NLP, model evaluation, and Python web delivery.',
-      promise: 'Best suited to teams exploring an intelligent product, automating a visual or text-heavy workflow, or turning a trained model into something people can test.',
+      label: 'AI Engineer', short: 'AI', eyebrow: 'Computer vision & language',
+      headline: 'Models with an interface people can use.',
+      description: 'I build vision and language models with Python web interfaces. My claims stay within the evaluation results and the tests available in each repository.',
+      promise: 'For a research team or startup testing a visual or text-based workflow, I connect the model to a usable review interface.',
       skills: ['Python', 'PyTorch', 'Computer Vision', 'Transformers', 'OpenCV', 'Flask', 'Django', 'Model Evaluation']
     },
     ML: {
-      label: 'ML Engineer', fullLabel: 'Machine Learning Engineer', short: 'ML', eyebrow: 'Predictive modelling · evaluation · delivery',
-      headline: 'Predictive systems built to be tested, explained, and used.',
-      description: 'I build supervised machine-learning workflows from data preparation and feature engineering through model comparison, explainability, and application integration.',
-      promise: 'Best suited to teams with structured data, a measurable prediction target, and a need for a reproducible model that stakeholders can understand.',
+      label: 'ML Engineer', fullLabel: 'Machine Learning Engineer', short: 'ML', eyebrow: 'Training & held-out evaluation',
+      headline: 'A prediction is only useful if you can test it.',
+      description: 'I build machine-learning models and the web apps that serve them. I keep preprocessing separate from held-out evaluation and document the limits of the result.',
+      promise: 'For teams with structured data and a measurable target, I build a reproducible baseline and a way to inspect its predictions.',
       skills: ['Python', 'scikit-learn', 'XGBoost', 'Optuna', 'SHAP', 'Data Validation', 'Flask', 'Django']
     },
     DS: {
-      label: 'Data Scientist', short: 'DS', eyebrow: 'Data exploration · modelling · evidence',
-      headline: 'Data science that turns messy questions into measurable evidence.',
-      description: 'I explore, prepare, and model data to clarify patterns, compare approaches, and communicate results through reproducible notebooks and usable applications.',
-      promise: 'Best suited to teams that need to understand a dataset, test a predictive idea, and translate model results into a decision-ready story.',
+      label: 'Data Scientist', short: 'DS', eyebrow: 'Experiments & evidence',
+      headline: 'Make the question measurable.',
+      description: 'I build predictive experiments that can be reviewed and repeated. I explain what held-out evaluation supports, then connect useful results to an application.',
+      promise: 'For teams exploring a dataset or testing a prediction idea, I document the assumptions and limitations alongside the results.',
       skills: ['Python', 'Pandas', 'Exploratory Analysis', 'Feature Engineering', 'Statistics', 'scikit-learn', 'XGBoost', 'SHAP']
     },
     DA: {
-      label: 'Data Analyst', short: 'DA', eyebrow: 'Data quality · patterns · communication',
-      headline: 'Clear analysis for teams that need to understand what the data is saying.',
-      description: 'I clean and explore structured datasets, identify useful patterns, define meaningful measures, and communicate findings without burying the decision in technical detail.',
-      promise: 'Best suited to teams with operational data that needs cleaning, investigation, comparison, and a concise explanation of what matters next.',
+      label: 'Data Analyst', short: 'DA', eyebrow: 'Analysis & data quality',
+      headline: 'Know what your data can support.',
+      description: 'I clean and investigate structured data before drawing conclusions. I keep the checks and limitations visible so a team can review the evidence behind an analysis.',
+      promise: 'For growing businesses with operational data, I investigate the question behind the report and make the findings easy to inspect.',
       skills: ['Python', 'Pandas', 'Data Cleaning', 'Exploratory Analysis', 'SQL Foundations', 'Data Validation', 'Metrics', 'Reporting']
     },
     DE: {
-      label: 'Data Engineer', short: 'DE', eyebrow: 'Reliable inputs · reproducible workflows · delivery',
-      headline: 'Cleaner, repeatable data workflows that make downstream work dependable.',
-      description: 'I bring a machine-learning perspective to data engineering: validating inputs, shaping reusable preparation steps, and keeping the path from raw data to application understandable.',
-      promise: 'Best suited to early-stage teams that need disciplined dataset preparation, validation, schema thinking, and reproducible handoff for analytics or machine learning.',
+      label: 'Data Engineer', short: 'DE', eyebrow: 'Validated inputs & reproducible delivery',
+      headline: 'Give the model dependable inputs.',
+      description: 'I build checked data workflows for analytics and machine learning. I document transformations and serving contracts, with repository tests showing what works.',
+      promise: 'For teams moving from raw data to an application, I make preparation steps repeatable and the handoff explicit.',
       skills: ['Python', 'Pandas', 'Data Validation', 'Schema Planning', 'SQL Foundations', 'Reproducibility', 'Pipeline Design', 'Documentation']
     }
   };

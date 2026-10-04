@@ -4,18 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const portfolioAssetUrl = path => new URL(`${portfolioAssetRoot}${path}`, document.baseURI).href;
 
   /* ============================================================
-     PAGE LOADER
-     ============================================================ */
-  const loader = document.getElementById('page-loader');
-  if (loader) {
-    window.addEventListener('load', () => {
-      setTimeout(() => loader.classList.add('hidden'), 400);
-    });
-    // Fallback
-    setTimeout(() => loader && loader.classList.add('hidden'), 2500);
-  }
-
-  /* ============================================================
      COLOR THEME — follow the OS until the visitor chooses
      ============================================================ */
   function initDarkMode() {
@@ -568,7 +556,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function updateAmbienceToggle() {
     if (!ambienceToggle) return;
-    const label = ambienceEnabled ? 'Disable Ambience' : 'Enable Ambience';
+    const label = ambienceEnabled ? 'Mute background ambience' : 'Unmute background ambience';
     ambienceToggle.classList.toggle('is-muted', !ambienceEnabled);
     ambienceToggle.setAttribute('aria-label', label);
     ambienceToggle.setAttribute('aria-pressed', String(ambienceEnabled));

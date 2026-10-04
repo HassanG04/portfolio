@@ -11,13 +11,13 @@
       document.documentElement.style.colorScheme = theme;
     })();
   </script>
-  <title>Hassan Gebril - AI engineer</title>
-  <meta name="description" content="Machine learning development, computer vision, NLP, and Python web applications for startups, research teams, and growing businesses." />
+  <title>Hassan Gebril | Machine Learning Engineer | Models to software</title>
+  <meta name="description" content="I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support." />
   <link rel="canonical" href="https://hassang04.github.io/portfolio/" />
 
   <!-- Open Graph -->
-  <meta property="og:title"       content="Hassan Gebril - AI engineer" />
-  <meta property="og:description" content="Practical machine-learning systems and Python web applications, from model development to usable delivery." />
+  <meta property="og:title"       content="Hassan Gebril | Machine Learning Engineer | Models to software" />
+  <meta property="og:description" content="I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support." />
   <meta property="og:site_name"   content="Hassan Gebril Portfolio" />
   <meta property="og:locale"      content="en_US" />
   <meta property="og:image"       content="https://hassang04.github.io/portfolio/images/thumbnail.png?v=20260908-2" />
@@ -29,8 +29,8 @@
   <meta property="og:url"         content="https://hassang04.github.io/portfolio/" />
   <meta property="og:type"        content="website" />
   <meta name="twitter:card"       content="summary_large_image" />
-  <meta name="twitter:title"      content="Hassan Gebril - AI engineer" />
-  <meta name="twitter:description" content="Practical machine-learning systems and Python web applications, from model development to usable delivery." />
+  <meta name="twitter:title"      content="Hassan Gebril | Machine Learning Engineer | Models to software" />
+  <meta name="twitter:description" content="I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support." />
   <meta name="twitter:image"      content="https://hassang04.github.io/portfolio/images/thumbnail.png?v=20260908-2" />
   <meta name="twitter:image:alt"  content="Hassan Gebril's machine learning and AI engineering portfolio" />
 
@@ -39,18 +39,14 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="js/motion-preference.js?v=20261001-1"></script><link rel="stylesheet" href="css/style.css?v=20260923-7" />
-  <link rel="stylesheet" href="css/design-system.css?v=20261001-1" />
+  <script src="js/motion-preference.js?v=20261001-1"></script><link rel="stylesheet" href="css/style.css?v=20261003-3" />
+  <link rel="stylesheet" href="css/design-system.css?v=20261004-4" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/editorial.css?v=20261004-3" />
 </head>
 <body>
-
-  <!-- PAGE LOADER -->
-  <div id="page-loader">
-    <div class="loader-inner">
-      <a class="loader-logo" href="#home" aria-label="Go to home section">HG.</a>
-      <div class="loader-ring"></div>
-    </div>
-  </div>
 
   <!-- PARTICLE CANVAS -->
   <canvas id="particle-canvas"></canvas>
@@ -73,13 +69,13 @@
       </div>
       <div class="navbar-utility-controls">
         <div class="ambience-control navbar-ambience-control" role="group" aria-label="Ambience controls">
-          <button class="ambience-toggle" id="ambienceToggle" type="button" aria-label="Disable Ambience" aria-describedby="ambienceTooltip" aria-pressed="true">
+          <button class="ambience-toggle" id="ambienceToggle" type="button" aria-label="Mute background ambience" aria-describedby="ambienceTooltip" aria-pressed="true">
             <i class="fas fa-volume-low" aria-hidden="true"></i>
-            <span class="ambience-tooltip" id="ambienceTooltip" role="tooltip">Disable Ambience</span>
+            <span class="ambience-tooltip" id="ambienceTooltip" role="tooltip">Mute background ambience</span>
           </button>
           <label class="ambience-volume-control" for="ambienceVolume">
-            <span class="visually-hidden">Ambience volume</span>
-            <input class="ambience-volume-slider" id="ambienceVolume" type="range" min="0" max="100" step="1" value="14" aria-label="Ambience volume" aria-describedby="ambienceVolumeValue" />
+            <span class="visually-hidden">Background ambience volume</span>
+            <input class="ambience-volume-slider" id="ambienceVolume" type="range" min="0" max="100" step="1" value="14" aria-label="Background ambience volume" aria-describedby="ambienceVolumeValue" />
             <output class="ambience-volume-value" id="ambienceVolumeValue" for="ambienceVolume">14%</output>
           </label>
         </div>
@@ -116,106 +112,42 @@
   </nav>
 
   <!-- ===== HERO ===== -->
-  <header class="hero-section" id="home" data-scroll-label="Cover">
-    <div class="container">
-      <div class="row align-items-center g-5">
-
-        <!-- Text -->
-        <div class="col-lg-6 order-2 order-lg-1">
-          <div class="hero-badge">
-            <span class="pulse-dot"></span>
-            Available for freelance &amp; internship opportunities
-          </div>
-
-          <h1 class="hero-title">
-            <span class="greeting">Hello, I'm</span>
-            <span class="name">Hassan Gebril</span>
-          </h1>
-
-          <div class="typewriter-wrap">
-            <span class="typewriter-prefix">I am a&nbsp;</span>
-            <span class="typewriter-text" id="typewriter-text">Machine Learning Developer</span>
-            <span class="typewriter-cursor"></span>
-          </div>
-
-          <p class="hero-desc">
-            I help startups, research teams, and growing businesses turn data into practical
-            machine-learning tools and polished Python web applications—from model training to deployment.
-          </p>
-
-          <div class="hero-actions">
-            <a href="#accomplishments" class="btn btn-primary">
-              View Selected Work <i class="fas fa-arrow-right ms-2"></i>
-            </a>
-            <a href="https://drive.google.com/file/d/1ej3BehMnJGrt4uYgD0utkQDmA8SbthKs/view?usp=drive_link"
-               target="_blank" rel="noopener" class="btn btn-cv">
-              <i class="fas fa-file-alt"></i> View Résumé
-            </a>
-            <a href="#about" class="btn btn-glass">
-              About Me
-            </a>
-          </div>
-
-          <div class="hero-social">
-            <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank"
-               rel="noopener noreferrer" class="social-btn linkedin" title="LinkedIn" aria-label="LinkedIn">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <span class="freelance-links-slot" data-portfolio-render="hero-freelance-links"></span>
-            <a href="https://github.com/HassanG04" target="_blank"
-               class="social-btn github" title="GitHub" aria-label="GitHub">
-              <i class="fab fa-github"></i>
-            </a>
-          </div>
+  <header class="hero-section editorial-hero" id="home" data-scroll-label="Cover">
+    <div class="container hero-composition">
+      <div class="hero-copy">
+        <p class="hero-byline">Hassan Gebril <span>/ Machine Learning Engineer</span></p>
+        <h1 class="hero-title">Models you can test.<br><span>Software you can use.</span></h1>
+        <div class="typewriter-wrap"><span class="typewriter-prefix">My focus: </span><span class="typewriter-text" id="typewriter-text" data-words="Machine Learning Engineering|Evaluated models|Python web applications">Machine Learning Engineering</span><span class="typewriter-cursor"></span></div>
+        <p class="hero-desc">I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.</p>
+        <div class="hero-actions">
+          <a href="#introduction" class="btn btn-primary">Explore the work <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i></a>
+          <a href="https://drive.google.com/file/d/1ej3BehMnJGrt4uYgD0utkQDmA8SbthKs/view?usp=drive_link" target="_blank" rel="noopener" class="btn btn-cv"><i class="fas fa-file-alt" aria-hidden="true"></i> View Résumé</a>
         </div>
-
-        <!-- Image -->
-        <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center">
-          <div class="hero-img-wrap">
-            <a class="hero-contact-bubble" href="#contact" aria-label="Go to contact section">
-              <i class="fas fa-paper-plane" aria-hidden="true"></i>
-              <span>Contact me</span>
-            </a>
-            <div class="hero-img-ring">
-              <div class="hero-img-inner">
-                <img src="images/profile.jpg" alt="Hassan Gebril – AI Engineer" fetchpriority="high" decoding="async" />
-              </div>
-            </div>
-
-            <!-- Floating badges -->
-            <div class="float-badge b1">
-              <div class="badge-ico p"><i class="fas fa-brain"></i></div>
-              <div>
-                <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:1px;">Focus</div>
-                <div>Applied AI / ML</div>
-              </div>
-            </div>
-
-            <div class="float-badge b2">
-              <div class="badge-ico c"><i class="fas fa-code"></i></div>
-              <div>
-                <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:1px;">Delivery</div>
-                <div>Model + Web App</div>
-              </div>
-            </div>
-          </div>
+        <p class="hero-availability">Available for freelance &amp; internship opportunities</p>
+        <div class="hero-social">
+          <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" rel="noopener noreferrer" class="social-btn linkedin" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+          <span class="freelance-links-slot" data-portfolio-render="hero-freelance-links"></span>
+          <a href="https://github.com/HassanG04" target="_blank" rel="noopener noreferrer" class="social-btn github" title="GitHub" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
         </div>
-
       </div>
+      <figure class="hero-portrait">
+        <div class="hero-img-wrap"><div class="hero-img-ring"><div class="hero-img-inner"><img src="images/profile.jpg" alt="Hassan Gebril" fetchpriority="high" decoding="async" /></div></div></div>
+        <figcaption>Based in Alexandria, Egypt<br><a href="#about" class="interactable">A little about me <span aria-hidden="true">↗</span></a></figcaption>
+      </figure>
+      <div class="hero-signature-slot" data-portfolio-render="signature"></div>
     </div>
-
   </header>
 
   <!-- ===== MAIN ===== -->
   <main>
 
     <!-- FEATURED PUBLIC WORK -->
-    <section id="introduction" class="section-wrap one-page-section" data-scroll-label="Introduction">
+    <section id="introduction" class="section-wrap one-page-section editorial-section" data-scroll-label="Introduction">
       <div class="container">
         <div class="section-anchor-heading reveal">
-          <span class="section-tag">Start here</span>
-          <h2 class="section-heading">Introduction</h2>
-          <p>Three public projects that represent my work across computer vision, explainable machine learning, and NLP.</p>
+          <span class="section-tag">Selected work / Public repositories</span>
+          <h2 class="section-heading">The implementation is open.</h2>
+          <p>Inspect the code and its limits. These projects connect model reasoning to software someone can use.</p>
         </div>
         <div class="row g-4 intro-project-grid" data-portfolio-render="intro">
           <!-- Rendered from js/portfolio-data.js -->
@@ -223,91 +155,21 @@
       </div>
     </section>
 
-    <!-- QUICK INTRO -->
-    <section class="section-wrap pt-0">
-      <div class="container">
-        <div class="intro-card premium-card reveal">
-          <span class="section-tag">Who I help</span>
-          <h2>From an AI idea to something people can actually use.</h2>
-          <p>
-            I work best with teams that have a useful dataset, a difficult prediction problem, or a manual
-            workflow that could be improved with machine learning. I combine model development, evaluation,
-            and web delivery so the result is understandable, testable, and ready to demonstrate.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="section-wrap one-page-section" data-scroll-label="About">
-      <div class="container">
-        <div class="section-anchor-heading reveal">
-          <span class="section-tag">Story, education &amp; experience</span>
-          <h2 class="section-heading">About <span class="grad-text">Me</span></h2>
-          <p>A machine-learning developer from Alexandria who enjoys turning difficult ideas into clear, usable products.</p>
-        </div>
-
-        <div class="row g-5 align-items-center">
-          <div class="col-lg-5 reveal-left">
-            <div class="about-profile-panel premium-card">
-              <div class="profile-image-wrapper">
-                <img src="images/profile.jpg" alt="Hassan Gebril" class="profile-image" loading="lazy" />
-              </div>
-              <div class="about-profile-copy">
-                <span>Alexandria, Egypt</span>
-                <h3>Curious by nature. Practical by choice.</h3>
-                <p>Competitive programming keeps my thinking disciplined, while design and storytelling help me explain technical work clearly.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-7 reveal-right">
-            <div class="about-story-card premium-card">
-              <span class="section-tag">My story</span>
-              <h3>Code became my canvas for solving real problems.</h3>
-              <p>I was born and raised in Alexandria and studied at Sidi Gaber Language School, where close friends introduced me to coding and the art of problem-solving.</p>
-              <p>That early spark led me to Artificial Intelligence. Today, I enjoy the complete journey: understanding the problem, preparing the data, improving the model, and shaping a web experience that helps someone use the result confidently.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="row g-4 mt-2">
-          <div class="col-lg-6 reveal-left">
-            <span class="section-tag">Education</span>
-            <div class="timeline-card education-summary-card premium-card">
-              <div class="d-flex align-items-center gap-3 mb-3">
-                <img src="images/AASTMT_Logo.png" alt="AASTMT" class="education-logo" loading="lazy" />
-                <div>
-                  <div class="timeline-title">Arab Academy for Science &amp; Technology</div>
-                </div>
-              </div>
-              <div class="timeline-sub">B.Sc. Artificial Intelligence · Data Science Track</div>
-              <p>Focused on machine learning, computer vision, NLP, data science, and the engineering foundations required to turn models into applications.</p>
-              <div class="toolkit-tags"><span>Machine Learning</span><span>Data Science</span><span>Computer Vision</span><span>NLP</span></div>
-            </div>
-          </div>
-          <div class="col-lg-6 reveal-right">
-            <span class="section-tag">Experience</span>
-            <div class="experience-stack" data-portfolio-render="experience">
-          <!-- Rendered from js/portfolio-data.js -->
-        </div>
-          </div>
-        </div>
-
-        <div class="about-value-grid mt-4 reveal">
-          <article class="premium-card"><span>01</span><h3>Understand before building</h3><p>I start with the decision or workflow the solution needs to improve.</p></article>
-          <article class="premium-card"><span>02</span><h3>Measure what matters</h3><p>I compare approaches and explain outcomes with meaningful evaluation.</p></article>
-          <article class="premium-card"><span>03</span><h3>Make it usable</h3><p>I care about the interface, explanation, and handoff as much as the model.</p></article>
-        </div>
+    <!-- ABOUT: shared with the profession pages -->
+    <section id="about" class="section-wrap one-page-section editorial-section" data-scroll-label="About">
+      <div class="container" data-portfolio-render="about">
+        <h2>I work on the model and the handoff.</h2>
+        <p>I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.</p>
       </div>
     </section>
 
     <!-- SERVICES -->
-    <section id="services" class="section-wrap one-page-section" data-scroll-label="Services">
+    <section id="services" class="section-wrap one-page-section editorial-section" data-scroll-label="Services">
       <div class="container">
         <div class="section-anchor-heading service-section-heading reveal">
           <span class="section-tag">Offered services</span>
-          <h2 class="section-heading">Services</h2>
-          <p class="section-sub">How I can help with data-driven products and intelligent web experiences.</p>
+          <h2 class="section-heading">Where I can help.</h2>
+          <p class="section-sub">For startups, research teams, and growing businesses with a dataset, a prediction problem, or a manual workflow.</p>
         </div>
 
         <div class="row g-4 service-card-grid" data-portfolio-render="services">
@@ -317,13 +179,13 @@
     </section>
 
     <!-- CORE TOOLKIT -->
-    <section class="section-wrap pt-0">
+    <section class="section-wrap pt-0 editorial-section">
       <div class="container">
-        <div class="toolkit-panel premium-card reveal">
+        <div class="toolkit-panel reveal">
           <div>
-            <span class="section-tag">Core competencies</span>
-            <h2 class="section-heading mb-2">A practical end-to-end toolkit.</h2>
-            <p>Strongest across Python, supervised learning, computer vision, NLP, model evaluation, explainability, and deployment.</p>
+            <span class="section-tag">Tools in the repositories</span>
+            <h2 class="section-heading mb-2">What I work with.</h2>
+            <p>Python is the foundation. The model and the application determine the rest.</p>
           </div>
           <div class="toolkit-tags" aria-label="Core technical skills" data-portfolio-render="skills">
           <!-- Rendered from js/portfolio-data.js -->
@@ -340,12 +202,12 @@
     </section>
 
     <!-- ACCOMPLISHMENTS -->
-    <section id="accomplishments" class="section-wrap one-page-section" data-scroll-label="Accomplishments">
+    <section id="accomplishments" class="section-wrap one-page-section editorial-section" data-scroll-label="Accomplishments">
       <div class="container">
         <div class="section-anchor-heading reveal">
-          <span class="section-tag">Credentials, achievements &amp; previous work</span>
+          <span class="section-tag">Evidence / Qualifications &amp; case studies</span>
           <h2 class="section-heading">Accomplishments</h2>
-          <p>Verified learning milestones and project case studies presented through their challenge, approach, and outcome.</p>
+          <p>Open the certificates, then review the implementation behind each project.</p>
         </div>
 
         <div class="row g-4 mb-5 credential-card-grid" data-portfolio-render="credentials">
@@ -354,8 +216,8 @@
 
         <div class="section-subheading reveal">
           <span class="section-tag">Project case studies</span>
-          <h3>Previous Work</h3>
-          <p>Every project connects technical decisions to a practical result.</p>
+          <h3>Implementation notes.</h3>
+          <p>The problem, the approach, and the result. Limitations stay in view.</p>
         </div>
 
         <div class="row g-4 portfolio-case-grid" data-portfolio-render="projects">
@@ -364,30 +226,12 @@
       </div>
     </section>
 
-    <!-- SOCIAL PROOF -->
-    <section class="section-wrap pt-0">
-      <div class="container">
-        <div class="trust-panel premium-card reveal">
-          <div>
-            <span class="section-tag">Credibility</span>
-            <h2>Trust the work, not anonymous praise.</h2>
-            <p>I only publish testimonials with permission. Until verified client feedback is available, you can inspect the public repositories, measured results, internship work, and named team collaborations behind this portfolio.</p>
-          </div>
-          <div class="trust-points">
-            <a href="https://github.com/HassanG04" target="_blank" rel="noopener"><i class="fab fa-github"></i><span><strong>Public source code</strong>Review implementation details</span></a>
-            <a href="#activity"><i class="fas fa-people-group"></i><span><strong>Named collaborators</strong>See the ECPC journey</span></a>
-            <a href="#accomplishments"><i class="fas fa-chart-line"></i><span><strong>Measured outcomes</strong>Explore project evidence</span></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- CTA -->
-    <section id="contact" class="section-wrap one-page-section pt-0" data-scroll-label="Contact">
+    <section id="contact" class="section-wrap one-page-section pt-0 editorial-section" data-scroll-label="Contact">
       <div class="container">
-        <div class="cta-card premium-card reveal">
-          <h2>Have a dataset, model idea, or web product to build?</h2>
-          <p>Send me the goal, the available data, and the outcome you need. Connect through LinkedIn or your preferred freelance platform so we can define a practical next step.</p>
+        <div class="cta-card reveal">
+          <span class="section-tag">Start with the problem</span><h2>What do you need<br>the model to do?</h2>
+          <p>Send me the available data and the decision you need to make. We can define a testable first version and an honest scope.</p>
           <div class="contact-actions">
             <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" rel="noopener" class="btn btn-white">
               <i class="fab fa-linkedin me-2"></i>Discuss a Project
@@ -423,7 +267,7 @@
   <footer>
     <div class="container text-center">
       <a class="footer-brand" href="#home" aria-label="Go to home section">HG.</a>
-      <p class="footer-tagline">Hassan Gebril — Machine Learning Developer &amp; AI Engineer</p>
+      <p class="footer-tagline">Hassan Gebril / Machine Learning Engineer</p>
       <div class="footer-social justify-content-center">
         <a href="https://www.linkedin.com/in/hassan-gebrill-98a08a299/" target="_blank" class="social-btn linkedin" aria-label="LinkedIn">
           <i class="fab fa-linkedin-in"></i>
@@ -433,14 +277,14 @@
         </a>
       </div>
       <div class="footer-divider"></div>
-      <p class="footer-copy">&copy; 2026 Hassan Gebril. Built with curiosity and care.</p>
+      <p class="footer-copy">&copy; 2026 Hassan Gebril. Models and web apps. Claims supported by held-out evaluation and passing tests.</p>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/portfolio-data.js?v=20261001-1"></script>
-  <script src="js/portfolio-components.js?v=20260929-1"></script>
-  <script src="js/main-page.js?v=20261001-1"></script>
-  <script src="js/script.js?v=20260923-7"></script>
+  <script src="js/portfolio-data.js?v=20261003-1"></script>
+  <script src="js/portfolio-components.js?v=20261003-1"></script>
+  <script src="js/main-page.js?v=20261003-1"></script>
+  <script src="js/script.js?v=20261003-1"></script>
 </body>
 </html>

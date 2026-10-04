@@ -6,6 +6,8 @@
   if (!data || !components) return;
 
   const renderers = {
+    about: () => components.renderAbout('MAIN'),
+    signature: () => components.renderTechnicalSignature(),
     intro: () => components.renderProjectCards('MAIN', { variant: 'intro', featuredOnly: true, limit: 3 }),
     services: () => components.renderServiceCards('MAIN'),
     experience: () => components.renderExperienceCards('MAIN'),

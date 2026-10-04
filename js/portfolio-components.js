@@ -47,13 +47,25 @@
     return `<div class="result-card-art project-visual project-visual--${escapeHtml(tone)}" aria-hidden="true"><span class="project-visual-icon"><i class="fas ${escapeHtml(project.icon || 'fa-code')}"></i></span><span class="project-visual-label"><small>${escapeHtml(project.artLabel || `${context} portfolio`)}</small>${escapeHtml(project.title)}</span></div>`;
   }
 
+  function renderTechnicalSignature() {
+    return `<div class="delivery-signature" aria-label="From data through model evaluation to a usable application"><span>data</span><i aria-hidden="true">→</i><span>model <small>ŷ = wᵀx + b</small></span><i aria-hidden="true">→</i><span>evaluation</span><i aria-hidden="true">→</i><span>application</span></div>`;
+  }
+
+  function renderAbout(roleKey, assetRoot = '') {
+    const about = data.shared.about;
+    return `<div class="section-anchor-heading reveal"><span class="section-tag">About / Alexandria, Egypt</span><h2 class="section-heading">${escapeHtml(about.heading)}</h2><p>${escapeHtml(about.intro)}</p></div>
+      <div class="about-editorial">
+        <figure class="about-portrait reveal-left"><img src="${asset(assetRoot, 'profile.jpg')}" alt="Hassan Gebril" loading="lazy" decoding="async" /><figcaption>${escapeHtml(data.shared.name)}<span>${escapeHtml(data.shared.identity)}</span></figcaption></figure>
+        <div class="about-prose reveal-right"><p>${escapeHtml(about.story)}</p><p>${escapeHtml(about.practice)}</p><div class="education-record"><img src="${asset(assetRoot, 'AASTMT_Logo.png')}" alt="AASTMT" loading="lazy" decoding="async" /><div><span class="record-label">Education</span><h3>${escapeHtml(about.education)}</h3><p>${escapeHtml(about.degree)}</p></div></div></div>
+      </div><div class="experience-records reveal"><h3>Experience</h3><div class="experience-stack">${renderExperienceCards(roleKey)}</div></div>`;
+  }
+
   function renderServiceCards(roleKey) {
     return data.forRole(data.services, roleKey).map((service, index) => `
       <div class="col-md-6 col-xl-4 reveal ${delayClass(index)}">
         <article class="skill-card premium-card" data-card-kind="service">
           <span class="service-index" aria-hidden="true">${String(index + 1).padStart(2, '0')}</span>
-          <div class="skill-icon${service.tone ? ` skill-icon--${escapeHtml(service.tone)}` : ''}"><i class="fas ${escapeHtml(service.icon)}" aria-hidden="true"></i></div>
-          <h5>${escapeHtml(service.title)}</h5>
+          <h3>${escapeHtml(service.title)}</h3>
           <p>${escapeHtml(service.copy)}</p>
           <div class="tag-row">${service.tags.map(tag => renderTechTag(tag, 'stag')).join('')}</div>
         </article>
@@ -195,6 +207,8 @@
   }
 
   window.PORTFOLIO_COMPONENTS = Object.freeze({
+    renderAbout,
+    renderTechnicalSignature,
     escapeHtml,
     renderServiceCards,
     renderProjectCards,
