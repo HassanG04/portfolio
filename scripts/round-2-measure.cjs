@@ -5,6 +5,7 @@ const { startServer } = require('./qa-server.cjs');
 const widths = [320,360,390,768,1024,1280,1440,1920,2560];
 const routes = (process.env.QA_ROUTES || 'main,AI,ML,DS,DA,DE').split(',');
 const failures = [], results = [];
+const output = `.baseline/round-2/${process.env.QA_STAGE || 'phase-1'}`;
 
 async function measure(page) {
   return page.evaluate(() => {
@@ -13,7 +14,13 @@ async function measure(page) {
       return { x:box.x,y:box.y,width:box.width,height:box.height,right:box.right,bottom:box.bottom };
     };
     const boxesOverlap = (a,b) => Math.min(a.right,b.right)-Math.max(a.x,b.x)>1 && Math.min(a.bottom,b.bottom)-Math.max(a.y,b.y)>1;
+    const face = document.querySelector('.depi-visual-back');
+    const button = face.querySelector('.profile-return');
+    const faceBox = rect(face), buttonBox = rect(button);
     return {
+      depiReturn: { width:button.offsetWidth, height:button.offsetHeight,
+        inset:Math.min(buttonBox.x-faceBox.x,buttonBox.y-faceBox.y,faceBox.right-buttonBox.right,faceBox.bottom-buttonBox.bottom),
+        overlapsBadge:boxesOverlap(buttonBox,rect(face.querySelector('.profile-id-card'))) },
       pageOverflow: document.documentElement.scrollWidth > innerWidth,
       photos: [...document.querySelectorAll('.profile-flip')].map(frame => {
         const image = frame.querySelector('.flip-card-image, .depi-progress-icon img');
@@ -55,6 +62,7 @@ async function measure(page) {
           const metrics=await measure(page), key={route,theme,width};
           results.push({...key,...metrics});
           if(metrics.pageOverflow) failures.push({...key,type:'page-overflow'});
+          if(metrics.depiReturn.width<36||metrics.depiReturn.height<36||metrics.depiReturn.inset<10||metrics.depiReturn.overlapsBadge) failures.push({...key,type:'depi-return',...metrics.depiReturn});
           for(const photo of metrics.photos) {
             if(photo.ratioError>1||photo.fit!=='contain'||photo.columnFraction<(width>=992?.599:.99)||Math.abs(photo.front.width-photo.back.width)>.5||Math.abs(photo.front.height-photo.back.height)>.5) failures.push({...key,type:'photo',...photo});
           }
@@ -66,8 +74,8 @@ async function measure(page) {
       await context.close();
     }
   } finally {await browser.close();await server.close();}
-  fs.mkdirSync('.baseline/round-2/phase-1',{recursive:true});
-  fs.writeFileSync('.baseline/round-2/phase-1/measurements.json',JSON.stringify({pass:!failures.length,views:results.length,failures,results},null,2));
+  fs.mkdirSync(output,{recursive:true});
+  fs.writeFileSync(`${output}/measurements.json`,JSON.stringify({pass:!failures.length,views:results.length,failures,results},null,2));
   console.log(JSON.stringify({pass:!failures.length,views:results.length,failures},null,2));
   process.exitCode=failures.length?1:0;
 })().catch(e=>{console.error(e);process.exitCode=1;});

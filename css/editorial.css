@@ -62,8 +62,6 @@ html[data-motion="reduced"] .hero-img-inner img { animation:none; }
   .hero-img-ring,.hero-img-inner img,.hero-pointer-frame.is-tap-pulsing { animation:none; }
   .hero-pointer-glow { display:none; }
 }
-.hero-portrait figcaption { margin-top:20px; padding-left:16px; border-left:1px solid var(--border-accent); font-size:.9rem; color:var(--text-secondary); line-height:1.8; }
-.hero-portrait figcaption a { color:var(--text-primary); text-decoration:none; }
 
 /* Public project index: one lead story and two compact entries */
 .intro-project-grid, .service-card-grid, .credential-card-grid, .portfolio-case-grid { display:grid; gap:24px; margin:0; }
@@ -177,7 +175,6 @@ html[data-motion="reduced"] .hero-img-inner img { animation:none; }
   .hero-title { font-size:2.65rem; }
   .hero-desc { font-size:1.1rem; }
   .hero-portrait { max-width:380px; margin-inline:auto; }
-  .hero-portrait figcaption { margin-top:24px; }
   .hero-byline { margin-bottom:24px; }
   .editorial-section { padding-block:56px; }
   .editorial-section .section-anchor-heading { margin-bottom:32px; }

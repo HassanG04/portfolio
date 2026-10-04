@@ -1515,13 +1515,6 @@ main.container {
   text-transform: uppercase;
 }
 
-.section-tag::before {
-  content: '';
-  width: 22px;
-  height: 1px;
-  background: currentColor;
-}
-
 .section-heading {
   font-size: clamp(2.25rem, 4vw, 3.55rem);
 }
@@ -2066,13 +2059,6 @@ html[data-motion="reduced"] #particle-canvas {
   font-weight: 800;
   letter-spacing: .16em;
   text-transform: uppercase;
-}
-
-.ecpc-info-tab .ecpc-chapter::before {
-  content: '';
-  width: 22px;
-  height: 1px;
-  background: currentColor;
 }
 
 .ecpc-info-tab h3 {
@@ -3209,13 +3195,6 @@ html[data-motion="reduced"] #particle-canvas {
   text-transform: uppercase;
 }
 
-.ecpc-slide-caption .ecpc-chapter::before {
-  content: '';
-  width: 22px;
-  height: 1px;
-  background: currentColor;
-}
-
 .ecpc-slide-caption h3 {
   margin: 0 0 10px;
   font-size: clamp(1.5rem, 3vw, 2.15rem);
@@ -3895,13 +3874,6 @@ html[data-theme="light"] .ecpc-deck-arrow:focus-visible {
   font-weight: 800;
   letter-spacing: .14em;
   text-transform: uppercase;
-}
-
-.depi-progress-eyebrow::before {
-  content: '';
-  width: 22px;
-  height: 1px;
-  background: currentColor;
 }
 
 .depi-progress-title-row {

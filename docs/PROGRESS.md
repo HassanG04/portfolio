@@ -7,7 +7,7 @@ Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit
 | Unit | Status | Evidence / next action |
 | --- | --- | --- |
 | U1 Reconcile existing fixes | done | 48 mouse/touch groups pass across six routes, both themes/motion preferences; 16 audio cases; unchanged 1,352 tokens/144 protected flip states. Prior geometry/ID/tag evidence remains valid. |
-| U2 Focused visual fixes | todo | Only remove hero figcaption/line and leading-dash labels; contain DEPI return control. Keep every font unchanged pending an approved later style tile. |
+| U2 Focused visual fixes | done | Removed hero caption/line and all leading-dash labels, removed DEPI eyebrow dash, and scoped a 36px/inset return control. Fonts unchanged. 108 measurements, 39 interaction checks, 1,352 tokens/144 flip states unchanged. |
 | U3 Features | todo | Existing-design Hassan progress badge, Discord ID 753929399291609130, ECPC corner-only grab flip; no ribbons or touch hold. |
 | U4 Shared structure / CSS cleanup | todo | Shared section builders, people registry and canonical layered CSS; current override chain remains. |
 | U5 Redesign / motion | skipped | Canceled by latest user request; no icon-text reveal, cursor, command palette or video-reference work. |
@@ -18,6 +18,7 @@ Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit
 
 - Revised U1: `.baseline/round-2/phase-1/carousel-checks.json` has 49 passing groups (48 navigation groups plus 16-case audio-isolation summary). `.baseline/round-2/unit-2-contract-diff.json` has no differences; the `unit-2` folder name predates the revised numbering.
 - Revised U1 code gate: 11 Python tests, 26 Node tests, every JS syntax check, seven-page validator and git diff whitespace checks pass. Seven protected flip/navigation/audio functions match the prior commit exactly. Preview server verified at port 4185 with no JavaScript errors.
+- Revised U2: `visual-2` screenshots and live tag layouts pass at 390/1440 in both themes; `visual-2/measurements.json` passes all 108 views from 320 to 2560; `compare-round-2 visual-2` reports zero protected differences. 39 interaction checks pass after one timing-only retry. The existing `ambience.mp3 ERR_ABORTED` preload warning remains harmless and is unchanged.
 - Phase 0 passed before edits: 32 views, 576 screenshots, 576 flip states and 169 root properties per view.
 - Prior committed fixes: `4bfd19f` identity, `192b94d` formula removal, `9052656` old About treatment.
 - `.baseline/round-2/phase-1/measurements.json`: 108 views, no failures (all six routes, both themes, 320–2560 px live resizing).

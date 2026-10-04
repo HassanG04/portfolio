@@ -71,3 +71,20 @@ test('carousel drag shares the pointer stream and does not cancel capture transf
   assert.match(js, /reducedCarouselMotion\.matches \|\| performance\.now\(\) - gesture\.lastAt > 100 \? 0/);
   assert.doesNotMatch(js, /stage\.addEventListener\('touch(?:start|move|end)'/);
 });
+
+test('focused visual pass removes decorative labels and portrait caption without replacing fonts', () => {
+  assert.doesNotMatch(context.window.PORTFOLIO_COMPONENTS.renderPortrait(), /figcaption|Based in/);
+  for (const file of ['index.html','js/role-page.js','js/portfolio-components.js']) {
+    assert.doesNotMatch(source(file), /class="(?:section-tag|ecpc-chapter|depi-progress-eyebrow)"/, file);
+  }
+  assert.doesNotMatch(source('css/style.css'), /(?:section-tag|ecpc-chapter|depi-progress-eyebrow)::before/);
+  assert.doesNotMatch(source('css/editorial.css'), /hero-portrait figcaption/);
+  const redesign = source('css/redesign.css');
+  assert.doesNotMatch(redesign, /font|--[\w-]+\s*:/);
+  assert.match(redesign, /width:36px/);
+  for (const file of ['index.html', ...['AI','ML','DS','DA','DE'].map(role => `${role}/index.html`)]) {
+    const html=source(file);
+    assert.match(html, /family=Sora[^"\n]+family=Source\+Sans\+3/);
+    assert.equal((html.match(/css\/redesign\.css\?v=/g)||[]).length,1);
+  }
+});

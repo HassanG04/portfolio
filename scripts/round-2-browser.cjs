@@ -73,7 +73,8 @@ async function capture(browser, route, width, theme) {
   const styles = {};
   const screenshot = async (label, selector) => {
     const target = page.locator(selector).first();
-    await target.evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    if (label === 'hero') await page.evaluate(() => scrollTo({top:0,behavior:'instant'}));
+    else await target.evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
     await page.waitForTimeout(450);
     const file = `${name}-${label}.png`;
     // Element screenshots wait for geometric stability forever on idle-floating
