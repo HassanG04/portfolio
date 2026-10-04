@@ -39,12 +39,12 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="js/motion-preference.js?v=20261001-1"></script><link rel="stylesheet" href="css/style.css?v=20261004-r2-3" />
-  <link rel="stylesheet" href="css/design-system.css?v=20261004-4" />
+  <script src="js/motion-preference.js?v=20261001-1"></script><link rel="stylesheet" href="css/style.css?v=20261004-u1" />
+  <link rel="stylesheet" href="css/design-system.css?v=20261004-u1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/editorial.css?v=20261004-r2-3" />
+  <link rel="stylesheet" href="css/editorial.css?v=20261004-u1" />
 </head>
 <body>
 
@@ -130,10 +130,7 @@
           <a href="https://github.com/HassanG04" target="_blank" rel="noopener noreferrer" class="social-btn github" title="GitHub" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
         </div>
       </div>
-      <figure class="hero-portrait">
-        <div class="hero-img-wrap"><div class="hero-img-ring"><div class="hero-img-inner"><img src="images/profile.jpg" alt="Hassan Gebril" fetchpriority="high" decoding="async" /></div></div></div>
-        <figcaption>Based in Alexandria, Egypt<br><a href="#about" class="interactable">A little about me <span aria-hidden="true">↗</span></a></figcaption>
-      </figure>
+      <figure class="hero-portrait" data-portfolio-render="portrait"></figure>
     </div>
   </header>
 
@@ -245,22 +242,7 @@
 
   </main>
 
-  <dialog class="certificate-viewer" id="certificateViewer" aria-labelledby="certificateViewerTitle">
-    <div class="certificate-viewer-panel">
-      <div class="certificate-viewer-head">
-        <div>
-          <span>Certificate preview</span>
-          <h2 id="certificateViewerTitle">Certificate</h2>
-        </div>
-        <button class="certificate-viewer-close" id="certificateViewerClose" type="button" aria-label="Close certificate preview">
-          <i class="fas fa-xmark" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="certificate-viewer-media">
-        <img id="certificateViewerImage" alt="" />
-      </div>
-    </div>
-  </dialog>
+  <div data-portfolio-render="certificate-viewer"></div>
 
   <!-- ===== FOOTER ===== -->
   <footer>
@@ -281,9 +263,10 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/portfolio-data.js?v=20261004-r2-1"></script>
-  <script src="js/portfolio-components.js?v=20261004-r2-3"></script>
-  <script src="js/main-page.js?v=20261004-r2-2"></script>
-  <script src="js/script.js?v=20261003-1"></script>
+  <script src="js/portfolio-data.js?v=20261004-u1"></script>
+  <script src="js/portfolio-components.js?v=20261004-u1"></script>
+  <script src="js/main-page.js?v=20261004-u1"></script>
+  <script src="js/interactive-motion.js?v=20261004-u1"></script>
+  <script src="js/certificate-inspector.js?v=20261004-u1"></script><script src="js/script.js?v=20261004-u1"></script>
 </body>
 </html>

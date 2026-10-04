@@ -917,6 +917,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const interactableSelector = [
     '.interactable',
     '.premium-card',
+    '.profile-id-card',
     '.soft-skills-copy',
     '.about-value-grid article',
     '.toolkit-tags span',
@@ -950,6 +951,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let activePointerTag = null;
   let pointerFrame = 0;
   let pendingPointer = null;
+  const pendingPointerMoves = new Map();
 
   // Idle animation starts on visibility, independently of pointer or focus.
   // Pause cards outside the viewport to avoid animating the whole long page.
@@ -979,6 +981,15 @@ document.addEventListener('DOMContentLoaded', function () {
     pointerFrame = 0;
     if (!pendingPointer) return;
     const { target, clientX, clientY } = pendingPointer;
+    document.dispatchEvent(new CustomEvent('portfolio:pointer', { detail: { ...pendingPointer, samples: [...pendingPointerMoves.values()] } }));
+    pendingPointerMoves.clear();
+    if (!precisePointer.matches || pendingPointer.pointerType === 'touch') return;
+    const badge = target.closest?.('.profile-id-card');
+    if (badge) {
+      const bounds = badge.getBoundingClientRect();
+      badge.style.setProperty('--profile-light-x', `${((clientX - bounds.left) / bounds.width * 100).toFixed(1)}%`);
+      badge.style.setProperty('--profile-light-y', `${((clientY - bounds.top) / bounds.height * 100).toFixed(1)}%`);
+    }
     const tag = target.closest?.('.tech-tag');
     const card = target.closest?.('.premium-card');
     // Read both rectangles before changing styles, once per animation frame.
@@ -1013,8 +1024,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   document.addEventListener('pointermove', event => {
-    if (!precisePointer.matches || event.pointerType === 'touch') return;
-    pendingPointer = { target: event.target, clientX: event.clientX, clientY: event.clientY };
+    pendingPointer = { target: event.target, clientX: event.clientX, clientY: event.clientY, pointerId: event.pointerId, pointerType: event.pointerType };
+    pendingPointerMoves.set(event.pointerId, pendingPointer);
     if (!pointerFrame) pointerFrame = window.requestAnimationFrame(updatePointerFeedback);
   }, { passive: true });
 
@@ -1033,6 +1044,26 @@ document.addEventListener('DOMContentLoaded', function () {
       pointerFrame = 0;
       pendingPointer = null;
     }
+  });
+
+  // Teammate paging never changes the photo frame or the protected flip state.
+  document.querySelectorAll('[data-profile-deck]').forEach(deck => {
+    const profiles = [...deck.children];
+    const face = deck.closest('.profile-id-back');
+    const count = face.querySelector('.profile-deck-count');
+    let index = 0;
+    for (const [selector, step] of [['.profile-prev', -1], ['.profile-next', 1]]) {
+      face.querySelector(selector)?.addEventListener('click', event => {
+        event.stopPropagation();
+        index = (index + step + profiles.length) % profiles.length;
+        profiles.forEach((profile, position) => profile.classList.toggle('is-current-profile', position === index));
+        count.textContent = `${index + 1} / ${profiles.length}`;
+        void playInterfaceSound('select');
+      });
+    }
+  });
+  document.querySelectorAll('.profile-id-card:not(.is-linked)').forEach(badge => {
+    badge.addEventListener('click', event => event.stopPropagation());
   });
 
   const activityClickCueTimers = new WeakMap();
@@ -1341,6 +1372,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (typeof certificateViewer.showModal === 'function') certificateViewer.showModal();
       else certificateViewer.setAttribute('open', '');
+      certificateViewer.dispatchEvent(new Event('certificate:open'));
       certificateViewerClose?.focus();
     });
   });

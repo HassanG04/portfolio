@@ -14,7 +14,7 @@ test('all teammates and instructors share the ID card component', () => {
   assert.equal((markup.match(/class="profile-id-card/g) || []).length, 8);
   assert.equal((markup.match(/class="profile-id-avatar"/g) || []).length, 8);
   assert.equal((markup.match(/class="profile-return /g) || []).length, 5);
-  assert.ok(!markup.includes('hadeer-makhlouf.jpeg'), 'Do not reuse a person’s photo for unrelated teammates');
+  assert.equal(markup.split('hadeer-makhlouf.jpeg').length - 1, 1, 'Only Hadeer’s own badge uses her portrait');
 });
 
 test('only provided LinkedIn profiles are links', () => {
@@ -23,6 +23,15 @@ test('only provided LinkedIn profiles are links', () => {
   for (const slug of ['yaseen-moataz-49b39b308', 'mohammed-hamed-b81064195', 'hadeermakhlouf']) {
     assert.ok(markup.includes(`https://www.linkedin.com/in/${slug}/`));
   }
+});
+
+test('missing person photos use initials and only the pre-existing instructor image is used', () => {
+  assert.ok(markup.includes('<span aria-hidden="true">AB</span>'));
+  assert.ok(markup.includes('<span aria-hidden="true">MH</span>'));
+  assert.ok(!markup.includes('class="fas fa-user"'));
+  const avatars = [...markup.matchAll(/class="profile-id-avatar">([\s\S]*?)<\/span>/g)];
+  assert.equal(avatars.filter(match => match[1].includes('<img ')).length, 1);
+  assert.ok(avatars.find(match => match[1].includes('<img '))[1].includes('hadeer-makhlouf.jpeg'));
 });
 
 test('the shared activity renders on profession routes with correct photo paths', () => {

@@ -8,6 +8,24 @@ const context = { window: {} };
 vm.runInNewContext(source('js/portfolio-data.js'), context);
 vm.runInNewContext(source('js/portfolio-components.js'), context);
 
+test('all six pages load the portrait and inspector controllers once', () => {
+  for (const file of ['index.html', ...['AI','ML','DS','DA','DE'].map(role => `${role}/index.html`)]) {
+    for (const name of ['interactive-motion', 'certificate-inspector']) assert.equal(source(file).split(`${name}.js?v=`).length - 1, 1, file);
+  }
+  assert.equal((source('js/script.js').match(/addEventListener\('pointermove'/g) || []).length, 1);
+  assert.doesNotMatch(source('js/interactive-motion.js') + source('js/certificate-inspector.js'), /addEventListener\('pointermove'/);
+});
+
+test('media dimensions and accessible teammate controls come from shared data', () => {
+  const data=context.window.PORTFOLIO_DATA, markup=context.window.PORTFOLIO_COMPONENTS.renderActivity();
+  assert.equal(data.activity.depi.imageWidth,225);
+  assert.equal(data.activity.softSkills.imageWidth/data.activity.softSkills.imageHeight,16/9);
+  assert.equal((markup.match(/data-profile-deck/g)||[]).length,3);
+  assert.equal((markup.match(/is-current-profile/g)||[]).length,3);
+  assert.equal((markup.match(/aria-label="Next teammate"/g)||[]).length,3);
+  assert.doesNotMatch(markup, /<div class="profile-id-card[^>]+(?:href|role="button")/);
+});
+
 test('the formula strip and its animation are removed at their source', () => {
   for (const file of ['index.html', 'js/main-page.js', 'js/role-page.js', 'js/portfolio-components.js', 'css/editorial.css']) {
     assert.doesNotMatch(source(file), /renderTechnicalSignature|hero-signature-slot|delivery-signature|delivery-trace/, file);

@@ -20,7 +20,7 @@
     if (/python|pandas|flask|django|scikit|api/.test(tag)) return 'blue';
     return 'purple';
   };
-  const renderTechTag = (tag, extraClass = '') => `<span class="${extraClass ? `${extraClass} ` : ''}tech-tag tech-tag--${techTone(tag)} interactable">${escapeHtml(tag)}</span>`;
+  const renderTechTag = (tag, extraClass = '') => `<span class="${extraClass ? `${extraClass} ` : ''}tech-tag tech-tag--${techTone(tag)} interactable" tabindex="0">${escapeHtml(tag)}</span>`;
   const renderFreelanceLinks = ({ variant = 'contact', assetRoot = '' } = {}) => {
     const profiles = Array.isArray(data.shared.freelanceProfiles) ? data.shared.freelanceProfiles : [];
     const classes = variant === 'social'
@@ -45,6 +45,10 @@
     }
     const tone = project.artTone || context.toLowerCase();
     return `<div class="result-card-art project-visual project-visual--${escapeHtml(tone)}" aria-hidden="true"><span class="project-visual-icon"><i class="fas ${escapeHtml(project.icon || 'fa-code')}"></i></span><span class="project-visual-label"><small>${escapeHtml(project.artLabel || `${context} portfolio`)}</small>${escapeHtml(project.title)}</span></div>`;
+  }
+
+  function renderPortrait(assetRoot = '') {
+    return `<div class="hero-img-wrap"><div class="hero-pointer-frame"><div class="hero-img-ring"><div class="hero-img-inner"><div class="hero-img-parallax"><img src="${asset(assetRoot, 'profile.jpg')}" alt="${escapeHtml(data.shared.name)}" fetchpriority="high" decoding="async" /></div></div></div><span class="hero-pointer-glow" aria-hidden="true"></span></div></div><figcaption>Based in ${escapeHtml(data.shared.location)}<br><a href="#about" class="interactable">A little about me <span aria-hidden="true">↗</span></a></figcaption>`;
   }
 
   function renderAbout(roleKey, assetRoot = '') {
@@ -98,6 +102,10 @@
     }).join('');
   }
 
+  function renderCertificateViewer() {
+    return `<dialog class="certificate-viewer" id="certificateViewer" aria-labelledby="certificateViewerTitle"><div class="certificate-viewer-panel"><div class="certificate-viewer-head"><div><span>Certificate inspector</span><h2 id="certificateViewerTitle">Certificate</h2></div><button class="certificate-viewer-close interactable" id="certificateViewerClose" type="button" aria-label="Close certificate preview"><i class="fas fa-xmark" aria-hidden="true"></i></button></div><div class="certificate-inspector-tools" aria-label="Certificate zoom controls"><button type="button" class="interactable" data-certificate-zoom="out" aria-label="Zoom out">−</button><output id="certificateZoomLevel" aria-live="polite">100% · Fit</output><button type="button" class="interactable" data-certificate-zoom="in" aria-label="Zoom in">+</button><button type="button" class="interactable" data-certificate-zoom="reset" aria-label="Reset certificate to fit">Fit</button><span id="certificateZoomHelp">Tap to zoom. Drag to move.</span></div><div class="certificate-viewer-media" tabindex="0" aria-label="Certificate image inspector" aria-describedby="certificateZoomHelp"><img id="certificateViewerImage" alt="" draggable="false" /></div></div></dialog>`;
+  }
+
   function renderCredentialCards(roleKey, assetRoot = '', limit = 3) {
     return data.forRole(data.credentials, roleKey).slice(0, limit).map((credential, index) => {
       const imageClass = credential.imageClass ? ` ${credential.imageClass}` : '';
@@ -123,17 +131,22 @@
     }).join('');
   }
 
-  function renderProfileId(person) {
+  function renderProfileId(person, assetRoot = '', current = false) {
     const linked = Boolean(person.linkedin);
-    const content = `<span class="profile-id-avatar" aria-hidden="true"><i class="${linked ? 'fab fa-linkedin-in' : 'fas fa-user'}"></i></span><strong class="profile-id-name">${escapeHtml(person.name)}</strong>${person.role ? `<span class="profile-id-role">${escapeHtml(person.role)}</span>` : ''}<span class="profile-id-description">${escapeHtml(person.description || 'No description')}</span><span class="profile-id-action">${linked ? 'View LinkedIn profile <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>' : 'Profile not shared'}</span>`;
+    const names = person.name.replace(/^(?:Eng\.?|Professor)\s+/i, '').trim().split(/\s+/);
+    const initials = [names[0], names.length > 1 ? names[names.length - 1] : ''].map(name => name.charAt(0)).join('').toUpperCase();
+    const portrait = person.image
+      ? `<img src="${asset(assetRoot, person.image)}" alt="${escapeHtml(person.name)}" loading="lazy" decoding="async" />`
+      : `<span aria-hidden="true">${escapeHtml(initials)}</span>`;
+    const content = `<span class="profile-id-heading"><strong class="profile-id-name">${escapeHtml(person.name)}</strong>${person.role ? `<span class="profile-id-role">${escapeHtml(person.role)}</span>` : ''}</span><span class="profile-id-avatar">${portrait}</span><span class="profile-id-description">${escapeHtml(person.badgeDescription || person.description || '')}</span><span class="profile-id-action">${linked ? 'View LinkedIn profile <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>' : 'Profile not shared'}</span>`;
     return linked
-      ? `<a class="profile-id-card interactable is-linked" href="${escapeHtml(person.linkedin)}" target="_blank" rel="noopener" aria-label="Open ${escapeHtml(person.name)}'s LinkedIn profile">${content}</a>`
-      : `<div class="profile-id-card">${content}</div>`;
+      ? `<a class="profile-id-card interactable is-linked${current ? ' is-current-profile' : ''}" href="${escapeHtml(person.linkedin)}" target="_blank" rel="noopener" aria-label="Open ${escapeHtml(person.name)}'s LinkedIn profile">${content}</a>`
+      : `<div class="profile-id-card${current ? ' is-current-profile' : ''}">${content}</div>`;
   }
 
-  function renderTeammates(teammates) {
+  function renderTeammates(teammates, assetRoot = '') {
     if (!teammates.length) return '<div class="ecpc-construction-note"><i class="fas fa-sparkles" aria-hidden="true"></i><strong>The next team story is still ahead.</strong><span>This card will be updated after the next contest.</span></div>';
-    return teammates.map(teammate => renderProfileId({ ...teammate, name: `Eng. ${teammate.name}`, role: 'ECPC teammate' })).join('');
+    return teammates.map((teammate, index) => renderProfileId({ ...teammate, name: `Eng. ${teammate.name}`, role: 'ECPC teammate' }, assetRoot, index === 0)).join('');
   }
 
   function renderEcpc(assetRoot) {
@@ -144,7 +157,7 @@
       const photoHeight = Number(slide.imageHeight) || 2;
       const front = future
         ? `<div class="flip-card ecpc-deck-card" data-flip-card><div class="flip-card-inner"><div class="flip-card-face flip-card-front ecpc-future-card"><div class="ecpc-future-aura" aria-hidden="true"></div><img class="ecpc-future-logo" src="${asset(assetRoot, slide.image)}" alt="${escapeHtml(slide.alt)}" loading="lazy" decoding="async" /><span class="ecpc-photo-number">${String(index + 1).padStart(2, '0')} / ${String(data.activity.ecpc.length).padStart(2, '0')}</span><span class="ecpc-future-label">Next contest</span><button class="flip-card-hit-area interactable" type="button" data-flip-toggle aria-expanded="false" aria-label="Track progress for the next ECPC contest"></button></div><div class="flip-card-face flip-card-back ecpc-progress-back" aria-hidden="true" inert><span class="ecpc-progress-kicker">THE NEXT CHAPTER</span><h3>Track Progress?</h3><p>Follow my practice, contests, and rating on Codeforces.</p><a class="ecpc-progress-link interactable" href="${escapeHtml(slide.progressUrl)}" target="_blank" rel="noopener">Hassan_G04 <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a><small>Tap the card to return</small></div></div></div>`
-        : `<div class="flip-card ecpc-deck-card profile-flip" data-flip-card><div class="flip-card-inner"><div class="flip-card-face flip-card-front flip-card-media ecpc-card-front"><img class="flip-card-image" src="${asset(assetRoot, slide.image)}" width="${photoWidth}" height="${photoHeight}" alt="${escapeHtml(slide.alt)}" loading="lazy" decoding="async" /><button class="flip-card-hit-area interactable" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from ${escapeHtml(slide.title)}"></button><span class="ecpc-photo-number">${String(index + 1).padStart(2, '0')} / ${String(data.activity.ecpc.length).padStart(2, '0')}</span><span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-users"></i><span>Meet the team</span></span></div><div class="flip-card-face flip-card-back ecpc-card-back profile-id-back" aria-hidden="true" inert><span class="profile-back-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the Team!</span><div class="profile-id-grid">${renderTeammates(slide.teammates)}</div><button class="profile-return interactable" type="button"><i class="fas fa-rotate-left" aria-hidden="true"></i> Back to photo</button></div></div></div>`;
+        : `<div class="flip-card ecpc-deck-card profile-flip" data-flip-card><div class="flip-card-inner"><div class="flip-card-face flip-card-front flip-card-media ecpc-card-front"><img class="flip-card-image" src="${asset(assetRoot, slide.image)}" width="${photoWidth}" height="${photoHeight}" alt="${escapeHtml(slide.alt)}" loading="lazy" decoding="async" /><button class="flip-card-hit-area interactable" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet the team from ${escapeHtml(slide.title)}"></button><span class="ecpc-photo-number">${String(index + 1).padStart(2, '0')} / ${String(data.activity.ecpc.length).padStart(2, '0')}</span><span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-users"></i><span>Meet the team</span></span></div><div class="flip-card-face flip-card-back ecpc-card-back profile-id-back" aria-hidden="true" inert><span class="profile-back-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the Team!</span><div class="profile-id-grid" data-profile-deck>${renderTeammates(slide.teammates, assetRoot)}</div><div class="profile-deck-controls" aria-label="Teammates"><button type="button" class="profile-prev interactable" aria-label="Previous teammate"><i class="fas fa-chevron-left" aria-hidden="true"></i></button><output class="profile-deck-count" aria-live="polite">1 / ${slide.teammates.length}</output><button type="button" class="profile-next interactable" aria-label="Next teammate"><i class="fas fa-chevron-right" aria-hidden="true"></i></button></div><button class="profile-return interactable" type="button"><i class="fas fa-rotate-left" aria-hidden="true"></i> Back to photo</button></div></div></div>`;
       return `<article class="ecpc-slide${active ? ' is-active' : ''}${index % 2 ? ' ecpc-slide--reverse' : ''}${future ? ' ecpc-future-slide' : ''}" style="--ecpc-photo-ratio:${photoWidth} / ${photoHeight}" data-ecpc-slide="${index}" aria-label="${escapeHtml(slide.title)}" aria-hidden="${String(!active)}"${active ? '' : ' inert'}>${front}<div class="ecpc-slide-caption"><span class="ecpc-chapter">${escapeHtml(slide.chapter)}</span><h3>${escapeHtml(slide.title)}</h3><p>${escapeHtml(slide.description)}</p></div></article>`;
     }).join('');
     const indicators = data.activity.ecpc.map((_, index) => `<button type="button"${index === 0 ? ' class="is-active" aria-current="true"' : ''} data-ecpc-index="${index}" aria-label="Show ECPC chapter ${index + 1}">${index + 1}</button>`).join('');
@@ -160,16 +173,16 @@
     return `
       <section class="depi-learning-section reveal" aria-labelledby="depi-learning-heading">
         <article class="depi-progress-card activity-feature-card premium-card">
-          <div class="depi-visual-flip flip-card profile-flip" data-flip-card>
+          <div class="depi-visual-flip flip-card profile-flip" data-flip-card style="--activity-photo-ratio:${depi.imageWidth} / ${depi.imageHeight}">
             <div class="flip-card-inner">
               <div class="depi-progress-visual flip-card-face flip-card-front">
-                <span class="depi-progress-icon"><img src="${asset(assetRoot, depi.image)}" alt="" loading="eager" decoding="async" /></span><strong>DEPI</strong><small>Learning journey</small>
+                <span class="depi-progress-icon"><img src="${asset(assetRoot, depi.image)}" alt="Digital Egypt Pioneers Initiative" width="${depi.imageWidth}" height="${depi.imageHeight}" loading="eager" decoding="async" /></span><strong>DEPI</strong><small>Learning journey</small>
                 <button class="flip-card-hit-area interactable" type="button" data-flip-toggle aria-expanded="false" aria-label="Show special thanks for the DEPI Data Engineering journey"></button>
                 <span class="flip-card-prompt depi-flip-prompt" aria-hidden="true"><i class="fas fa-rotate" aria-hidden="true"></i><span>Special thanks</span></span>
               </div>
               <div class="depi-visual-back profile-id-back flip-card-face flip-card-back" aria-hidden="true" inert>
                 <span class="profile-back-label">Special Thanks</span>
-                ${renderProfileId({ ...depi.instructor, role: 'DEPI · Data Engineering Instructor', description: depi.instructor.message })}
+                ${renderProfileId({ ...depi.instructor, role: 'DEPI · Data Engineering Instructor', description: depi.instructor.message }, assetRoot)}
                 <button class="profile-return interactable" type="button"><i class="fas fa-rotate-left" aria-hidden="true"></i> Back to DEPI</button>
               </div>
             </div>
@@ -183,7 +196,7 @@
     const soft = data.activity.softSkills;
     return `
       <section class="soft-skills-section activity-feature-card premium-card reveal" aria-labelledby="soft-skills-heading">
-        <div class="soft-skills-flip flip-card profile-flip" id="softSkillsFlip" data-flip-card><div class="soft-skills-flip-inner flip-card-inner"><div class="soft-skills-photo soft-skills-face flip-card-face flip-card-front flip-card-media"><img class="flip-card-image" src="${asset(assetRoot, soft.image)}" alt="Hassan with his DEPI soft skills class" loading="lazy" decoding="async" /><button class="flip-card-hit-area interactable" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet Hassan's soft skills instructor"></button><span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-chalkboard-user"></i><span>Meet the instructor</span></span><a class="soft-skills-book-tag interactable" href="${soft.website}" target="_blank" rel="noopener" aria-label="Visit the DEPI website"><span>DEPI Community</span><i class="fas fa-people-group" aria-hidden="true"></i></a></div><div class="soft-skills-back profile-id-back soft-skills-face flip-card-face flip-card-back" aria-hidden="true" inert><span class="profile-back-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the instructor</span>${renderProfileId(soft.instructor)}<button class="profile-return interactable" type="button"><i class="fas fa-rotate-left" aria-hidden="true"></i> Back to photo</button></div></div></div>
+        <div class="soft-skills-flip flip-card profile-flip" id="softSkillsFlip" data-flip-card style="--activity-photo-ratio:${soft.imageWidth} / ${soft.imageHeight}"><div class="soft-skills-flip-inner flip-card-inner"><div class="soft-skills-photo soft-skills-face flip-card-face flip-card-front flip-card-media"><img class="flip-card-image" src="${asset(assetRoot, soft.image)}" width="${soft.imageWidth}" height="${soft.imageHeight}" alt="Hassan with his DEPI soft skills class" loading="lazy" decoding="async" /><button class="flip-card-hit-area interactable" type="button" data-flip-toggle aria-expanded="false" aria-label="Meet Hassan's soft skills instructor"></button><span class="flip-card-prompt" aria-hidden="true"><i class="fas fa-chalkboard-user"></i><span>Meet the instructor</span></span><a class="soft-skills-book-tag interactable" href="${soft.website}" target="_blank" rel="noopener" aria-label="Visit the DEPI website"><span>DEPI Community</span><i class="fas fa-people-group" aria-hidden="true"></i></a></div><div class="soft-skills-back profile-id-back soft-skills-face flip-card-face flip-card-back" aria-hidden="true" inert><span class="profile-back-label"><i class="fab fa-linkedin-in" aria-hidden="true"></i> Meet the instructor</span>${renderProfileId(soft.instructor, assetRoot)}<button class="profile-return interactable" type="button"><i class="fas fa-rotate-left" aria-hidden="true"></i> Back to photo</button></div></div></div>
         <div class="soft-skills-copy"><span class="section-tag">Beyond technical skills</span><h2 id="soft-skills-heading">Soft Skills</h2><p>${escapeHtml(soft.copy)}</p></div>
       </section>`;
   }
@@ -203,11 +216,13 @@
   }
 
   window.PORTFOLIO_COMPONENTS = Object.freeze({
+    renderPortrait,
     renderAbout,
     escapeHtml,
     renderServiceCards,
     renderProjectCards,
     renderCredentialCards,
+    renderCertificateViewer,
     renderExperienceCards,
     renderTechTag,
     renderFreelanceLinks,

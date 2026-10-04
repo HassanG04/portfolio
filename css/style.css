@@ -1188,50 +1188,6 @@ footer {
   margin-top: 12px;
 }
 
-.tech-tag {
-  font-size: .7rem;
-  font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 999px;
-  letter-spacing: .04em;
-}
-
-.tech-tag.python {
-  background: rgba(52, 211, 153, .1);
-  color: #34d399;
-  border: 1px solid rgba(52, 211, 153, .2);
-}
-
-.tech-tag.ai {
-  background: rgba(139, 92, 246, .1);
-  color: #a78bfa;
-  border: 1px solid rgba(139, 92, 246, .2);
-}
-
-.tech-tag.web {
-  background: rgba(34, 211, 238, .1);
-  color: #22d3ee;
-  border: 1px solid rgba(34, 211, 238, .2);
-}
-
-.tech-tag.flask {
-  background: rgba(251, 146, 60, .1);
-  color: #fb923c;
-  border: 1px solid rgba(251, 146, 60, .2);
-}
-
-.tech-tag.django {
-  background: rgba(16, 185, 129, .1);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, .2);
-}
-
-.tech-tag.cv {
-  background: rgba(244, 114, 182, .1);
-  color: #f472b6;
-  border: 1px solid rgba(244, 114, 182, .2);
-}
-
 /* ===== SCROLL REVEAL ===== */
 .reveal,
 .reveal-left,
@@ -1645,17 +1601,6 @@ main.container {
 .tag-row,
 .tech-tags {
   gap: 7px;
-}
-
-.stag,
-.tech-tag {
-  padding: 5px 9px;
-  border: 1px solid rgba(139, 92, 246, .16) !important;
-  border-radius: 8px;
-  color: var(--accent-purple-light) !important;
-  background: rgba(139, 92, 246, .08) !important;
-  font-size: .7rem;
-  font-weight: 700;
 }
 
 .btn {
@@ -4356,25 +4301,6 @@ html[data-theme="light"] .ecpc-deck-arrow:focus-visible {
   }
 }
 
-.toolkit-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.toolkit-tags span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 38px;
-  padding: 8px 14px;
-  border: 1px solid var(--border-glass);
-  border-radius: 999px;
-  background: rgba(139, 92, 246, .08);
-  color: var(--text-primary);
-  font-size: .88rem;
-  font-weight: 650;
-}
-
 .btn-cta-secondary {
   border: 1px solid rgba(255, 255, 255, .32);
   background: rgba(20, 9, 38, .22);
@@ -4583,23 +4509,38 @@ html[data-theme="light"] .ecpc-deck-arrow:focus-visible {
 }
 
 .certificate-viewer-media {
-  display: grid;
-  place-items: center;
-  min-height: 0;
-  padding: clamp(12px, 2vw, 24px);
-  overflow: auto;
+  position: relative;
+  flex: 0 0 auto;
+  height: min(68dvh, 720px);
+  max-height: calc(100dvh - 220px);
+  min-height: 120px;
+  padding: 0;
+  overflow: hidden;
+  touch-action: none;
+  cursor: zoom-in;
   background: radial-gradient(circle at 50% 20%, rgba(139, 92, 246, .12), transparent 55%), var(--bg-primary);
 }
 
 .certificate-viewer-media img {
+  position: absolute;
+  inset: 0;
   display: block;
-  max-width: 100%;
-  max-height: calc(100vh - 150px);
-  width: auto;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, .34);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
 }
+
+.certificate-viewer-media[data-maximum-zoom="true"] { cursor:zoom-out; }
+.certificate-viewer-media.is-panning { cursor:move; }
+.certificate-viewer-media:focus-visible { outline:2px solid var(--accent-purple-light); outline-offset:-3px; }
+.certificate-inspector-tools { display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:10px 16px; border-bottom:1px solid var(--border-glass); }
+.certificate-inspector-tools button { min-width:40px; height:40px; border:1px solid var(--border-glass); border-radius:8px; color:var(--text-primary); background:var(--bg-card); }
+.certificate-inspector-tools button:focus-visible { outline:2px solid var(--accent-purple-light); outline-offset:2px; }
+.certificate-inspector-tools output { min-width:82px; text-align:center; font-size:.85rem; font-variant-numeric:tabular-nums; }
+.certificate-inspector-tools > span { margin-left:auto; color:var(--text-secondary); font-size:.75rem; }
+@media(prefers-reduced-motion:reduce) { .certificate-viewer[open] { animation:none; } }
 
 @keyframes certificate-viewer-in {
   from {
@@ -4628,14 +4569,7 @@ html[data-theme="light"] .ecpc-deck-arrow:focus-visible {
     padding: 14px 15px;
   }
 
-  .certificate-viewer-media {
-    padding: 8px;
-  }
-
-  .certificate-viewer-media img {
-    max-height: calc(100vh - 125px);
-    border-radius: 9px;
-  }
+  .certificate-inspector-tools > span { width:100%; margin:0; }
 }
 
 .section-subheading {
@@ -5051,12 +4985,6 @@ html[data-theme="light"] #particle-canvas {
   background: var(--editorial-surface-raised) !important;
   box-shadow: var(--editorial-shadow);
   backdrop-filter: none;
-}
-
-.stag,
-.tech-tag,
-.toolkit-tags span {
-  border-radius: 4px !important;
 }
 
 .role-signature {

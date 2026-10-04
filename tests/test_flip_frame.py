@@ -12,9 +12,11 @@ class FlipFrameTests(unittest.TestCase):
         self.assertNotRegex(css, r"\.profile-flip\.is-flipped[^{}]*\{[^}]*position\s*:\s*relative")
         back = re.search(r"\.profile-id-back\.flip-card-back\s*\{([^}]+)", css).group(1)
         self.assertIn("overflow:visible", back)
-        self.assertIn("position:relative", back)
-        self.assertIn(".profile-flip[data-flip-card] { display:grid; grid-template-columns:minmax(0,1fr); aspect-ratio:auto; min-height:min-content; max-height:none; }", css)
-        self.assertIn(".profile-flip > .flip-card-inner { display:grid; grid-template-columns:minmax(0,1fr); height:auto; min-height:min-content; }", css)
+        self.assertIn("position:absolute", back)
+        self.assertIn("aspect-ratio:var(--activity-photo-ratio,var(--ecpc-photo-ratio,3 / 2))", css)
+        self.assertIn(".profile-flip > .flip-card-inner { position:absolute; inset:0; width:100%; height:100%; min-height:0; }", css)
+        self.assertNotIn(".profile-flip > .flip-card-inner::before", css)
+        self.assertIn(".profile-id-card:not(.is-current-profile)", css)
 
 
 if __name__ == "__main__":

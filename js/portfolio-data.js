@@ -216,17 +216,18 @@
       }
     ],
     depi: {
-      title: 'DEPI Data Engineering', website: 'https://depi-tasks-pi.vercel.app/', image: 'depi.png',
+      title: 'DEPI Data Engineering', website: 'https://depi-tasks-pi.vercel.app/', image: 'depi.png', imageWidth: 225, imageHeight: 224,
       description: 'Follow my progress through the Data Engineering track, where I am building practical skills in Python, APIs, pandas, SQL, web scraping, Flask, and production-minded data engineering.',
       skills: ['Python', 'APIs', 'pandas', 'SQL', 'Flask'], start: '2026-08', end: '2026-12',
       instructor: { name: 'Eng. Mohamed Hamed', linkedin: 'https://www.linkedin.com/in/mohammed-hamed-b81064195/', message: 'A special thanks to Eng. Mohamed Hamed for the outstanding effort, guidance, and support he provided throughout the DEPI journey.' }
     },
     softSkills: {
-      image: 'softskills.jpeg', website: 'https://depi.gov.eg/',
+      image: 'softskills.jpeg', imageWidth: 1280, imageHeight: 720, website: 'https://depi.gov.eg/',
       instructor: {
         name: 'Hadeer Makhlouf',
         role: 'Head of Training · Octopus Outsourcing',
         image: 'hadeer-makhlouf.jpeg',
+        badgeDescription: '7+ years designing people-focused learning experiences.',
         linkedin: 'https://www.linkedin.com/in/hadeermakhlouf/',
         description: 'Learning & Development professional with more than seven years of experience designing people-focused learning experiences.'
       },

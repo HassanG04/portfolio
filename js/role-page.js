@@ -34,7 +34,7 @@
           <p class="hero-availability">Available for freelance &amp; internship opportunities</p>
           <div class="hero-socials"><a href="${data.shared.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin interactable" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>${components.renderFreelanceLinks({ variant: 'social', assetRoot })}<a href="${data.shared.github}" target="_blank" rel="noopener" class="social-btn github interactable" aria-label="GitHub"><i class="fab fa-github"></i></a></div>
         </div>
-        <figure class="hero-portrait"><div class="hero-img-wrap"><div class="hero-img-ring"><div class="hero-img-inner"><img src="../images/profile.jpg" alt="${esc(data.shared.name)}" fetchpriority="high" decoding="async" /></div></div></div><figcaption>Based in ${esc(data.shared.location)}<br><a href="#about" class="interactable">A little about me <span aria-hidden="true">↗</span></a></figcaption></figure>
+        <figure class="hero-portrait">${components.renderPortrait('../')}</figure>
       </div>
     </header>
 
@@ -58,7 +58,7 @@
       </section>
     </main>
 
-    <dialog class="certificate-viewer" id="certificateViewer" aria-labelledby="certificateViewerTitle"><div class="certificate-viewer-panel"><div class="certificate-viewer-head"><div><span>Certificate preview</span><h2 id="certificateViewerTitle">Certificate</h2></div><button class="certificate-viewer-close interactable" id="certificateViewerClose" type="button" aria-label="Close certificate preview"><i class="fas fa-xmark" aria-hidden="true"></i></button></div><div class="certificate-viewer-media"><img id="certificateViewerImage" alt="" /></div></div></dialog>`;
+    ${components.renderCertificateViewer()}`;
 
   document.querySelectorAll('[data-role-label]').forEach(node => { node.textContent = data.shared.identity; });
 }());

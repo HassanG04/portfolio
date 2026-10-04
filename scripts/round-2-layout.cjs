@@ -73,7 +73,9 @@ async function readLayout(page) {
         await page.mouse.move(0, 0);
         await page.waitForTimeout(750);
         const rest = await readLayout(page);
-        await page.screenshot({ path: path.join(output, `${route}-${width}-${theme}-tools.png`) });
+        if ([390,1440].includes(width) && ['main','AI'].includes(route)) {
+          await page.screenshot({ path: path.join(output, `${route}-${width}-${theme}-tools.png`) });
+        }
         const interactions = [];
         for (const tag of await page.locator('.toolkit-tags .tech-tag').all()) {
           await tag.hover({ force: true });
@@ -91,6 +93,9 @@ async function readLayout(page) {
         console.log(`${stage} tools ${route}/${theme}/${width}: ${rest.tags.length} tags`);
       }
       fs.writeFileSync(file, JSON.stringify(results, null, 2));
+      const clipped = results.flatMap(row => [row.rest.tags, ...row.interactions.flatMap(state => [state.hover,state.focus])]
+        .flat().filter(tag => tag.ancestors.some(ancestor => ancestor.clipsText || ancestor.clipsBorder)));
+      if (clipped.length) throw new Error(`${route}/${theme}: ${clipped.length} clipped tag states`);
       await context.close();
     }
   } finally { await browser.close(); await server.close(); }
