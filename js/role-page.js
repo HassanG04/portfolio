@@ -23,7 +23,7 @@
     <header class="hero-section editorial-hero role-hero" id="home" data-scroll-label="Cover">
       <div class="container hero-composition">
         <div class="hero-copy">
-          <p class="hero-byline">Hassan Gebril <span>/ ${esc(data.shared.identity)}</span></p>
+          <p class="hero-byline">Hassan Gebril <span>${esc(roleKey === 'ML' ? role.label : data.shared.identity)}</span></p>
           <h1 class="hero-title">${esc(role.headline)}</h1>
           <div class="profession-statement"><span>Portfolio focus</span><strong>${esc(fullLabel)}</strong></div>
           <p class="hero-desc">${esc(role.description)}</p>

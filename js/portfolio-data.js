@@ -5,12 +5,12 @@
 
   const shared = {
     name: 'Hassan Gebril',
-    identity: 'Machine Learning Engineer',
-    usp: 'I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.',
+    identity: 'AI Engineer',
+    usp: 'I build AI models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.',
     location: 'Alexandria, Egypt',
     about: {
       heading: 'I work on the model and the handoff.',
-      intro: 'I build machine-learning models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.',
+      intro: 'I build AI models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.',
       story: 'I grew up in Alexandria and studied at Sidi Gaber Language School. Friends introduced me to programming, and competitive programming gave me a reason to keep practising.',
       practice: 'That work led me to Artificial Intelligence. I now connect model experiments to Flask and Django applications, with the evaluation setup and implementation limits recorded in the repository.',
       education: 'Arab Academy for Science & Technology',
@@ -36,7 +36,7 @@
     AI: {
       label: 'AI Engineer', short: 'AI', eyebrow: 'Computer vision & language',
       headline: 'Models with an interface people can use.',
-      description: 'I build vision and language models with Python web interfaces. My claims stay within the evaluation results and the tests available in each repository.',
+      description: 'I build AI models and the web apps that serve them, with a focus on vision and language. I only claim what held-out evaluation and passing tests support.',
       promise: 'For a research team or startup testing a visual or text-based workflow, I connect the model to a usable review interface.',
       skills: ['Python', 'PyTorch', 'Computer Vision', 'Transformers', 'OpenCV', 'Flask', 'Django', 'Model Evaluation']
     },

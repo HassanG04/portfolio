@@ -104,7 +104,7 @@ for (const role of ['AI', 'ML', 'DS', 'DA', 'DE']) {
 
 test('general portfolio uses its new title and resume at both entry points', () => {
   const html = readFileSync(join(__dirname, '../index.html'), 'utf8');
-  assert.ok(html.includes('<title>Hassan Gebril | Machine Learning Engineer | Models to software</title>'));
+  assert.ok(html.includes('<title>Hassan Gebril | AI Engineer | Models to software</title>'));
   const resume = 'https://drive.google.com/file/d/1ej3BehMnJGrt4uYgD0utkQDmA8SbthKs/view?usp=drive_link';
   assert.equal(html.split(`href="${resume}"`).length - 1, 2);
   assert.ok(!html.includes('1OtvoA3evwZXAcb-kifyhtX20TDkF-zF1'));
