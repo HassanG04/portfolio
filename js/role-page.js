@@ -35,7 +35,6 @@
           <div class="hero-socials"><a href="${data.shared.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin interactable" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>${components.renderFreelanceLinks({ variant: 'social', assetRoot })}<a href="${data.shared.github}" target="_blank" rel="noopener" class="social-btn github interactable" aria-label="GitHub"><i class="fab fa-github"></i></a></div>
         </div>
         <figure class="hero-portrait"><div class="hero-img-wrap"><div class="hero-img-ring"><div class="hero-img-inner"><img src="../images/profile.jpg" alt="${esc(data.shared.name)}" fetchpriority="high" decoding="async" /></div></div></div><figcaption>Based in ${esc(data.shared.location)}<br><a href="#about" class="interactable">A little about me <span aria-hidden="true">↗</span></a></figcaption></figure>
-        <div class="hero-signature-slot">${components.renderTechnicalSignature()}</div>
       </div>
     </header>
 

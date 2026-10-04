@@ -8,6 +8,12 @@ const context = { window: {} };
 vm.runInNewContext(source('js/portfolio-data.js'), context);
 vm.runInNewContext(source('js/portfolio-components.js'), context);
 
+test('the formula strip and its animation are removed at their source', () => {
+  for (const file of ['index.html', 'js/main-page.js', 'js/role-page.js', 'js/portfolio-components.js', 'css/editorial.css']) {
+    assert.doesNotMatch(source(file), /renderTechnicalSignature|hero-signature-slot|delivery-signature|delivery-trace/, file);
+  }
+});
+
 test('general identity is AI Engineer and the honest scope stays explicit', () => {
   const { shared, professions } = context.window.PORTFOLIO_DATA;
   assert.equal(shared.identity, 'AI Engineer');

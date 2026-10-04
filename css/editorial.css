@@ -26,7 +26,7 @@
 .editorial-section a:focus-visible,
 .editorial-hero a:focus-visible { outline:2px solid var(--accent-purple-light); outline-offset:6px; }
 
-/* Hero: the person, a specific promise, and one technical signature */
+/* Hero: the person and a specific promise */
 .editorial-hero { position:relative; padding:88px 0 40px; }
 .hero-composition { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(280px,1fr); align-items:center; gap:48px 72px; }
 .hero-copy { min-width:0; }
@@ -55,13 +55,6 @@ html[data-motion="reduced"] .hero-img-ring,
 html[data-motion="reduced"] .hero-img-inner img { animation:none; }
 .hero-portrait figcaption { margin-top:20px; padding-left:16px; border-left:1px solid var(--border-accent); font-size:.9rem; color:var(--text-secondary); line-height:1.8; }
 .hero-portrait figcaption a { color:var(--text-primary); text-decoration:none; }
-.hero-signature-slot { grid-column:1 / -1; }
-.delivery-signature { position:relative; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:24px 0; border-block:1px solid var(--border-glass); color:var(--text-secondary); font-family:monospace; font-size:.85rem; }
-.delivery-signature > span { display:flex; align-items:baseline; gap:16px; }
-.delivery-signature small { color:var(--accent-purple); font-size:1em; }
-.delivery-signature > i { font-style:normal; color:var(--accent-purple-light); }
-.delivery-signature::after { content:''; position:absolute; bottom:-1px; left:0; width:20%; height:1px; background:var(--accent-purple-light); transform-origin:left; animation:delivery-trace 1.4s cubic-bezier(.22,1,.36,1) both; }
-@keyframes delivery-trace { from { opacity:0; transform:scaleX(0); } to { opacity:1; transform:scaleX(1); } }
 
 /* Public project index: one lead story and two compact entries */
 .intro-project-grid, .service-card-grid, .credential-card-grid, .portfolio-case-grid { display:grid; gap:24px; margin:0; }
@@ -156,8 +149,6 @@ html[data-motion="reduced"] .hero-img-inner img { animation:none; }
   .hero-portrait { margin-inline:auto; }
   .hero-title { font-size:clamp(2.5rem,5.6vw,3.5rem); }
   .hero-byline span { display:block; }
-  .delivery-signature > span { display:block; }
-  .delivery-signature small { display:block; margin-top:6px; }
   .editorial-section .section-anchor-heading { gap:16px 32px; }
   .intro-project-grid, .portfolio-case-grid { grid-template-columns:1fr; }
   .intro-project-grid > :first-child, .intro-project-grid > :not(:first-child) { grid-column:1; grid-row:auto; }
@@ -174,8 +165,6 @@ html[data-motion="reduced"] .hero-img-inner img { animation:none; }
   .hero-portrait { max-width:380px; margin-inline:auto; }
   .hero-portrait figcaption { margin-top:24px; }
   .hero-byline { margin-bottom:24px; }
-  .delivery-signature { gap:8px; font-size:.66rem; padding:16px 0; }
-  .delivery-signature small { display:none; }
   .editorial-section { padding-block:56px; }
   .editorial-section .section-anchor-heading { margin-bottom:32px; }
   .editorial-section .section-heading { font-size:2rem; }
@@ -193,6 +182,6 @@ html[data-motion="reduced"] .hero-img-inner img { animation:none; }
   .certificate-preview-cue { position:static; display:block; opacity:1; }
 }
 @media (prefers-reduced-motion:reduce) {
-  .delivery-signature::after, .typewriter-cursor { animation:none; }
+  .typewriter-cursor { animation:none; }
   .hero-img-inner img, .certificate-preview-cue { transition:none; }
 }

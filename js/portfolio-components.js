@@ -47,10 +47,6 @@
     return `<div class="result-card-art project-visual project-visual--${escapeHtml(tone)}" aria-hidden="true"><span class="project-visual-icon"><i class="fas ${escapeHtml(project.icon || 'fa-code')}"></i></span><span class="project-visual-label"><small>${escapeHtml(project.artLabel || `${context} portfolio`)}</small>${escapeHtml(project.title)}</span></div>`;
   }
 
-  function renderTechnicalSignature() {
-    return `<div class="delivery-signature" aria-label="From data through model evaluation to a usable application"><span>data</span><i aria-hidden="true">→</i><span>model <small>ŷ = wᵀx + b</small></span><i aria-hidden="true">→</i><span>evaluation</span><i aria-hidden="true">→</i><span>application</span></div>`;
-  }
-
   function renderAbout(roleKey, assetRoot = '') {
     const about = data.shared.about;
     return `<div class="section-anchor-heading reveal"><span class="section-tag">About / Alexandria, Egypt</span><h2 class="section-heading">${escapeHtml(about.heading)}</h2><p>${escapeHtml(about.intro)}</p></div>
@@ -208,7 +204,6 @@
 
   window.PORTFOLIO_COMPONENTS = Object.freeze({
     renderAbout,
-    renderTechnicalSignature,
     escapeHtml,
     renderServiceCards,
     renderProjectCards,
