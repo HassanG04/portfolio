@@ -1341,7 +1341,8 @@ document.addEventListener('DOMContentLoaded', function () {
         suppressFlipClickUntil = performance.now() + 450;
         const distance = event ? event.clientX - gesture.startX : gesture.distance;
         const momentum = reducedCarouselMotion.matches || performance.now() - gesture.lastAt > 100 ? 0 : Math.max(-2.5, Math.min(2.5, gesture.velocity)) * 240;
-        const step = cancelled ? 0 : Math.max(1 - slides.length, Math.min(slides.length - 1, -Math.round((distance + momentum) / Math.min(150, gesture.width * 0.4))));
+        let step = cancelled ? 0 : Math.max(1 - slides.length, Math.min(slides.length - 1, -Math.round((distance + momentum) / Math.min(150, gesture.width * 0.4))));
+        step = Math.max(-1, Math.min(1, step)); // Limit drag to next/prev photo only
         if (!step || !moveEcpcWithSound(step)) positionEcpcTrack(reducedCarouselMotion.matches);
         else if (reducedCarouselMotion.matches) positionEcpcTrack(true);
       }
@@ -1624,22 +1625,14 @@ document.addEventListener('DOMContentLoaded', function () {
         
         if (shouldFlip !== card.classList.contains('is-flipped')) {
            if (shouldFlip) {
-             const finalAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-             if (finalAxis === 'x') {
-               card.style.setProperty('--flip-dir-y', dx > 0 ? 1 : -1);
-               card.style.setProperty('--flip-dir-x', 0);
-             } else {
-               card.style.setProperty('--flip-dir-x', dy > 0 ? -1 : 1);
-               card.style.setProperty('--flip-dir-y', 0);
-             }
+             // Always force horizontal flip on release so backface is never upside down
+             card.style.setProperty('--flip-dir-y', dx !== 0 ? (dx > 0 ? 1 : -1) : (dy > 0 ? 1 : -1));
+             card.style.setProperty('--flip-dir-x', 0);
            }
            setActivityFlipState(card, shouldFlip);
            if (typeof playActivitySound === 'function') playActivitySound(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'right' : 'left'));
         } else {
            markActivityFlipAnimating(card);
-           if (!shouldFlip) {
-             card.removeAttribute('data-flip-axis');
-           }
         }
       } else {
         const shouldFlip = !card.classList.contains('is-flipped');

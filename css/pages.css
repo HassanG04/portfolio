@@ -844,7 +844,7 @@ body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90de
   grid-template-columns: minmax(0px, 1fr) minmax(0px, 1fr);
   align-items: center;
   gap: 48px;
-  padding: 32px 0px;
+  padding: 32px 48px;
   border-block: 1px solid var(--border-glass);
   border-color: var(--editorial-line);
   background: var(--editorial-surface-raised);
@@ -1041,7 +1041,7 @@ body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90de
 @media (max-width: 599.98px) {
   .about-editorial,
   .service-card-grid,
-  .toolkit-panel { grid-template-columns: 1fr; }
+  .toolkit-panel { grid-template-columns: 1fr; padding: 24px 24px; }
 }
 
 @media (max-width: 991.98px) {

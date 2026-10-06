@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Style Tile - Hassan Gebril</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;600&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Dark mode */
+      --dark-base: #0d0714;
+      --dark-raised: #140b1e;
+      --dark-elevated: #1b1027;
+      --dark-accent: #9b6dff;
+      --dark-text: #f7f2ff;
+
+      /* Light mode */
+      --light-base: #f8f6fc;
+      --light-raised: #f0ebf8;
+      --light-elevated: #ffffff;
+      --light-accent: #6d28d9;
+      --light-text: #21162f;
+
+      --bg-base: var(--dark-base);
+      --bg-raised: var(--dark-raised);
+      --bg-elevated: var(--dark-elevated);
+      --accent: var(--dark-accent);
+      --text: var(--dark-text);
+      
+      --r-s: 8px;
+      --r-m: 16px;
+      --r-l: 32px;
+    }
+    
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-base: var(--light-base);
+        --bg-raised: var(--light-raised);
+        --bg-elevated: var(--light-elevated);
+        --accent: var(--light-accent);
+        --text: var(--light-text);
+      }
+    }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text);
+      font-family: 'Instrument Sans', sans-serif;
+      margin: 0;
+      padding: 40px;
+    }
+    
+    .c1 { font-family: 'Bricolage Grotesque', sans-serif; }
+    .c2 { font-family: 'Unbounded', sans-serif; }
+
+    .grid { display: grid; gap: 40px; }
+    .row { display: flex; gap: 40px; flex-wrap: wrap; }
+    
+    .type-scale h1 { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; margin: 0; line-height: 1.1; }
+    .type-scale h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 600; margin: 0; line-height: 1.2; }
+    .type-scale h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 600; margin: 0; }
+    .type-scale p { font-size: 1rem; line-height: 1.6; max-width: 75ch; margin-top: 10px; }
+
+    .btn {
+      padding: 14px 28px;
+      border-radius: var(--r-l);
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    
+    .radii-box {
+      width: 100px; height: 100px;
+      background: var(--bg-raised);
+      display: grid; place-items: center;
+      border: 1px solid var(--accent);
+    }
+    
+    /* Organic Mask */
+    .portrait-mask {
+      width: 240px; height: 280px;
+      background: var(--accent);
+      /* A subtle blob / organic shape */
+      clip-path: path('M120 0 C200 10, 240 80, 230 180 C220 260, 160 280, 80 270 C10 260, 0 160, 20 80 C40 10, 80 -10, 120 0 Z');
+    }
+    
+    /* SVG Divider */
+    .divider {
+      width: 100%; height: 60px;
+      background: var(--bg-raised);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    }
+
+    /* Dummy ECPC Card */
+    .ecpc-card {
+      width: 300px; height: 200px;
+      background: var(--bg-elevated);
+      border-radius: var(--r-m);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .corner-peel {
+      position: absolute; top: 0; right: 0;
+      width: 0; height: 0;
+      border-top: 40px solid var(--accent);
+      border-left: 40px solid transparent;
+      border-bottom-left-radius: var(--r-s);
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div>
+      <p>Candidate 1: Bricolage Grotesque</p>
+      <div class="row c1 type-scale">
+        <h1>Hassan Gebril</h1>
+      </div>
+    </div>
+    
+    <div>
+      <p>Candidate 2: Unbounded</p>
+      <div class="row c2 type-scale">
+        <h1>Hassan Gebril</h1>
+      </div>
+    </div>
+
+    <div class="type-scale">
+      <h2 class="c1">Building AI that works.</h2>
+      <p>Python is the foundation. The model and the application determine the rest. This demonstrates the Instrument Sans body copy scale and line length constraints.</p>
+    </div>
+    
+    <div class="row">
+      <button class="btn">Primary Action</button>
+      <button class="btn btn-secondary">Secondary Action</button>
+    </div>
+
+    <div class="row">
+      <div class="radii-box" style="border-radius: var(--r-s)">8px</div>
+      <div class="radii-box" style="border-radius: var(--r-m)">16px</div>
+      <div class="radii-box" style="border-radius: var(--r-l)">32px</div>
+    </div>
+
+    <div class="row">
+      <div class="portrait-mask"></div>
+      <div class="ecpc-card">
+        <div class="corner-peel"></div>
+        <p style="margin:0">ECPC Deck Card</p>
+      </div>
+    </div>
+    
+    <div class="divider"></div>
+  </div>
+</body>
+</html>
