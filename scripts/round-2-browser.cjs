@@ -153,7 +153,7 @@ async function capture(browser, route, width, theme) {
   try {
     save('source.json', {
       commit: execFileSync('git', ['-c', `safe.directory=${process.cwd().replaceAll('\\', '/')}`, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
-      files: ['css/style.css', 'css/design-system.css', 'css/editorial.css', ...fs.readdirSync('js').filter(file => file.endsWith('.js')).map(file => `js/${file}`)]
+      files: [...fs.readdirSync('css').filter(file => file.endsWith('.css')).map(file => `css/${file}`), ...fs.readdirSync('js').filter(file => file.endsWith('.js')).map(file => `js/${file}`)]
         .map(file => { const source = fs.readFileSync(file, 'utf8'); return { file, lines: source.split('\n').length, crlf: (source.match(/\r\n/g) || []).length, bytes: Buffer.byteLength(source) }; })
     });
     const jobs = routes.flatMap(route => widths.flatMap(width => themes.map(theme => [route, width, theme])));

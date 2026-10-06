@@ -1,0 +1,3 @@
+{
+  "dynamic_classes": ["is-*", "delay-*", "tech-tag--*", "show", "collapsing", "modal-backdrop", "fade"]
+}

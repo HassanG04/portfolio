@@ -27,7 +27,7 @@ test('media dimensions and accessible teammate controls come from shared data', 
 });
 
 test('the formula strip and its animation are removed at their source', () => {
-  for (const file of ['index.html', 'js/main-page.js', 'js/role-page.js', 'js/portfolio-components.js', 'css/editorial.css']) {
+  for (const file of ['index.html', 'js/main-page.js', 'js/role-page.js', 'js/portfolio-components.js', ...['tokens-base','components','pages','activity'].map(name=>`css/${name}.css`)]) {
     assert.doesNotMatch(source(file), /renderTechnicalSignature|hero-signature-slot|delivery-signature|delivery-trace/, file);
   }
 });
@@ -38,7 +38,7 @@ test('the old About portrait structure is shared by main and specialist pages', 
     assert.match(markup, /about-profile-panel[^>]*><div class="profile-image-wrapper"><img[^>]+class="profile-image"/);
     assert.doesNotMatch(markup, /about-portrait/);
   }
-  const css = source('css/editorial.css');
+  const css = source('css/components.css');
   assert.equal((css.match(/@keyframes rotate-ring/g) || []).length, 1);
   assert.equal((css.match(/@keyframes pulse-glow/g) || []).length, 1);
 });
@@ -50,7 +50,7 @@ test('general identity is AI Engineer and the honest scope stays explicit', () =
   assert.match(shared.usp, /held-out evaluation and passing tests support/);
   assert.match(professions.AI.description, /I build AI models/);
   assert.equal(professions.ML.label, 'ML Engineer');
-  assert.match(source('index.html'), /data-words="AI Engineering\|/);
+  assert.match(context.window.PORTFOLIO_COMPONENTS.renderPage(), /data-words="AI Engineering\|/);
 });
 
 test('every entry point has consistent identity and social image descriptions', () => {
@@ -77,14 +77,13 @@ test('focused visual pass removes decorative labels and portrait caption without
   for (const file of ['index.html','js/role-page.js','js/portfolio-components.js']) {
     assert.doesNotMatch(source(file), /class="(?:section-tag|ecpc-chapter|depi-progress-eyebrow)"/, file);
   }
-  assert.doesNotMatch(source('css/style.css'), /(?:section-tag|ecpc-chapter|depi-progress-eyebrow)::before/);
-  assert.doesNotMatch(source('css/editorial.css'), /hero-portrait figcaption/);
-  const redesign = source('css/redesign.css');
-  assert.doesNotMatch(redesign, /font|--[\w-]+\s*:/);
-  assert.match(redesign, /width:36px/);
+  const css=['tokens-base','components','pages','activity'].map(name=>source(`css/${name}.css`)).join('\n');
+  assert.doesNotMatch(css, /(?:section-tag|ecpc-chapter|depi-progress-eyebrow)::before/);
+  assert.doesNotMatch(css, /hero-portrait figcaption/);
+  assert.match(css, /\.depi-visual-back > \.profile-return\s*\{[^}]*width:\s*36px/);
   for (const file of ['index.html', ...['AI','ML','DS','DA','DE'].map(role => `${role}/index.html`)]) {
     const html=source(file);
     assert.match(html, /family=Sora[^"\n]+family=Source\+Sans\+3/);
-    assert.equal((html.match(/css\/redesign\.css\?v=/g)||[]).length,1);
+    for(const name of ['tokens-base','components','pages','activity'])assert.equal(html.split(`css/${name}.css?v=`).length-1,1);
   }
 });

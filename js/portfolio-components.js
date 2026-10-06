@@ -132,6 +132,7 @@
   }
 
   function renderProfileId(person, assetRoot = '', current = false) {
+    if (typeof person === 'string') person = data.people[person];
     const linked = Boolean(person.linkedin);
     const names = person.name.replace(/^(?:Eng\.?|Professor)\s+/i, '').trim().split(/\s+/);
     const initials = [names[0], names.length > 1 ? names[names.length - 1] : ''].map(name => name.charAt(0)).join('').toUpperCase();
@@ -146,7 +147,10 @@
 
   function renderTeammates(teammates, assetRoot = '') {
     if (!teammates.length) return '<div class="ecpc-construction-note"><i class="fas fa-sparkles" aria-hidden="true"></i><strong>The next team story is still ahead.</strong><span>This card will be updated after the next contest.</span></div>';
-    return teammates.map((teammate, index) => renderProfileId({ ...teammate, name: `Eng. ${teammate.name}`, role: 'ECPC teammate' }, assetRoot, index === 0)).join('');
+    return teammates.map((id, index) => {
+      const person = data.people[id];
+      return renderProfileId({ ...person, name: `Eng. ${person.name}` }, assetRoot, index === 0);
+    }).join('');
   }
 
   function renderEcpc(assetRoot) {
@@ -182,7 +186,7 @@
               </div>
               <div class="depi-visual-back profile-id-back flip-card-face flip-card-back" aria-hidden="true" inert>
                 <span class="profile-back-label">Special Thanks</span>
-                ${renderProfileId({ ...depi.instructor, role: 'DEPI · Data Engineering Instructor', description: depi.instructor.message }, assetRoot)}
+                ${renderProfileId(depi.instructor, assetRoot)}
                 <button class="profile-return interactable" type="button"><i class="fas fa-rotate-left" aria-hidden="true"></i> Back to DEPI</button>
               </div>
             </div>
@@ -215,7 +219,115 @@
       </section>`;
   }
 
+  function pageContext(roleKey = 'MAIN', assetRoot = '') {
+    const role = data.professions[roleKey];
+    return { roleKey, role, assetRoot, main: !role, copy: data.pageCopy };
+  }
+
+  function renderHero(context) {
+    const { roleKey, role, assetRoot, main, copy } = context;
+    const heading = main ? `${escapeHtml(copy.heroLines[0])}<br><span>${escapeHtml(copy.heroLines[1])}</span>` : escapeHtml(role.headline);
+    const focus = main
+      ? `<div class="typewriter-wrap"><span class="typewriter-prefix">My focus: </span><span class="typewriter-text" id="typewriter-text" data-words="${escapeHtml(copy.typewriter.join('|'))}">${escapeHtml(copy.typewriter[0])}</span><span class="typewriter-cursor"></span></div>`
+      : `<div class="profession-statement"><span>Portfolio focus</span><strong>${escapeHtml(role.fullLabel || role.label)}</strong></div>`;
+    return `<header class="hero-section editorial-hero${main ? '' : ' role-hero'}" id="home" data-scroll-label="Cover"><div class="container hero-composition"><div class="hero-copy">
+      <p class="hero-byline">${escapeHtml(data.shared.name)} <span>${escapeHtml(roleKey === 'ML' ? role.label : data.shared.identity)}</span></p>
+      <h1 class="hero-title">${heading}</h1>${focus}<p class="hero-desc">${escapeHtml(main ? data.shared.usp : role.description)}</p>
+      <div class="hero-actions"><a href="#introduction" class="btn btn-primary${main ? '' : ' interactable'}">Explore the work <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i></a><a href="${data.shared.resumes[roleKey]}" target="_blank" rel="noopener" class="btn btn-cv${main ? '' : ' interactable'}"><i class="fas fa-file-alt" aria-hidden="true"></i> View ${main ? '' : `${escapeHtml(role.short)} `}Résumé</a></div>
+      <p class="hero-availability">${escapeHtml(copy.availability)}</p><div class="${main ? 'hero-social' : 'hero-socials'}">${renderSocialLinks(assetRoot, true)}</div>
+      </div><figure class="hero-portrait" data-portfolio-render="portrait">${renderPortrait(assetRoot)}</figure></div></header>`;
+  }
+
+  function renderSocialLinks(assetRoot = '', freelance = false) {
+    return `<a href="${data.shared.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin interactable" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>${freelance ? `<span class="freelance-links-slot" data-portfolio-render="hero-freelance-links">${renderFreelanceLinks({ variant:'social', assetRoot })}</span>` : ''}<a href="${data.shared.github}" target="_blank" rel="noopener" class="social-btn github interactable" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>`;
+  }
+
+  function renderSectionHeading(title, copy, extra = '', paragraphClass = '') {
+    return `<div class="section-anchor-heading${extra} reveal"><h2 class="section-heading">${escapeHtml(title)}</h2><p${paragraphClass ? ` class="${paragraphClass}"` : ''}>${escapeHtml(copy)}</p></div>`;
+  }
+
+  function renderIntroduction({ roleKey, role, assetRoot, main, copy }) {
+    return `<section id="introduction" class="section-wrap one-page-section editorial-section" data-scroll-label="Introduction">`
+      + `<div class="container">${renderSectionHeading(copy.introductionTitle, main ? copy.introduction : role.promise)}`
+      + `<div class="row g-4 intro-project-grid" data-portfolio-render="intro">`
+      + renderProjectCards(roleKey, { variant: 'intro', featuredOnly: main, limit: 3, assetRoot })
+      + `</div></div></section>`;
+  }
+
+  function renderServices({ roleKey, role, main, copy }) {
+    return `<section id="services" class="section-wrap one-page-section editorial-section" data-scroll-label="Services">`
+      + `<div class="container">`
+      + renderSectionHeading(copy.servicesTitle, main ? copy.services : role.promise, ' service-section-heading', main ? 'section-sub' : '')
+      + `<div class="row g-4 service-card-grid" data-portfolio-render="services">${renderServiceCards(roleKey)}</div>`
+      + `</div></section>`;
+  }
+
+  function renderToolkit({ role, main, copy }) {
+    const description = main ? copy.toolkit : `Tools selected for ${(role.fullLabel || role.label).toLowerCase()} work, with the implementation available to inspect.`;
+    const skills = main ? data.main.skills : role.skills;
+    return `<section class="section-wrap pt-0 editorial-section"><div class="container"><div class="toolkit-panel reveal">`
+      + `<div><h2 class="section-heading mb-2">${escapeHtml(copy.toolkitTitle)}</h2><p>${escapeHtml(description)}</p></div>`
+      + `<div class="toolkit-tags" aria-label="Core technical skills" data-portfolio-render="skills">`
+      + skills.map(skill => renderTechTag(skill)).join('')
+      + `</div></div></div></section>`;
+  }
+
+  function renderAccomplishments({ roleKey, assetRoot, copy }) {
+    return `<section id="accomplishments" class="section-wrap one-page-section editorial-section" data-scroll-label="Accomplishments">`
+      + `<div class="container">${renderSectionHeading('Accomplishments', copy.accomplishments)}`
+      + `<div class="row g-4 mb-5 credential-card-grid" data-portfolio-render="credentials">`
+      + renderCredentialCards(roleKey, assetRoot, 3)
+      + `</div><div class="section-subheading reveal">`
+      + `<h3>${escapeHtml(copy.projectTitle)}</h3><p>${escapeHtml(copy.projectIntro)}</p></div>`
+      + `<div class="row g-4 portfolio-case-grid" data-portfolio-render="projects">`
+      + renderProjectCards(roleKey, { assetRoot })
+      + `</div></div></section>`;
+  }
+
+  function renderContact({ main, copy }) {
+    const secondary = main
+      ? { url: data.shared.resumes.MAIN, label: 'Review My Résumé', icon: 'file-alt', style: 'btn-cta-secondary' }
+      : { url: data.shared.github, label: 'Review My GitHub', icon: 'github', style: 'btn-cv interactable' };
+    return `<section id="contact" class="section-wrap one-page-section pt-0 editorial-section" data-scroll-label="Contact">`
+      + `<div class="container"><div class="cta-card reveal">`
+      + `<h2>${copy.contactLines.map(escapeHtml).join('<br>')}</h2><p>${escapeHtml(copy.contact)}</p>`
+      + `<div class="contact-actions">`
+      + `<a href="${data.shared.linkedin}" target="_blank" rel="noopener" class="btn ${main ? 'btn-white' : 'btn-primary interactable'}"><i class="fab fa-linkedin${main ? '' : '-in'} me-2"></i>Discuss a Project</a>`
+      + `<a href="${secondary.url}" target="_blank" rel="noopener" class="btn ${secondary.style}"><i class="${main ? 'fas' : 'fab'} fa-${secondary.icon} me-2"></i>${secondary.label}</a>`
+      + `</div></div></div></section>`;
+  }
+
+  function renderFooter({ main, assetRoot, copy }) {
+    return `<footer><div class="container text-center">`
+      + `<a class="footer-brand" href="${main ? '#home' : assetRoot}" aria-label="${main ? 'Go to home section' : 'Open the main portfolio home page'}">HG.</a>`
+      + `<p class="footer-tagline">${escapeHtml(data.shared.name)} ${main ? '/' : '—'} ${escapeHtml(data.shared.identity)}</p>`
+      + `<div class="footer-social justify-content-center">${renderSocialLinks(assetRoot)}</div>`
+      + `<div class="footer-divider"></div><p class="footer-copy">${escapeHtml(copy.footer)}</p>`
+      + `</div></footer>`;
+  }
+
+  function renderPage(roleKey = 'MAIN', assetRoot = '') {
+    const context = pageContext(roleKey, assetRoot);
+    return [
+      renderHero(context),
+      '<main>',
+      renderIntroduction(context),
+      '<section id="about" class="section-wrap one-page-section editorial-section" data-scroll-label="About">',
+      `<div class="container" data-portfolio-render="about">${renderAbout(roleKey, assetRoot)}</div></section>`,
+      renderServices(context),
+      renderToolkit(context),
+      '<section id="activity" class="section-wrap one-page-section" data-scroll-label="Activity">',
+      `<div class="container activity-main" data-portfolio-render="activity">${renderActivity(assetRoot)}</div></section>`,
+      renderAccomplishments(context),
+      renderContact(context),
+      '</main>',
+      `<div data-portfolio-render="certificate-viewer">${renderCertificateViewer()}</div>`,
+      renderFooter(context)
+    ].join('');
+  }
+
   window.PORTFOLIO_COMPONENTS = Object.freeze({
+    renderPage,
     renderPortrait,
     renderAbout,
     escapeHtml,

@@ -74,10 +74,10 @@ def validate(root=ROOT):
             continue
         parser = PageParser()
         parser.feed(page.read_text(encoding="utf-8"))
-        if "rolePageRoot" in parser.ids:
+        if "portfolioPageRoot" in parser.ids:
             generated_markup = "\n".join(
                 (root / path).read_text(encoding="utf-8")
-                for path in ("js/role-page.js", "js/portfolio-components.js")
+                for path in ("js/portfolio-components.js",)
             )
             parser.ids.extend(re.findall(r'\bid="([^"$]+)"', generated_markup))
         if not parser.title:

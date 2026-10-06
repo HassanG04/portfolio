@@ -2,15 +2,16 @@
   'use strict';
 
   const allRoles = ['AI', 'ML', 'DS', 'DA', 'DE'];
+  const usp = 'I build AI models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.';
 
   const shared = {
     name: 'Hassan Gebril',
     identity: 'AI Engineer',
-    usp: 'I build AI models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.',
+    usp,
     location: 'Alexandria, Egypt',
     about: {
       heading: 'I work on the model and the handoff.',
-      intro: 'I build AI models and the web apps that serve them. I only claim what held-out evaluation and passing tests support.',
+      intro: usp,
       story: 'I grew up in Alexandria and studied at Sidi Gaber Language School. Friends introduced me to programming, and competitive programming gave me a reason to keep practising.',
       practice: 'That work led me to Artificial Intelligence. I now connect model experiments to Flask and Django applications, with the evaluation setup and implementation limits recorded in the repository.',
       education: 'Arab Academy for Science & Technology',
@@ -24,12 +25,31 @@
       { label: 'Fiverr', url: 'https://www.fiverr.com/hassan_g04', iconImage: 'fiverr-icon.png' }
     ],
     resumes: {
+      MAIN: 'https://drive.google.com/file/d/1ej3BehMnJGrt4uYgD0utkQDmA8SbthKs/view?usp=drive_link',
       AI: 'https://drive.google.com/file/d/1OtvoA3evwZXAcb-kifyhtX20TDkF-zF1/view?usp=sharing',
       ML: 'https://drive.google.com/file/d/1QwQu9VR7pfQ150LYLhrRi9tzvpEFT1UZ/view?usp=drive_link',
       DS: 'https://drive.google.com/file/d/1Hv3CbecJJjHXBKa5ne9_1nqPhPpaRrpr/view?usp=drive_link',
       DA: 'https://drive.google.com/file/d/1mbtZ-syqCMoyOxkj6yaczp5xED4QxzLO/view?usp=drive_link',
       DE: 'https://drive.google.com/file/d/1itIBuVUK0YW5qgI82nqqoZzbameo5YXP/view?usp=sharing'
     }
+  };
+
+  const pageCopy = {
+    heroLines: ['Models you can test.', 'Software you can use.'],
+    typewriter: ['AI Engineering', 'Evaluated models', 'Python web applications'],
+    availability: 'Available for freelance & internship opportunities',
+    introductionTitle: 'The implementation is open.',
+    introduction: 'Inspect the code and its limits. These projects connect model reasoning to software someone can use.',
+    servicesTitle: 'Where I can help.',
+    services: 'For startups, research teams, and growing businesses with a dataset, a prediction problem, or a manual workflow.',
+    toolkitTitle: 'What I work with.',
+    toolkit: 'Python is the foundation. The model and the application determine the rest.',
+    accomplishments: 'Open the certificates, then review the implementation behind each project.',
+    projectTitle: 'Implementation notes.',
+    projectIntro: 'The problem, the approach, and the result. Limitations stay in view.',
+    contactLines: ['What do you need', 'the model to do?'],
+    contact: 'Send me the available data and the decision you need to make. We can define a testable first version and an honest scope.',
+    footer: '© 2026 Hassan Gebril. Models and web apps. Claims supported by held-out evaluation and passing tests.'
   };
 
   const professions = {
@@ -191,22 +211,34 @@
     { id: 'depi-soft-skills', roles: ['MAIN', ...allRoles], icon: 'fa-people-group', type: 'Professional training', title: 'DEPI Soft Skills Program', copy: 'Strengthened communication, collaboration, and professional readiness.' }
   ];
 
+  // Locally authored profile information only; no external profile fetching.
+  const people = {
+    adham: { id:'adham', name:'Adham El Behiry', role:'ECPC teammate' },
+    karim: { id:'karim', name:'Karim Ayman', role:'ECPC teammate' },
+    mohammed: { id:'mohammed', name:'Mohammed Ossama', role:'ECPC teammate' },
+    yasin: { id:'yasin', name:'Yasin Moataz', role:'ECPC teammate', linkedin:'https://www.linkedin.com/in/yaseen-moataz-49b39b308/' },
+    fatma: { id:'fatma', name:'Fatma Abaza', role:'ECPC teammate' },
+    rahma: { id:'rahma', name:'Rahma Hussein', role:'ECPC teammate' },
+    mohamedHamed: { id:'mohamedHamed', name:'Eng. Mohamed Hamed', role:'DEPI · Data Engineering Instructor', linkedin:'https://www.linkedin.com/in/mohammed-hamed-b81064195/', description:'A special thanks to Eng. Mohamed Hamed for the outstanding effort, guidance, and support he provided throughout the DEPI journey.' },
+    hadeer: { id:'hadeer', name:'Hadeer Makhlouf', role:'Head of Training · Octopus Outsourcing', image:'hadeer-makhlouf.jpeg', badgeDescription:'7+ years designing people-focused learning experiences.', linkedin:'https://www.linkedin.com/in/hadeermakhlouf/', description:'Learning & Development professional with more than seven years of experience designing people-focused learning experiences.' }
+  };
+
   const activity = {
     ecpc: [
       {
         chapter: 'Chapter one', title: 'My first ECPC', image: 'ECPC1.jpg', imageWidth: 2048, imageHeight: 1207, alt: 'Hassan with Adham El Behiry and Karim Ayman at ECPC',
         description: 'This was my first time participating in a major collegiate programming contest. ECPC 2024 was thrilling and a learning opportunity for all of us. It was a blast to work with Eng. Adham El Behiry and Eng. Karim Ayman.',
-        teammates: [{ name: 'Adham El Behiry' }, { name: 'Karim Ayman' }]
+        teammates: ['adham', 'karim']
       },
       {
         chapter: 'Chapter two', title: '25th in qualification', image: 'ECPC2.jpg', imageWidth: 1600, imageHeight: 1066, alt: 'Hassan with Mohammed Ossama and Yasin Moataz at ECPC qualification',
         description: 'Fueled by the momentum of our first contest, we returned with a sharper strategy and fiercer ambition. Securing 25th place in ECPC qualification was a testament to our preparation. Sharing this milestone with Eng. Mohammed Ossama and Eng. Yasin Moataz made it even more rewarding.',
-        teammates: [{ name: 'Mohammed Ossama' }, { name: 'Yasin Moataz', linkedin: 'https://www.linkedin.com/in/yaseen-moataz-49b39b308/' }]
+        teammates: ['mohammed', 'yasin']
       },
       {
         chapter: 'Chapter three', title: 'A stronger return', image: 'ECPC3.jpeg', imageWidth: 1200, imageHeight: 800, alt: 'Hassan with Fatma Abaza and Rahma Hussein at ECPC',
         description: 'From the previous year, I was ambitious to improve and aim higher. My team put in overwhelming effort and solved multiple problems. Special thanks to Eng. Fatma Abaza and Eng. Rahma Hussein for making this a truly special team.',
-        teammates: [{ name: 'Fatma Abaza' }, { name: 'Rahma Hussein' }]
+        teammates: ['fatma', 'rahma']
       },
       {
         chapter: 'Next contest', title: 'The next chapter', image: 'ecpc_logo.png', alt: 'Egyptian Collegiate Programming Contest logo',
@@ -219,30 +251,25 @@
       title: 'DEPI Data Engineering', website: 'https://depi-tasks-pi.vercel.app/', image: 'depi.png', imageWidth: 225, imageHeight: 224,
       description: 'Follow my progress through the Data Engineering track, where I am building practical skills in Python, APIs, pandas, SQL, web scraping, Flask, and production-minded data engineering.',
       skills: ['Python', 'APIs', 'pandas', 'SQL', 'Flask'], start: '2026-08', end: '2026-12',
-      instructor: { name: 'Eng. Mohamed Hamed', linkedin: 'https://www.linkedin.com/in/mohammed-hamed-b81064195/', message: 'A special thanks to Eng. Mohamed Hamed for the outstanding effort, guidance, and support he provided throughout the DEPI journey.' }
+      instructor: 'mohamedHamed'
     },
     softSkills: {
       image: 'softskills.jpeg', imageWidth: 1280, imageHeight: 720, website: 'https://depi.gov.eg/',
-      instructor: {
-        name: 'Hadeer Makhlouf',
-        role: 'Head of Training · Octopus Outsourcing',
-        image: 'hadeer-makhlouf.jpeg',
-        badgeDescription: '7+ years designing people-focused learning experiences.',
-        linkedin: 'https://www.linkedin.com/in/hadeermakhlouf/',
-        description: 'Learning & Development professional with more than seven years of experience designing people-focused learning experiences.'
-      },
+      instructor: 'hadeer',
       copy: 'During my journey with DEPI, the Soft Skills course became an important part of my professional development. I was lucky to have Professor Hadeer Makhlouf as my instructor. She helped us improve and expand our skill sets.'
     }
   };
 
   const data = {
     shared,
+    pageCopy,
     professions,
     services,
     projects,
     credentials,
     experiences,
     activity,
+    people,
     main: {
       skills: ['Python', 'PyTorch', 'Keras', 'scikit-learn', 'XGBoost', 'OpenCV', 'Transformers', 'SHAP', 'Flask', 'Django', 'HTML / CSS / JS', 'Git']
     },

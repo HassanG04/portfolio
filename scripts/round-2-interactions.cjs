@@ -4,6 +4,10 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const {startServer}=require('./qa-server.cjs');
 const checks=[];
+const output=`.baseline/round-2/${process.env.QA_STAGE||'phase-1'}`;
+fs.mkdirSync(output,{recursive:true});
+const reportName=process.env.QA_CAROUSEL_ONLY?'carousel-checks':process.env.QA_AUDIO_ONLY?'audio-summary':'interaction-checks';
+const saveCheckpoint=()=>fs.writeFileSync(`${output}/${reportName}.json`,JSON.stringify(checks,null,2));
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const routes=(process.env.QA_ROUTES||'main,AI,ML,DS,DA,DE').split(',');
 
@@ -75,6 +79,7 @@ const routes=(process.env.QA_ROUTES||'main,AI,ML,DS,DA,DE').split(',');
     await card.locator('.profile-return').click({force:true});await wait(900);
     checks.push({route,theme,check:'single teammate paging keeps flip state',pass:true});
     console.log(`Interactions passed: ${route}/${theme}`);
+    saveCheckpoint();
     await page.setViewportSize({width:1440,height:1000});
    }
    assert.deepEqual(errors,[]);await context.close();
@@ -156,6 +161,7 @@ const routes=(process.env.QA_ROUTES||'main,AI,ML,DS,DA,DE').split(',');
      await page.locator('#ecpcDeck').focus();await page.keyboard.press('ArrowLeft');await wait(950);assert.equal(await active(),'0');
      checks.push({route,theme,reduced,check:'mouse threshold, live drag, snap, wrap, fling, text selection, flip, arrows and keyboard',pass:true});
      console.log(`Carousel mouse passed: ${route}/${theme}/${reduced?'reduced':'full'}`);
+     saveCheckpoint();
     }
     assert.deepEqual(errors,[]);await context.close();
    }
@@ -184,6 +190,7 @@ const routes=(process.env.QA_ROUTES||'main,AI,ML,DS,DA,DE').split(',');
     assert.ok(Math.abs(await page.evaluate(()=>scrollY)-scroll)>20,'vertical touch scroll remains available');
     checks.push({route,theme,reduced,check:'touch swipe over photo, click suppression and vertical scrolling',pass:true});
     console.log(`Carousel touch passed: ${route}/${theme}/${reduced?'reduced':'full'}`);
+    saveCheckpoint();
     }
     await context.close();
    }
@@ -225,9 +232,9 @@ const routes=(process.env.QA_ROUTES||'main,AI,ML,DS,DA,DE').split(',');
     await cue(`${mode}/certificate-open`,'select2',()=>audioPage.locator('[data-certificate-preview]').first().click({force:true}));
     await cue(`${mode}/certificate-close`,'select',()=>audioPage.locator('#certificateViewerClose').click());
   }
-  fs.writeFileSync('.baseline/round-2/phase-1/audio-checks.json',JSON.stringify(evidence,null,2));
+  fs.writeFileSync(`${output}/audio-checks.json`,JSON.stringify(evidence,null,2));
   checks.push({check:'independent interface cues with ambience muted and volume zero',pass:true});
   await audioContext.close();
- }finally{await browser.close();await server.close();fs.mkdirSync('.baseline/round-2/phase-1',{recursive:true});fs.writeFileSync(`.baseline/round-2/phase-1/${process.env.QA_CAROUSEL_ONLY?'carousel-checks':process.env.QA_AUDIO_ONLY?'audio-summary':'interaction-checks'}.json`,JSON.stringify(checks,null,2));}
+ }finally{saveCheckpoint();await browser.close();await server.close();}
  console.log(JSON.stringify({pass:true,checks:checks.length}));
 })().catch(e=>{console.error(e);process.exitCode=1});

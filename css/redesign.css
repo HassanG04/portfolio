@@ -1,7 +1,0 @@
-/* U2: contain DEPI's return control without altering the other flip cards. */
-.depi-visual-back > .profile-return {
-  inset:12px 12px auto auto;
-  width:36px;
-  height:36px;
-  min-height:36px;
-}

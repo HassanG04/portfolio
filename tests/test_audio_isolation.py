@@ -70,7 +70,7 @@ class AudioIsolationTests(unittest.TestCase):
                 self.assertIn('aria-label="Mute background ambience"', html)
 
     def test_page_loader_is_gone_but_boot_cue_remains(self):
-        for path in [*PAGES, ROOT / "js/role-page.js", ROOT / "css/style.css"]:
+        for path in [*PAGES, ROOT / "js/role-page.js", *(ROOT / "css").glob("*.css")]:
             with self.subTest(path=path.relative_to(ROOT)):
                 self.assertNotRegex(
                     path.read_text(encoding="utf-8"),

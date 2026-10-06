@@ -75,19 +75,14 @@ test('shared renderer resolves local profile icons from profession routes', () =
 });
 
 test('main page inserts freelance links immediately after LinkedIn in the hero only', () => {
-  const html = readFileSync(join(__dirname, '../index.html'), 'utf8');
-  const slots = new Map();
+  const root = { innerHTML:'' };
   const mainContext = { window: context.window, document: {
-    querySelector(selector) {
-      const slot = { innerHTML: '' };
-      slots.set(selector, slot);
-      return slot;
-    }
+    getElementById: () => root
   } };
   runInNewContext(readFileSync(join(__dirname, '../js/main-page.js'), 'utf8'), mainContext);
-  assert.match(html, /<a href="https:\/\/www\.linkedin\.com[^>]+>[\s\S]*?<\/a>\s*<span class="freelance-links-slot" data-portfolio-render="hero-freelance-links"/);
-  assert.ok(slots.get('[data-portfolio-render="hero-freelance-links"]').innerHTML.includes('khamsat.com/user/hassan_g04'));
-  assert.doesNotMatch(html, /data-portfolio-render="freelance-links"/);
+  assert.match(root.innerHTML, /<a href="https:\/\/www\.linkedin\.com[^>]+>[\s\S]*?<\/a>\s*<span class="freelance-links-slot" data-portfolio-render="hero-freelance-links"/);
+  assert.ok(root.innerHTML.includes('khamsat.com/user/hassan_g04'));
+  assert.doesNotMatch(root.innerHTML, /data-portfolio-render="freelance-links"/);
 });
 
 for (const role of ['AI', 'ML', 'DS', 'DA', 'DE']) {
@@ -104,7 +99,7 @@ for (const role of ['AI', 'ML', 'DS', 'DA', 'DE']) {
     for (const url of context.window.PORTFOLIO_DATA.shared.freelanceProfiles.map(profile => profile.url)) {
       assert.equal(root.innerHTML.split(`href="${url}"`).length - 1, 1);
     }
-    assert.match(root.innerHTML, /aria-label="LinkedIn"><i[^>]+><\/i><\/a><a class="social-btn freelance-profile-link/);
+    assert.match(root.innerHTML, /aria-label="LinkedIn"><i[^>]+><\/i><\/a><span class="freelance-links-slot"[^>]+><a class="social-btn freelance-profile-link/);
     assert.doesNotMatch(root.innerHTML, /Discuss a Project<\/a><a class="social-btn freelance-profile-link/);
     assert.equal(root.innerHTML.split('src="../images/khamsat-icon.png"').length - 1, 1);
     assert.equal(root.innerHTML.split('src="../images/fiverr-icon.png"').length - 1, 1);
@@ -115,6 +110,6 @@ test('general portfolio uses its new title and resume at both entry points', () 
   const html = readFileSync(join(__dirname, '../index.html'), 'utf8');
   assert.ok(html.includes('<title>Hassan Gebril | AI Engineer | Models to software</title>'));
   const resume = 'https://drive.google.com/file/d/1ej3BehMnJGrt4uYgD0utkQDmA8SbthKs/view?usp=drive_link';
-  assert.equal(html.split(`href="${resume}"`).length - 1, 2);
+  assert.equal(context.window.PORTFOLIO_COMPONENTS.renderPage().split(`href="${resume}"`).length - 1, 2);
   assert.ok(!html.includes('1OtvoA3evwZXAcb-kifyhtX20TDkF-zF1'));
 });

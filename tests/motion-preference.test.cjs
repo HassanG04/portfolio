@@ -54,7 +54,7 @@ test('every portfolio loads the shared motion initializer before styles', () => 
   for (const page of ['index.html', ...['AI', 'ML', 'DS', 'DA', 'DE'].map(role => `${role}/index.html`)]) {
     const html = readFileSync(join(__dirname, '..', page), 'utf8');
     assert.ok(html.includes('js/motion-preference.js'));
-    assert.ok(html.indexOf('js/motion-preference.js') < html.indexOf('css/style.css'));
+    assert.ok(html.indexOf('js/motion-preference.js') < html.indexOf('css/tokens-base.css'));
     assert.doesNotMatch(html, /motionPreferenceToggle/);
   }
 });
