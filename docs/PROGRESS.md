@@ -14,7 +14,7 @@ Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit
 | U-A Motion regression | done | Fix motion-preference.js two-tier system (full/calm), footer toggle, tests pass. |
 | U-B Certificates fill their frames | done | Image dimensions added to portfolio-data.js, component emits --cert-ratio, pages.css uses aspect-ratio and 4% padding. |
 | U-C Features | done | Added Discord buttons, Codeforces ID card and corner-grab flip physics. |
-| U-D Stage A: plan + style tile | todo | Design plan, font selection, shape kit, style-tile.html. Stop for approval. |
+| U-D Stage A: plan + style tile | done | Design plan, font selection, shape kit, style-tile.html. Stopped for approval. |
 | U-E Stage B: apply | todo | Hero, About, Services, Projects, Credentials, Activity, Contact redesign. |
 | U-F Stage C: motion | todo | Hero load sequence, timeline draw, image unmask, single rAF scheduler. |
 | U-G Hygiene and report | todo | Consolidate QA scripts, .gitignore, ARCHITECTURE.md, final report. |
