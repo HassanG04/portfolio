@@ -1340,7 +1340,7 @@ document.addEventListener('DOMContentLoaded', function () {
         suppressFlipClickUntil = performance.now() + 450;
         const distance = event ? event.clientX - gesture.startX : gesture.distance;
         const momentum = reducedCarouselMotion.matches || performance.now() - gesture.lastAt > 100 ? 0 : Math.max(-2.5, Math.min(2.5, gesture.velocity)) * 240;
-        const step = cancelled ? 0 : Math.max(1 - slides.length, Math.min(slides.length - 1, -Math.round((distance + momentum) / gesture.width)));
+        const step = cancelled ? 0 : Math.max(1 - slides.length, Math.min(slides.length - 1, -Math.round((distance + momentum) / Math.min(150, gesture.width * 0.4))));
         if (!step || !moveEcpcWithSound(step)) positionEcpcTrack(reducedCarouselMotion.matches);
         else if (reducedCarouselMotion.matches) positionEcpcTrack(true);
       }

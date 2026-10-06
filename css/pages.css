@@ -324,7 +324,7 @@ body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90de
   font-size: 9px;
 }
 
-@container (max-width: 600px) {
+@media (max-width: 767.98px) {
   .profile-deck-controls { display: block; }
 }
 
