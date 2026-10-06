@@ -19,6 +19,8 @@
     },
     github: 'https://github.com/HassanG04',
     linkedin: 'https://www.linkedin.com/in/hassan-gebrill-98a08a299/',
+    discordHandle: 'GRZ_Hassan',
+    discordUserId: '753929399291609130',
     freelanceProfiles: [
       { label: 'Upwork', url: 'https://www.upwork.com/freelancers/~01a4a740c603955a24/', iconClass: 'fa-brands fa-upwork' },
       { label: 'Khamsat', url: 'https://khamsat.com/user/hassan_g04', iconImage: 'khamsat-icon.png' },

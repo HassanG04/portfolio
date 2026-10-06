@@ -240,7 +240,8 @@
   }
 
   function renderSocialLinks(assetRoot = '', freelance = false) {
-    return `<a href="${data.shared.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin interactable" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>${freelance ? `<span class="freelance-links-slot" data-portfolio-render="hero-freelance-links">${renderFreelanceLinks({ variant:'social', assetRoot })}</span>` : ''}<a href="${data.shared.github}" target="_blank" rel="noopener" class="social-btn github interactable" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>`;
+    const handle = data.shared.discordHandle;
+    return `<a href="${data.shared.linkedin}" target="_blank" rel="noopener" class="social-btn linkedin interactable" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>${freelance ? `<span class="freelance-links-slot" data-portfolio-render="hero-freelance-links">${renderFreelanceLinks({ variant:'social', assetRoot })}</span>` : ''}<a href="${data.shared.github}" target="_blank" rel="noopener" class="social-btn github interactable" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a><button type="button" class="social-btn discord interactable" aria-label="Opens Discord and copies ${escapeHtml(handle)}" title="Opens Discord and copies ${escapeHtml(handle)}"><i class="fab fa-discord" aria-hidden="true"></i> Add me on Discord</button>`;
   }
 
   function renderSectionHeading(title, copy, extra = '', paragraphClass = '') {
@@ -295,6 +296,7 @@
       + `<div class="contact-actions">`
       + `<a href="${data.shared.linkedin}" target="_blank" rel="noopener" class="btn ${main ? 'btn-white' : 'btn-primary interactable'}"><i class="fab fa-linkedin${main ? '' : '-in'} me-2"></i>Discuss a Project</a>`
       + `<a href="${secondary.url}" target="_blank" rel="noopener" class="btn ${secondary.style}"><i class="${main ? 'fas' : 'fab'} fa-${secondary.icon} me-2"></i>${secondary.label}</a>`
+      + `<button type="button" class="btn discord interactable" aria-label="Opens Discord and copies ${escapeHtml(data.shared.discordHandle)}" title="Opens Discord and copies ${escapeHtml(data.shared.discordHandle)}"><i class="fab fa-discord me-2" aria-hidden="true"></i>Add me on Discord</button>`
       + `</div></div></div></section>`;
   }
 

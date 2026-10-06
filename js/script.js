@@ -1459,4 +1459,63 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
   });
 
+  /* ============================================================
+     DISCORD BUTTON LOGIC
+     ============================================================ */
+  function showDiscordToast(handle) {
+    let toast = document.getElementById('discordToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'discordToast';
+      toast.setAttribute('role', 'alert');
+      toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--editorial-surface-raised);color:var(--text-primary);padding:12px 24px;border-radius:30px;border:1px solid var(--premium-border);box-shadow:var(--premium-glow);z-index:9999;opacity:0;transition:opacity 0.3s ease;pointer-events:none;font-weight:600;font-size:0.9rem;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = `Copied ${handle}`;
+    toast.style.opacity = '1';
+    setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+  }
+
+  document.querySelectorAll('.discord').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const handle = "GRZ_Hassan";
+      const userId = "753929399291609130";
+
+      function fallbackCopy(text) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed"; ta.style.top = "0"; ta.style.left = "0";
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        try { document.execCommand('copy'); } catch (err) {}
+        document.body.removeChild(ta);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(handle).catch(() => fallbackCopy(handle));
+      } else {
+        fallbackCopy(handle);
+      }
+      showDiscordToast(handle);
+
+      const appLink = userId ? `discord://-/users/${userId}` : `discord://-/channels/@me`;
+      const webLink = userId ? `https://discord.com/users/${userId}` : `https://discord.com/channels/@me`;
+      
+      const before = Date.now();
+      let hasFocus = true;
+      const blurHandler = () => { hasFocus = false; };
+      window.addEventListener('blur', blurHandler);
+      
+      window.location.href = appLink;
+      
+      setTimeout(() => {
+        window.removeEventListener('blur', blurHandler);
+        if (hasFocus && Date.now() - before < 1500) {
+          window.open(webLink, '_blank', 'noopener');
+        }
+      }, 1200);
+    });
+  });
+
 });
