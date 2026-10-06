@@ -1518,4 +1518,155 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  /* ============================================================
+     CORNER-GRAB FLIP
+     ============================================================ */
+  document.querySelectorAll('.flip-card[data-flip-grab]').forEach(card => {
+    const front = card.querySelector('.flip-card-front');
+    const back = card.querySelector('.flip-card-back');
+    const zonesHTML = `<div class="flip-corner tl" data-grab="tl" aria-hidden="true"></div><div class="flip-corner tr" data-grab="tr" aria-hidden="true"></div><div class="flip-corner bl" data-grab="bl" aria-hidden="true"></div><div class="flip-corner br" data-grab="br" aria-hidden="true"></div>`;
+    if (front) front.insertAdjacentHTML('beforeend', zonesHTML);
+    if (back) back.insertAdjacentHTML('beforeend', zonesHTML);
+
+    let startX = 0, startY = 0;
+    let isDragging = false;
+    let isGrab = false;
+    let wasGrab = false;
+    let currentCorner = null;
+    let lockAxis = null;
+    let dirX = 1;
+    let dirY = 1;
+
+    card.addEventListener('touchstart', (e) => {
+      const c = e.target.closest('.flip-corner');
+      if (c) c.classList.add('is-touched');
+    }, {passive: true});
+    card.addEventListener('touchend', (e) => {
+      card.querySelectorAll('.flip-corner.is-touched').forEach(c => c.classList.remove('is-touched'));
+    }, {passive: true});
+
+    card.addEventListener('pointerdown', (e) => {
+      const corner = e.target.closest('.flip-corner');
+      if (corner) {
+        currentCorner = corner;
+        isDragging = true;
+        isGrab = false;
+        wasGrab = false;
+        lockAxis = null;
+        startX = e.clientX;
+        startY = e.clientY;
+        
+        const isFlipped = card.classList.contains('is-flipped');
+        dirX = parseFloat(card.style.getPropertyValue('--flip-dir-x')) || 0;
+        dirY = parseFloat(card.style.getPropertyValue('--flip-dir-y')) || (isFlipped ? 1 : 0);
+        if (dirY === 0 && !isFlipped) dirY = 1;
+        
+        card.setPointerCapture(e.pointerId);
+      }
+    });
+
+    card.addEventListener('pointermove', (e) => {
+      if (!isDragging || !currentCorner) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      const dist = Math.hypot(dx, dy);
+
+      if (!isGrab && dist > 5) {
+        isGrab = true;
+        wasGrab = true;
+        card.classList.add('is-grabbed');
+      }
+
+      if (isGrab) {
+        if (!lockAxis && dist > 12) {
+          lockAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+          card.setAttribute('data-flip-axis', lockAxis);
+          if (lockAxis === 'x') {
+            dirY = -(dx / Math.abs(dx));
+            card.style.setProperty('--flip-dir-y', dirY);
+            card.style.setProperty('--flip-dir-x', 0);
+          } else {
+            dirX = dy / Math.abs(dy);
+            card.style.setProperty('--flip-dir-x', dirX);
+            card.style.setProperty('--flip-dir-y', 0);
+          }
+        }
+
+        if (document.documentElement.dataset.motion !== 'calm' && lockAxis) {
+          const rect = card.getBoundingClientRect();
+          const baseFlip = card.classList.contains('is-flipped') ? 180 : 0;
+          
+          if (lockAxis === 'x') {
+            const delta = -(dx / rect.width) * 180;
+            let currentAngle = baseFlip * dirY + delta;
+            if (dirY === 1) {
+              currentAngle = Math.max(0, Math.min(180, currentAngle));
+            } else {
+              currentAngle = Math.max(-180, Math.min(0, currentAngle));
+            }
+            card.style.setProperty('--flip-y', `${currentAngle}deg`);
+            card.style.setProperty('--flip-x', `0deg`);
+          } else if (lockAxis === 'y') {
+            const delta = (dy / rect.height) * 180;
+            let currentAngle = baseFlip * dirX + delta;
+            if (dirX === 1) {
+              currentAngle = Math.max(0, Math.min(180, currentAngle));
+            } else {
+              currentAngle = Math.max(-180, Math.min(0, currentAngle));
+            }
+            card.style.setProperty('--flip-x', `${currentAngle}deg`);
+            card.style.setProperty('--flip-y', `0deg`);
+          }
+        }
+      }
+    });
+
+    card.addEventListener('pointerup', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      card.releasePointerCapture(e.pointerId);
+
+      if (isGrab) {
+        card.classList.remove('is-grabbed');
+        let shouldFlip = card.classList.contains('is-flipped');
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        const rect = card.getBoundingClientRect();
+        
+        if (lockAxis) {
+           let distProgress = lockAxis === 'x' ? Math.abs(dx) / rect.width : Math.abs(dy) / rect.height;
+           if (distProgress > 0.5 || Math.hypot(e.movementX || 0, e.movementY || 0) > 10) {
+             shouldFlip = !shouldFlip;
+           }
+        }
+
+        card.style.removeProperty('--flip-x');
+        card.style.removeProperty('--flip-y');
+        
+        if (shouldFlip !== card.classList.contains('is-flipped')) {
+           setActivityFlipState(card, shouldFlip);
+           if (typeof playActivitySound === 'function') playActivitySound(lockAxis === 'y' ? (dy > 0 ? 'right' : 'left') : (dx > 0 ? 'right' : 'left'));
+        } else {
+           markActivityFlipAnimating(card);
+           if (!shouldFlip) {
+             card.removeAttribute('data-flip-axis');
+           }
+        }
+      } else {
+        const shouldFlip = !card.classList.contains('is-flipped');
+        setActivityFlipState(card, shouldFlip);
+        if (typeof playActivitySound === 'function') playActivitySound(shouldFlip ? 'right' : 'left');
+      }
+      
+      currentCorner = null;
+    });
+
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.flip-corner') && wasGrab) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+  });
+
 });

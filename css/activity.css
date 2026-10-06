@@ -167,7 +167,34 @@
   will-change: transform;
 }
 
-.flip-card.is-flipped > .flip-card-inner { transform: translateZ(0px) rotateY(180deg); }
+.flip-card > .flip-card-inner {
+  transform: translateZ(0px) rotateX(var(--flip-x, 0deg)) rotateY(var(--flip-y, 0deg));
+}
+.flip-card.is-flipped { 
+  --flip-y: calc(180deg * var(--flip-dir-y, 1)); 
+  --flip-x: calc(180deg * var(--flip-dir-x, 0));
+}
+.flip-card.is-grabbed > .flip-card-inner {
+  transition: none !important;
+  box-shadow: var(--shadow-card);
+}
+
+.flip-corner { position: absolute; width: 48px; height: 48px; z-index: 10; cursor: grab; touch-action: none; }
+.flip-corner:active { cursor: grabbing; }
+.flip-corner.tl { top: 0; left: 0; }
+.flip-corner.tr { top: 0; right: 0; }
+.flip-corner.bl { bottom: 0; left: 0; }
+.flip-corner.br { bottom: 0; right: 0; }
+.flip-corner::after { content: ""; position: absolute; width: 28px; height: 28px; background: var(--accent-purple); transition: clip-path 0.16s ease; }
+html[data-motion="calm"] .flip-corner::after { transition: none; }
+.flip-corner.tl::after { top: 0; left: 0; clip-path: polygon(0 0, 0 0, 0 0); }
+.flip-corner.tl:is(:hover, :focus-visible, .is-touched)::after { clip-path: polygon(0 0, 100% 0, 0 100%); }
+.flip-corner.tr::after { top: 0; right: 0; clip-path: polygon(100% 0, 100% 0, 100% 0); }
+.flip-corner.tr:is(:hover, :focus-visible, .is-touched)::after { clip-path: polygon(100% 0, 100% 100%, 0 0); }
+.flip-corner.bl::after { bottom: 0; left: 0; clip-path: polygon(0 100%, 0 100%, 0 100%); }
+.flip-corner.bl:is(:hover, :focus-visible, .is-touched)::after { clip-path: polygon(0 100%, 100% 100%, 0 0); }
+.flip-corner.br::after { bottom: 0; right: 0; clip-path: polygon(100% 100%, 100% 100%, 100% 100%); }
+.flip-corner.br:is(:hover, :focus-visible, .is-touched)::after { clip-path: polygon(100% 100%, 0 100%, 100% 0); }
 
 .flip-card-face {
   position: absolute;
@@ -186,6 +213,7 @@
   outline: none;
   transform: rotateY(180deg);
 }
+.flip-card[data-flip-axis="x"] .flip-card-back { transform: rotateX(180deg); }
 
 .flip-card-back:focus-visible { box-shadow: inset 0 0 0 3px var(--accent-purple-light); }
 
