@@ -4,18 +4,13 @@ Work branch: `design-overhaul-2`. Never change `main` or publish.
 Existing Round 2 baseline: `.baseline/round-2/baseline/`; do not regenerate.
 Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit.
 
-## Prior work (Codex, verified at commit 67051e6)
-
-| Old Unit | Status | Evidence |
-| --- | --- | --- |
-| U1 Reconcile existing fixes | done | 48 mouse/touch groups pass across six routes, both themes/motion preferences; 16 audio cases; unchanged 1,352 tokens/144 protected flip states. |
-| U2 Focused visual fixes | done | Removed hero caption/line and all leading-dash labels, removed DEPI eyebrow dash, scoped 36px/inset return control. 108 measurements, 39 interaction checks. |
-| U4 Shared structure / CSS cleanup | done | One shared page renderer/people registry; four owned CSS files. Audit 0 duplicate pairs/0 cross-file/5 documented priorities/0 unreferenced classes. |
-
-## New units (from BRIEF.md)
+## Units
 
 | Unit | Status | Evidence / next action |
 | --- | --- | --- |
+| U1 Reconcile existing fixes | done | commit 67051e6 |
+| U2 Focused visual fixes | done | commit 67051e6 |
+| U4 Shared structure / CSS cleanup | done | commit 67051e6 |
 | U-A Motion regression | todo | Fix motion-preference.js two-tier system (full/calm), footer toggle, tests. |
 | U-B Certificates fill their frames | todo | Aspect-ratio from data, height:auto, 92%+ fill, third-card span fix. |
 | U-C Features | todo | Discord button, Codeforces ID card, corner-grab flip. |
