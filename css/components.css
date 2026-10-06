@@ -195,6 +195,12 @@
   box-shadow: rgba(200, 200, 200, 0.25) 0px 0px 18px;
 }
 
+.social-btn.discord:hover {
+  border-color: #5865F2;
+  color: #5865F2;
+  box-shadow: rgba(88, 101, 242, 0.4) 0px 0px 18px;
+}
+
 .social-btn i { line-height: 1; }
 
 html[data-theme="light"] .navbar { background: rgba(248, 246, 252, 0.8); }
@@ -503,6 +509,20 @@ html[data-theme="light"] .navbar.scrolled { background: rgba(248, 246, 252, 0.96
   color: rgb(255, 255, 255);
   box-shadow: rgba(109, 40, 217, 0.3) 0px 16px 34px;
   background: rgb(139, 92, 246);
+}
+
+.btn.discord {
+  background: rgba(88, 101, 242, 0.1);
+  border: 1px solid rgba(88, 101, 242, 0.3);
+  color: var(--text-primary);
+}
+
+.btn.discord:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: #5865F2;
+  border-color: #5865F2;
+  color: white;
+  box-shadow: rgba(88, 101, 242, 0.3) 0px 16px 34px;
 }
 
 .social-btn {

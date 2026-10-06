@@ -1343,8 +1343,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const momentum = reducedCarouselMotion.matches || performance.now() - gesture.lastAt > 100 ? 0 : Math.max(-2.5, Math.min(2.5, gesture.velocity)) * 240;
         let step = cancelled ? 0 : Math.max(1 - slides.length, Math.min(slides.length - 1, -Math.round((distance + momentum) / Math.min(150, gesture.width * 0.4))));
         step = Math.max(-1, Math.min(1, step)); // Limit drag to next/prev photo only
-        if (!step || !moveEcpcWithSound(step)) positionEcpcTrack(reducedCarouselMotion.matches);
-        else if (reducedCarouselMotion.matches) positionEcpcTrack(true);
+        
+        requestAnimationFrame(() => {
+          if (!step || !moveEcpcWithSound(step)) positionEcpcTrack(reducedCarouselMotion.matches);
+          else if (reducedCarouselMotion.matches) positionEcpcTrack(true);
+        });
       }
 
       stage.addEventListener('pointerdown', event => {

@@ -1185,10 +1185,6 @@ html[data-theme="light"] .depi-website-link { color: rgb(255, 255, 255); }
   box-shadow: var(--premium-glow-hover);
 }
 
-.depi-visual-flip > .flip-card-inner { transform: rotateY(0deg); }
-
-.depi-visual-flip.is-flipped > .flip-card-inner { transform: rotateY(180deg); }
-
 .depi-visual-flip:not(.is-flip-animating) > .flip-card-inner,
 .depi-visual-flip:not(.is-flip-animating) .flip-card-face { will-change: auto; }
 
@@ -1732,6 +1728,16 @@ html[data-theme="light"] .depi-visual-back { color: rgb(33, 19, 53); background:
   cursor: default;
   isolation: isolate;
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s, box-shadow 0.3s;
+}
+
+.profile-id-card.codeforces-card {
+  border-color: transparent;
+  background-image: linear-gradient(var(--editorial-surface-raised), var(--editorial-surface-raised)), linear-gradient(135deg, #3b82f6, #ef4444, #eab308);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+.profile-id-card.codeforces-card:is(:hover, :focus-visible) {
+  box-shadow: 0 4px 16px rgba(59,130,246,0.15), 0 0 12px rgba(239,68,68,0.15), 0 0 24px rgba(234,179,8,0.15);
 }
 
 .profile-id-card::before {
