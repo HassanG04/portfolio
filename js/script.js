@@ -57,6 +57,27 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   /* ============================================================
+     MOTION TOGGLE — footer button switches full / calm
+     ============================================================ */
+  const motionBtn = document.getElementById('motionToggle');
+  if (motionBtn && window.__portfolioMotion) {
+    function syncMotionBtn() {
+      const tier = window.__portfolioMotion.tier;
+      motionBtn.textContent = 'Motion: ' + tier;
+      motionBtn.setAttribute('aria-pressed', String(tier === 'calm'));
+    }
+    syncMotionBtn();
+    motionBtn.addEventListener('click', () => {
+      window.__portfolioMotion.toggle();
+      syncMotionBtn();
+    });
+    /* Follow external changes (OS preference shift) */
+    new MutationObserver(syncMotionBtn).observe(
+      document.documentElement, { attributes: true, attributeFilter: ['data-motion'] }
+    );
+  }
+
+  /* ============================================================
      NAVBAR — scroll behaviour
      ============================================================ */
   const navbar = document.querySelector('.navbar');
@@ -211,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
      PARTICLE CANVAS
      ============================================================ */
   const canvas = document.getElementById('particle-canvas');
-  if (canvas) {
+  if (canvas && document.documentElement.dataset.motion !== 'calm') {
     const ctx = canvas.getContext('2d');
     let W = canvas.width = window.innerWidth;
     let H = canvas.height = window.innerHeight;
@@ -1429,6 +1450,7 @@ document.addEventListener('DOMContentLoaded', function () {
      ============================================================ */
   document.querySelectorAll('.btn-primary,.btn-cv').forEach(btn => {
     btn.addEventListener('mousemove', e => {
+      if (document.documentElement.dataset.motion === 'calm') return;
       const r = btn.getBoundingClientRect();
       const x = e.clientX - r.left - r.width / 2;
       const y = e.clientY - r.top - r.height / 2;

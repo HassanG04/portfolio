@@ -90,7 +90,7 @@
   background: var(--bg-secondary);
 }
 
-html[data-motion="reduced"] #particle-canvas { display: none; }
+html[data-motion="calm"] #particle-canvas { display: none; }
 
 .experience-card:hover {
   transform: translateX(5px);
@@ -531,8 +531,7 @@ body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90de
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-html[data-motion="reduced"] .hero-img-ring,
-html[data-motion="reduced"] .hero-img-inner img { animation: auto ease 0s 1 normal none running none; }
+
 
 @media (prefers-reduced-motion: reduce) {
   .hero-img-ring,

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+      <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#171026"/><stop offset="1" stop-color="#0c111c"/></linearGradient></defs>
+      <rect width="1400" height="900" rx="0" fill="url(#bg)"/>
+      <rect x="64" y="72" width="46" height="5" rx="2" fill="#b89afa"/>
+      <g font-family="Segoe UI,Arial,sans-serif" fill="#faf8ff">
+        <text x="128" y="83" font-size="21" letter-spacing="3" fill="#b89afa">HASSAN GEBRIL / SELECTED WORK</text>
+        <text x="64" y="195" font-size="76" font-weight="700">Hotel Cancellation</text>
+        <text x="68" y="249" font-size="32" fill="#c4bdcf">Validated prediction API</text>
+        <text x="68" y="312" font-size="24" fill="#b89afa">Python / FastAPI / XGBoost / PostgreSQL</text>
+        <rect x="64" y="396" width="394" height="224" rx="24" fill="#211c30" stroke="#b89afa" stroke-opacity=".4"/>
+          <text x="94" y="443" font-size="20" fill="#b89afa">01</text>
+          <text x="94" y="505" font-size="36" font-weight="600">Validate</text>
+          <text x="94" y="557" font-size="23" fill="#c4bdcf">Booking features</text>
+          <path d="M471 506h18m-7-7 7 7-7 7" stroke="#b89afa" stroke-width="3" fill="none"/><rect x="502" y="396" width="394" height="224" rx="24" fill="#211c30" stroke="#b89afa" stroke-opacity=".4"/>
+          <text x="532" y="443" font-size="20" fill="#b89afa">02</text>
+          <text x="532" y="505" font-size="36" font-weight="600">Predict</text>
+          <text x="532" y="557" font-size="23" fill="#c4bdcf">Native XGBoost model</text>
+          <path d="M909 506h18m-7-7 7 7-7 7" stroke="#b89afa" stroke-width="3" fill="none"/><rect x="940" y="396" width="394" height="224" rx="24" fill="#211c30" stroke="#b89afa" stroke-opacity=".4"/>
+          <text x="970" y="443" font-size="20" fill="#b89afa">03</text>
+          <text x="970" y="505" font-size="36" font-weight="600">Trace</text>
+          <text x="970" y="557" font-size="23" fill="#c4bdcf">PostgreSQL lineage</text>
+          
+        <circle cx="76" cy="680" r="4" fill="#b89afa"/><text x="94" y="688" font-size="24" fill="#d1cbdc">Schema validation</text><circle cx="76" cy="722" r="4" fill="#b89afa"/><text x="94" y="730" font-size="24" fill="#d1cbdc">Versioned model artifacts</text><circle cx="76" cy="764" r="4" fill="#b89afa"/><text x="94" y="772" font-size="24" fill="#d1cbdc">Docker + integration tests</text>
+        <path d="M64 804h1272" stroke="#393141"/>
+        <text x="64" y="848" font-size="20" fill="#ada4ba">Portfolio implementation · system architecture</text>
+      </g>
+    </svg>

@@ -1,17 +1,20 @@
 /* Portrait feedback consumes the shared, frame-throttled pointer stream.
-   Idle, tilt and image parallax each own a separate element. */
+   Idle, tilt and image parallax each own a separate element.
+   Respects data-motion="calm" on the document element (no tilt in calm). */
 (function () {
   'use strict';
   document.addEventListener('DOMContentLoaded', () => {
     const frame = document.querySelector('.hero-pointer-frame');
     if (!frame) return;
     const parallax = frame.querySelector('.hero-img-parallax');
-    const reduced = matchMedia('(prefers-reduced-motion:reduce)');
+    const root = document.documentElement;
     const fine = matchMedia('(hover:hover) and (pointer:fine)');
     const value = { x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0 };
     let visible = true;
     let raf = 0;
     let lastTime = 0;
+
+    function isCalm() { return root.dataset.motion === 'calm'; }
 
     function stop() {
       cancelAnimationFrame(raf);
@@ -25,7 +28,7 @@
 
     function draw(time) {
       raf = 0;
-      if (!visible || document.hidden || reduced.matches) return stop();
+      if (!visible || document.hidden || isCalm()) return stop();
       const step = Math.min(2, (time - (lastTime || time - 16.67)) / 16.67);
       lastTime = time;
       for (const axis of ['x', 'y']) {
@@ -44,7 +47,7 @@
 
     function schedule() { if (!raf) raf = requestAnimationFrame(draw); }
     document.addEventListener('portfolio:pointer', ({ detail }) => {
-      if (reduced.matches || !fine.matches || !visible || !frame.contains(detail.target)) return;
+      if (isCalm() || !fine.matches || !visible || !frame.contains(detail.target)) return;
       const box = frame.parentElement.getBoundingClientRect();
       value.tx = Math.max(-1, Math.min(1, (detail.clientX - box.left) / box.width * 2 - 1));
       value.ty = Math.max(-1, Math.min(1, (detail.clientY - box.top) / box.height * 2 - 1));
@@ -60,7 +63,7 @@
       schedule();
     });
     frame.addEventListener('pointerup', event => {
-      if (event.pointerType === 'touch' && !reduced.matches) frame.classList.add('is-tap-pulsing');
+      if (event.pointerType === 'touch' && !isCalm()) frame.classList.add('is-tap-pulsing');
     });
     frame.addEventListener('animationend', event => {
       if (event.animationName === 'portrait-tap') frame.classList.remove('is-tap-pulsing');
@@ -70,6 +73,7 @@
       if (!visible) stop();
     }).observe(frame);
     document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); });
-    reduced.addEventListener('change', stop);
+    /* Watch for motion tier changes (from the toggle or OS) */
+    new MutationObserver(() => { if (isCalm()) stop(); }).observe(root, { attributes: true, attributeFilter: ['data-motion'] });
   });
 }());

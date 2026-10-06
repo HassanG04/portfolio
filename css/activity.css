@@ -1912,7 +1912,7 @@ html[data-theme="light"] .is-linked > .profile-id-action { color: rgb(7, 92, 168
   .is-flipped:not(.is-flip-animating) .profile-id-card::before { animation: auto ease 0s 1 normal none running none; }
 }
 
-html[data-motion="reduced"] .activity-subsection-number { animation: auto ease 0s 1 normal none running none; }
+/* Calm motion: activity-subsection-number handled in tokens-base.css */
 
 .depi-visual-back > .profile-return {
   inset: 12px 12px auto auto;

@@ -1015,11 +1015,7 @@ html[data-theme="light"] .tech-tag--amber { --tech-rgb: 180,83,9; }
 
 html[data-theme="light"] .tech-tag--purple { --tech-rgb: 109,40,217; }
 
-html[data-motion="reduced"] .premium-card,
-html[data-motion="reduced"] .premium-card::after,
-html[data-motion="reduced"] .hero-actions .btn,
-html[data-motion="reduced"] .hero-social .social-btn,
-html[data-motion="reduced"] .hero-socials .social-btn { animation: auto ease 0s 1 normal none running none; }
+/* Calm motion: looping card/button animations handled in tokens-base.css */
 
 .hero-actions .btn { min-height: 48px; font-size: 0.95rem; }
 

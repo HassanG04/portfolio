@@ -92,15 +92,49 @@ footer {
   background: var(--bg-secondary);
 }
 
-html[data-motion="reduced"],
-html[data-motion="reduced"] *,
-html[data-motion="reduced"] ::before,
-html[data-motion="reduced"] ::after {
+/* Calm motion tier: stop looping/idle animations, keep short hover/focus transitions */
+html[data-motion="calm"] {
   scroll-behavior: auto;
-  animation-duration: 0.01ms;
-  animation-iteration-count: 1;
+}
+html[data-motion="calm"] .hero-img-ring,
+html[data-motion="calm"] .hero-img-inner img,
+html[data-motion="calm"] .premium-card,
+html[data-motion="calm"] .premium-card::after,
+html[data-motion="calm"] .hero-actions .btn,
+html[data-motion="calm"] .hero-social .social-btn,
+html[data-motion="calm"] .hero-socials .social-btn,
+html[data-motion="calm"] .activity-subsection-number,
+html[data-motion="calm"] .ecpc-future-card,
+html[data-motion="calm"] .ecpc-future-aura,
+html[data-motion="calm"] .ecpc-future-logo,
+html[data-motion="calm"] .depi-progress-icon img,
+html[data-motion="calm"] .profile-id-card,
+html[data-motion="calm"] .profile-id-avatar {
+  animation: none;
+}
+/* Snap flips in calm (no transition on transform) */
+html[data-motion="calm"] .flip-card-inner {
   transition-duration: 0.01ms;
-  transition-delay: 0ms;
+}
+
+/* Motion tier toggle in the footer */
+.footer-motion-toggle {
+  display: inline-block;
+  margin: 12px auto 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--border-glass);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.footer-motion-toggle:hover { color: var(--text-primary); border-color: var(--accent); }
+.footer-motion-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 @media (max-width: 767.98px) {
