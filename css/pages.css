@@ -867,7 +867,7 @@ body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90de
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 16px;
+  padding: 16px 4%;
   border-radius: 8px;
   border: 1px solid var(--premium-border);
   background: var(--editorial-surface-raised);
@@ -876,9 +876,10 @@ body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90de
 .credential-card-image {
   display: block;
   width: 100%;
-  height: 208px;
+  height: auto;
+  aspect-ratio: var(--cert-ratio, 16 / 9);
   object-fit: contain;
-  padding: 8px;
+  padding: 0;
 }
 
 .credential-card > div { padding: 20px 8px 8px; }
@@ -1105,7 +1106,7 @@ body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90de
 }
 
 @media (max-width: 991.98px) {
-  .credential-card-grid > :last-child { grid-column: 1 / -1; max-width: 520px; }
+  .credential-card-grid > :last-child { grid-column: 1 / -1; max-width: 520px; margin-inline: auto; width: 100%; }
 }
 
 @media (max-width: 599.98px) {

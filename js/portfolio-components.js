@@ -110,11 +110,12 @@
     return data.forRole(data.credentials, roleKey).slice(0, limit).map((credential, index) => {
       const imageClass = credential.imageClass ? ` ${credential.imageClass}` : '';
       const src = asset(assetRoot, credential.image);
+      const styleAttr = (credential.imageWidth && credential.imageHeight) ? ` style="--cert-ratio: ${credential.imageWidth} / ${credential.imageHeight};"` : '';
       return `
         <div class="col-md-6 col-xl-4 reveal ${delayClass(index)}">
           <article class="credential-card premium-card">
             <button class="certificate-preview-trigger interactable" type="button" data-certificate-preview data-certificate-src="${src}" data-certificate-title="${escapeHtml(credential.title)}" data-certificate-alt="${escapeHtml(credential.title)} certificate" aria-label="Inspect the ${escapeHtml(credential.title)} certificate">
-              <img class="credential-card-image${imageClass}" src="${src}" alt="${escapeHtml(credential.title)} certificate" loading="lazy" decoding="async" />
+              <img class="credential-card-image${imageClass}" src="${src}" alt="${escapeHtml(credential.title)} certificate" loading="lazy" decoding="async"${styleAttr} />
               <span class="certificate-preview-cue"><i class="fas fa-magnifying-glass-plus" aria-hidden="true"></i> Inspect certificate</span>
             </button>
             <div><span>${escapeHtml(credential.type)}</span><h3>${escapeHtml(credential.title)}</h3><p>${escapeHtml(credential.copy)}</p></div>

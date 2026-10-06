@@ -12,7 +12,7 @@ Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit
 | U2 Focused visual fixes | done | commit 67051e6 |
 | U4 Shared structure / CSS cleanup | done | commit 67051e6 |
 | U-A Motion regression | done | Fix motion-preference.js two-tier system (full/calm), footer toggle, tests pass. |
-| U-B Certificates fill their frames | todo | Aspect-ratio from data, height:auto, 92%+ fill, third-card span fix. |
+| U-B Certificates fill their frames | done | Image dimensions added to portfolio-data.js, component emits --cert-ratio, pages.css uses aspect-ratio and 4% padding. |
 | U-C Features | todo | Discord button, Codeforces ID card, corner-grab flip. |
 | U-D Stage A: plan + style tile | todo | Design plan, font selection, shape kit, style-tile.html. Stop for approval. |
 | U-E Stage B: apply | todo | Hero, About, Services, Projects, Credentials, Activity, Contact redesign. |

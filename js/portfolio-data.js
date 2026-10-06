@@ -198,11 +198,11 @@
   ];
 
   const credentials = [
-    { id: 'cellula-cv', roles: ['AI'], image: 'cellula_cv.png', title: 'Cellula Robotics · Computer Vision', type: 'Internship', copy: 'Completed practical training in computer-vision workflows and model development.' },
-    { id: 'cellula-ml', roles: ['MAIN', 'ML', 'DS', 'DA', 'DE'], image: 'cellula_ml.png', title: 'Cellula Robotics · Machine Learning', type: 'Internship', copy: 'Completed practical training in machine-learning preparation, modelling, and evaluation.' },
-    { id: 'cellula-nlp', roles: [], image: 'cellula_nlp.png', title: 'Cellula Robotics · NLP', type: 'Internship', copy: 'Worked with text preprocessing, embeddings, transformers, and NLP deployment workflows.' },
-    { id: 'bue-ai', roles: ['MAIN', ...allRoles], image: 'BUE.jpeg', imageClass: 'credential-card-image--bue', title: 'Fundamentals & Applications in AI', type: 'Training', copy: 'Completed a 12-hour applied artificial-intelligence course at The British University in Egypt.' },
-    { id: 'ecpc-qualification', roles: ['MAIN', ...allRoles], image: 'icpc.png', title: '25th in ECPC Qualification', type: 'Achievement', copy: 'Earned with my team through focused algorithmic problem-solving and preparation.' }
+    { id: 'cellula-cv', roles: ['AI'], image: 'cellula_cv.png', imageWidth: 981, imageHeight: 689, title: 'Cellula Robotics · Computer Vision', type: 'Internship', copy: 'Completed practical training in computer-vision workflows and model development.' },
+    { id: 'cellula-ml', roles: ['MAIN', 'ML', 'DS', 'DA', 'DE'], image: 'cellula_ml.png', imageWidth: 821, imageHeight: 580, title: 'Cellula Robotics · Machine Learning', type: 'Internship', copy: 'Completed practical training in machine-learning preparation, modelling, and evaluation.' },
+    { id: 'cellula-nlp', roles: [], image: 'cellula_nlp.png', imageWidth: 1020, imageHeight: 720, title: 'Cellula Robotics · NLP', type: 'Internship', copy: 'Worked with text preprocessing, embeddings, transformers, and NLP deployment workflows.' },
+    { id: 'bue-ai', roles: ['MAIN', ...allRoles], image: 'BUE.jpeg', imageWidth: 1280, imageHeight: 923, imageClass: 'credential-card-image--bue', title: 'Fundamentals & Applications in AI', type: 'Training', copy: 'Completed a 12-hour applied artificial-intelligence course at The British University in Egypt.' },
+    { id: 'ecpc-qualification', roles: ['MAIN', ...allRoles], image: 'icpc.png', imageWidth: 1112, imageHeight: 778, title: '25th in ECPC Qualification', type: 'Achievement', copy: 'Earned with my team through focused algorithmic problem-solving and preparation.' }
   ];
 
   const experiences = [
