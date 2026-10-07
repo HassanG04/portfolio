@@ -854,10 +854,11 @@ html[data-theme="light"] .depi-website-link { color: rgb(255, 255, 255); }
 }
 
 .activity-subsection-heading {
-  display: grid;
-  grid-template-columns: auto minmax(0px, 1fr);
-  align-items: start;
-  gap: clamp(18px, 3vw, 38px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(12px, 2vw, 18px);
   margin-bottom: clamp(26px, 4vw, 46px);
 }
 
@@ -1415,21 +1416,6 @@ html[data-theme="light"] .depi-website-link { color: rgb(255, 255, 255); }
 .soft-skills-flip:not(.is-flipped):hover .flip-card-image,
 .depi-visual-flip:not(.is-flipped):hover .flip-card-image { transform: translateZ(0px) scale(1); }
 
-.activity-subsection-number {
-  display: grid;
-  width: clamp(58px, 6vw, 82px);
-  aspect-ratio: 1 / 1;
-  place-items: center;
-  border: 1px solid rgba(167, 139, 250, 0.28);
-  border-radius: 50%;
-  color: var(--accent-purple-light);
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.16), transparent 70%);
-  box-shadow: rgba(139, 92, 246, 0.11) 0px 0px 34px;
-  font-family: Sora, sans-serif;
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  font-weight: 800;
-  animation: 5.8s ease-in-out 0s infinite normal none running activity-number-idle;
-}
 
 html[data-theme="light"] .ecpc-future-label { color: rgb(109, 40, 217); }
 
@@ -1599,19 +1585,12 @@ html[data-theme="light"] .depi-visual-back { color: rgb(33, 19, 53); background:
 @media (max-width: 767.98px) {
   .soft-skills-copy { margin: 0px; padding: 8px 2px; }
 
-  .activity-subsection-heading { grid-template-columns: 52px minmax(0px, 1fr); gap: 15px; }
-}
 
-@media (max-width: 420px) {
-  .activity-subsection-heading { grid-template-columns: 1fr; }
-}
 
 @media (max-width: 767.98px) {
-  .activity-subsection-number { width: 52px; }
 }
 
-@media (max-width: 420px) {
-  .activity-subsection-number { width: 45px; }
+
 }
 
 @media (max-width: 767.98px) {
@@ -1963,9 +1942,6 @@ html[data-motion="calm"] .cf-ambience {
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
-}
-
-.codeforces-card::before {
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;

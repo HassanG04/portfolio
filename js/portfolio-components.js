@@ -209,11 +209,11 @@
     return `
       <header class="activity-section-heading section-anchor-heading reveal"><h1 class="section-heading">Activity</h1><p>Competition, continued learning, and the people who shaped how I solve problems and work with a team.</p></header>
       <section class="activity-journey-group activity-journey-group--ecpc" aria-labelledby="activity-ecpc-heading">
-        <div class="activity-subsection-heading reveal"><span class="activity-subsection-number">01</span><div><h2 id="activity-ecpc-heading">ECPC</h2><p>Four chapters from my collegiate problem-solving journey.</p></div></div>
+        <div class="activity-subsection-heading reveal"><h2 id="activity-ecpc-heading">ECPC</h2><p>Four chapters from my collegiate problem-solving journey.</p></div>
         ${renderEcpc(assetRoot)}
       </section>
       <section class="activity-journey-group activity-journey-group--depi" aria-labelledby="activity-depi-heading">
-        <div class="activity-subsection-heading reveal"><span class="activity-subsection-number">02</span><div><h2 id="activity-depi-heading">DEPI</h2><p>Technical growth and professional development from one connected program.</p></div></div>
+        <div class="activity-subsection-heading reveal"><h2 id="activity-depi-heading">DEPI</h2><p>Technical growth and professional development from one connected program.</p></div>
         ${renderDepiCard(assetRoot)}
         ${renderSoftSkills(assetRoot)}
       </section>`;
