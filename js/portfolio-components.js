@@ -305,7 +305,6 @@
       + `<p class="footer-tagline">${escapeHtml(data.shared.name)} ${main ? '/' : '—'} ${escapeHtml(data.shared.identity)}</p>`
       + `<div class="footer-social justify-content-center">${renderSocialLinks(assetRoot)}</div>`
       + `<div class="footer-divider"></div>`
-      + `<button type="button" id="motionToggle" class="footer-motion-toggle" aria-pressed="false">Motion: full</button>`
       + `<p class="footer-copy">${escapeHtml(copy.footer)}</p>`
       + `</div></footer>`;
   }

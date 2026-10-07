@@ -63,8 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
   if (motionBtn && window.__portfolioMotion) {
     function syncMotionBtn() {
       const tier = window.__portfolioMotion.tier;
-      motionBtn.textContent = 'Motion: ' + tier;
+      const icon = motionBtn.querySelector('i');
+      const label = motionBtn.querySelector('.theme-toggle-label');
+      if (icon) icon.className = tier === 'calm' ? 'fas fa-play' : 'fas fa-pause';
+      if (label) label.textContent = tier === 'calm' ? 'Play' : 'Pause';
       motionBtn.setAttribute('aria-pressed', String(tier === 'calm'));
+      motionBtn.setAttribute('aria-label', tier === 'calm' ? 'Enable animations' : 'Disable animations');
     }
     syncMotionBtn();
     motionBtn.addEventListener('click', () => {
