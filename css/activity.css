@@ -1931,30 +1931,60 @@ html[data-motion="calm"] .cf-ambience {
 /* ID Card Conic Border for Codeforces */
 .codeforces-card {
   --profile-rgb: 13, 7, 20 !important; /* Keep inner background neutral */
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
 
-@keyframes cf-box-glow {
-  0%   { box-shadow: 0 8px 30px rgba(234, 179, 8, 0.4); border-color: rgba(234, 179, 8, 0.8); }
-  33%  { box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4); border-color: rgba(59, 130, 246, 0.8); }
-  66%  { box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.8); }
-  100% { box-shadow: 0 8px 30px rgba(234, 179, 8, 0.4); border-color: rgba(234, 179, 8, 0.8); }
+@property --cf-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
-.codeforces-card.is-current-profile:is(:hover, :focus-visible),
-.codeforces-card:is(:hover, :focus-visible) {
-  animation: cf-box-glow 3s linear infinite;
+@keyframes cf-angle-spin {
+  0% { --cf-angle: 0deg; }
+  100% { --cf-angle: 360deg; }
 }
 
-.codeforces-card::before {
+.codeforces-card::before,
+.codeforces-card::after {
   content: "";
   position: absolute;
   inset: -2px;
   z-index: -1;
   border-radius: inherit;
-  background: conic-gradient(from 0deg, #3B82F6, #EF4444, #EAB308, #3B82F6);
+  background: conic-gradient(from var(--cf-angle), 
+    transparent 0deg,
+    transparent 60deg, rgba(239, 68, 68, 0.8) 120deg,
+    transparent 120deg,
+    transparent 180deg, rgba(59, 130, 246, 0.8) 240deg,
+    transparent 240deg,
+    transparent 300deg, rgba(234, 179, 8, 0.8) 360deg
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.codeforces-card::before {
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   padding: 2px;
 }
+
+.codeforces-card::after {
+  filter: blur(10px);
+  z-index: -2;
+}
+
+.codeforces-card.is-current-profile:is(:hover, :focus-visible)::before,
+.codeforces-card.is-current-profile:is(:hover, :focus-visible)::after,
+.codeforces-card:is(:hover, :focus-visible)::before,
+.codeforces-card:is(:hover, :focus-visible)::after {
+  opacity: 1;
+  animation: cf-angle-spin 3s linear infinite;
+}
+
+
