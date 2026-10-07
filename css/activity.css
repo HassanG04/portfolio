@@ -1946,8 +1946,7 @@ html[data-motion="calm"] .cf-ambience {
   100% { --cf-angle: 360deg; }
 }
 
-.codeforces-card::before,
-.codeforces-card::after {
+.codeforces-card::before {
   content: "";
   position: absolute;
   inset: -2px;
@@ -1955,11 +1954,11 @@ html[data-motion="calm"] .cf-ambience {
   border-radius: inherit;
   background: conic-gradient(from var(--cf-angle), 
     transparent 0deg,
-    transparent 60deg, rgba(239, 68, 68, 0.8) 120deg,
+    transparent 60deg, #EF4444 120deg,
     transparent 120deg,
-    transparent 180deg, rgba(59, 130, 246, 0.8) 240deg,
+    transparent 180deg, #3B82F6 240deg,
     transparent 240deg,
-    transparent 300deg, rgba(234, 179, 8, 0.8) 360deg
+    transparent 300deg, #EAB308 360deg
   );
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -1974,15 +1973,8 @@ html[data-motion="calm"] .cf-ambience {
   padding: 2px;
 }
 
-.codeforces-card::after {
-  filter: blur(10px);
-  z-index: -2;
-}
-
 .codeforces-card.is-current-profile:is(:hover, :focus-visible)::before,
-.codeforces-card.is-current-profile:is(:hover, :focus-visible)::after,
-.codeforces-card:is(:hover, :focus-visible)::before,
-.codeforces-card:is(:hover, :focus-visible)::after {
+.codeforces-card:is(:hover, :focus-visible)::before {
   opacity: 1;
   animation: cf-angle-spin 3s linear infinite;
 }
