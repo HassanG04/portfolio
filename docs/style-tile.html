@@ -90,8 +90,7 @@
     .portrait-mask {
       width: 240px; height: 280px;
       background: var(--accent);
-      /* A subtle blob / organic shape */
-      clip-path: path('M120 0 C200 10, 240 80, 230 180 C220 260, 160 280, 80 270 C10 260, 0 160, 20 80 C40 10, 80 -10, 120 0 Z');
+      clip-path: url(#organic-mask);
     }
     
     /* SVG Divider */
@@ -119,6 +118,13 @@
   </style>
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute;">
+    <defs>
+      <clipPath id="organic-mask" clipPathUnits="objectBoundingBox">
+        <path d="M0.5,0 C0.83,0.04 1,0.29 0.96,0.64 C0.92,0.93 0.67,1 0.33,0.96 C0.04,0.93 0,0.57 0.08,0.29 C0.17,0.04 0.33,-0.04 0.5,0 Z" />
+      </clipPath>
+    </defs>
+  </svg>
   <div class="grid">
     <div>
       <p>Candidate 1: Bricolage Grotesque</p>
