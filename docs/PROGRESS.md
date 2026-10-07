@@ -1,6 +1,6 @@
 # Portfolio design, features and refactor checklist
 
-Work branch: `design-overhaul-2`. Never change `main` or publish.
+Current fix branch: `codex/activity-sizing-fixes`, created from the user's current checkout. Keep `main` unchanged. The latest user request authorizes publishing these mobile fixes before returning to freelance accounts.
 Existing Round 2 baseline: `.baseline/round-2/baseline/`; do not regenerate.
 Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit.
 
@@ -18,6 +18,8 @@ Preserve unrelated dirty files and CRLF. Each unit ends with its gate and commit
 | U-E Stage B: apply | todo | Hero, About, Services, Projects, Credentials, Activity, Contact redesign. |
 | U-F Stage C: motion | todo | Hero load sequence, timeline draw, image unmask, single rAF scheduler. |
 | U-G Hygiene and report | todo | Consolidate QA scripts, .gitignore, ARCHITECTURE.md, final report. |
+| Requested activity sizing fixes | source checks passed; deploy approval needed | Removed a stray CSS brace restoring phone breakpoints, capped DEPI at 340px, separated the ECPC 4 logo and caption; 19 Python + 34 Node tests, 7-page validation, 8 JS syntax checks and zero CSS duplicate pairs pass. Browser visual verification remains blocked. Pages permits only main: ask before overriding the earlier never-touch-main restriction. |
+| Requested freelance account follow-up | todo | Review saved Upwork/Fiverr/Khamsat/Mostaql work after the card fixes; keep service drafts unpublished. |
 
 ## Resume rule
 

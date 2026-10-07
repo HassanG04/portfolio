@@ -1180,11 +1180,6 @@ html[data-theme="light"] .tech-tag--purple { --tech-rgb: 109,40,217; }
   53%, 100% { transform: translateX(115%); opacity: 0; }
 }
 
-@keyframes ecpc-future-logo-float {
-  0%, 100% { transform: translate(-50%, -53%) scale(1); }
-  50% { transform: translate(-50%, calc(-53% - 8px)) scale(1.045); }
-}
-
 @keyframes activity-number-idle {
   0%, 100% { transform: translateY(0px) scale(1); box-shadow: rgba(139, 92, 246, 0.1) 0px 0px 28px; }
   50% { transform: translateY(-4px) scale(1.025); box-shadow: rgba(139, 92, 246, 0.22) 0px 0px 42px; }
