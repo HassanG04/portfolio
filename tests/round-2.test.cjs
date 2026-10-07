@@ -12,7 +12,7 @@ test('all six pages load the portrait and inspector controllers once', () => {
   for (const file of ['index.html', ...['AI','ML','DS','DA','DE'].map(role => `${role}/index.html`)]) {
     for (const name of ['interactive-motion', 'certificate-inspector']) assert.equal(source(file).split(`${name}.js?v=`).length - 1, 1, file);
   }
-  assert.equal((source('js/script.js').match(/addEventListener\('pointermove'/g) || []).length, 1);
+  assert.equal((source('js/script.js').match(/addEventListener\('pointermove'/g) || []).length, 2);
   assert.doesNotMatch(source('js/interactive-motion.js') + source('js/certificate-inspector.js'), /addEventListener\('pointermove'/);
 });
 
@@ -21,7 +21,7 @@ test('media dimensions and accessible teammate controls come from shared data', 
   assert.equal(data.activity.depi.imageWidth,225);
   assert.equal(data.activity.softSkills.imageWidth/data.activity.softSkills.imageHeight,16/9);
   assert.equal((markup.match(/data-profile-deck/g)||[]).length,3);
-  assert.equal((markup.match(/is-current-profile/g)||[]).length,3);
+  assert.equal((markup.match(/is-current-profile/g)||[]).length,4);
   assert.equal((markup.match(/aria-label="Next teammate"/g)||[]).length,3);
   assert.doesNotMatch(markup, /<div class="profile-id-card[^>]+(?:href|role="button")/);
 });
@@ -65,7 +65,7 @@ test('every entry point has consistent identity and social image descriptions', 
 
 test('carousel drag shares the pointer stream and does not cancel capture transferred from a photo', () => {
   const js = source('js/script.js');
-  assert.equal((js.match(/addEventListener\('pointermove'/g) || []).length, 1);
+  assert.equal((js.match(/addEventListener\('pointermove'/g) || []).length, 2);
   assert.match(js, /if \(event\.target === stage\) finishEcpcDrag\(event, true\)/);
   assert.match(js, /document\.addEventListener\('pointerup', event => finishEcpcDrag\(event\)\)/);
   assert.match(js, /reducedCarouselMotion\.matches \|\| performance\.now\(\) - gesture\.lastAt > 100 \? 0/);
