@@ -1,0 +1,9 @@
+FAIL: h1 font-size at 1440 is 64.08px (needs >= 112)
+FAIL: h1 font-size at 390 is 42.4px (needs >= 48)
+PASS: No overflow 320 to 2560
+PASS: Hero portrait width is 480px
+PASS: clip-path: path( not found in CSS
+FAIL: .section-anchor-heading definitions: 11 (needs 1)
+FAIL: Contains "01 / 04" overlay
+FAIL: Vertical gap between hero buttons and socials is 0px (needs >= 20px)
+FAIL: Slide 4 ambience lobes not verified in script yet
