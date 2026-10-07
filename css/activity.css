@@ -1881,3 +1881,67 @@ html[data-theme="light"] .is-linked > .profile-id-action { color: rgb(7, 92, 168
   height: 36px;
   min-height: 36px;
 }
+
+/* Codeforces Ambience Lobes */
+.cf-ambience {
+  position: absolute;
+  z-index: -1;
+  inset: -30%;
+  pointer-events: none;
+  animation: cf-orbit 28s linear infinite;
+  transform-origin: center center;
+}
+
+html[data-motion="calm"] .cf-ambience {
+  animation: none;
+}
+
+@keyframes cf-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cf-lobe {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  filter: blur(40px);
+}
+
+.cf-lobe-blue {
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle, rgba(59,130,246,0.35) 0%, rgba(59,130,246,0) 60%);
+}
+
+.cf-lobe-red {
+  top: 0;
+  right: 0;
+  background: radial-gradient(circle, rgba(239,68,68,0.35) 0%, rgba(239,68,68,0) 60%);
+}
+
+.cf-lobe-yellow {
+  bottom: 0;
+  left: 20%;
+  background: radial-gradient(circle, rgba(234,179,8,0.35) 0%, rgba(234,179,8,0) 60%);
+}
+
+/* ID Card Conic Border for Codeforces */
+.codeforces-card {
+  --profile-rgb: 13, 7, 20; /* Keep inner background neutral */
+}
+
+.codeforces-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg, #3B82F6, #EF4444, #EAB308, #3B82F6);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+}
