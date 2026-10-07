@@ -206,34 +206,25 @@ main.container { max-width: var(--portfolio-content-width); }
 
 body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.035) 16%, rgba(139, 92, 246, 0.035) 84%, transparent); }
 
-.section-anchor-heading {
-  display: grid;
-  grid-template-rows: auto auto;
-  align-items: end;
+.section-anchor-heading,
+.service-section-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   max-width: none;
   margin: 0px 0px clamp(34px, 4.5vw, 58px);
   border-top: 1px solid var(--editorial-line);
-  text-align: left;
-  grid-template-columns: minmax(0px, 1.25fr) minmax(0px, 1fr);
-  column-gap: clamp(30px, 6vw, 90px);
   padding-top: 24px;
+  gap: 12px;
 }
 
 .service-section-heading {
-  display: grid;
-  grid-template-rows: auto auto;
-  align-items: end;
-  max-width: none;
   margin: 0px 0px clamp(42px, 6vw, 72px);
-  border-top: 1px solid var(--editorial-line);
-  text-align: left;
-  grid-template-columns: minmax(0px, 1.25fr) minmax(0px, 1fr);
-  column-gap: clamp(30px, 6vw, 90px);
-  padding-top: 24px;
 }
 
-.section-anchor-heading .section-heading {
-  grid-area: 2 / 1;
+.section-anchor-heading .section-heading,
+.service-section-heading .section-heading {
   max-width: 760px;
   margin: 0px;
   font-size: clamp(2.6rem, 5vw, 4.4rem);
@@ -242,13 +233,13 @@ body[data-role] .section-wrap:nth-of-type(2n) { background: linear-gradient(90de
   overflow-wrap: anywhere;
 }
 
-.section-anchor-heading > p {
-  grid-area: 1 / 2 / span 2;
-  place-self: end;
-  margin: 0px 0px 4px;
+.section-anchor-heading > p,
+.service-section-heading > p {
+  max-width: 600px;
+  margin: 0px;
   font-size: 0.98rem;
   line-height: 1.75;
-  max-width: 48ch;
+  color: var(--text-secondary);
 }
 
 .section-subheading { margin: 0px 0px 30px; margin-block: 64px 32px; }

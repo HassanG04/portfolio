@@ -1928,8 +1928,21 @@ html[data-motion="calm"] .cf-ambience {
 }
 
 /* ID Card Conic Border for Codeforces */
+/* ID Card Conic Border for Codeforces */
 .codeforces-card {
-  --profile-rgb: 13, 7, 20; /* Keep inner background neutral */
+  --profile-rgb: 13, 7, 20 !important; /* Keep inner background neutral */
+}
+
+@keyframes cf-box-glow {
+  0%   { box-shadow: 0 8px 30px rgba(234, 179, 8, 0.4); border-color: rgba(234, 179, 8, 0.8); }
+  33%  { box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4); border-color: rgba(59, 130, 246, 0.8); }
+  66%  { box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.8); }
+  100% { box-shadow: 0 8px 30px rgba(234, 179, 8, 0.4); border-color: rgba(234, 179, 8, 0.8); }
+}
+
+.codeforces-card.is-current-profile:is(:hover, :focus-visible),
+.codeforces-card:is(:hover, :focus-visible) {
+  animation: cf-box-glow 3s linear infinite;
 }
 
 .codeforces-card::before {
