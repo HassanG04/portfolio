@@ -189,10 +189,23 @@
   box-shadow: rgba(0, 119, 181, 0.4) 0px 0px 18px;
 }
 
+.social-btn[title="Upwork"] { border-color: #000; background: #000; color: #fff; }
+.social-btn[title="Upwork"] i { color: #fff; }
+html[data-theme="dark"] .social-btn[title="Upwork"] { border-color: #fff; background: #fff; color: #000; }
+html[data-theme="dark"] .social-btn[title="Upwork"] i { color: #000; }
+
+.social-btn[title="Khamsat"] { border-color: #f36c21; background: #f36c21; }
+.social-btn[title="Khamsat"] img { filter: brightness(0) invert(1); }
+
+.social-btn[title="Fiverr"] { border-color: #1dbf73; background: #1dbf73; }
+.social-btn[title="Fiverr"] img { filter: brightness(0) invert(1); }
+
+.social-btn.github { border-color: #808080; background: #808080; color: #fff; }
+.social-btn.github i { color: #fff; }
+
 .social-btn.github:hover {
-  border-color: rgb(170, 170, 170);
-  color: rgb(170, 170, 170);
-  box-shadow: rgba(200, 200, 200, 0.25) 0px 0px 18px;
+  border-color: #a0a0a0;
+  box-shadow: rgba(160, 160, 160, 0.25) 0px 0px 18px;
 }
 
 .social-btn.discord:hover {
